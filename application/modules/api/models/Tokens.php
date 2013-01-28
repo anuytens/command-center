@@ -1,6 +1,6 @@
 <?php
 
-class Api_Model_Tokens extends Zend_Controller_Action
+class Api_Model_Tokens extends Zend_Db_Table_Abstract
 {
     protected $_name = "tokens";
     protected $_referencemap = array(
