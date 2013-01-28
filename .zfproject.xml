@@ -35,7 +35,46 @@
         <modelFile modelName="Events"/>
         <modelFile modelName="UsersEvents"/>
       </modelsDirectory>
-      <modulesDirectory enabled="false"/>
+      <modulesDirectory>
+        <moduleDirectory moduleName="api">
+          <configsDirectory enabled="false"/>
+          <controllersDirectory>
+            <controllerFile controllerName="Oauth">
+              <actionMethod actionName="index"/>
+              <actionMethod actionName="requestToken"/>
+              <actionMethod actionName="accessToken"/>
+              <actionMethod actionName="authorize"/>
+            </controllerFile>
+          </controllersDirectory>
+          <formsDirectory enabled="false"/>
+          <layoutsDirectory enabled="false"/>
+          <modelsDirectory>
+            <modelFile modelName="Tokens"/>
+            <modelFile modelName="TokenTypes"/>
+            <modelFile modelName="Consumers"/>
+            <modelFile modelName="ConsumersNonce"/>
+          </modelsDirectory>
+          <servicesDirectory enabled="false"/>
+          <viewsDirectory>
+            <viewScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Oauth">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Oauth">
+                <viewScriptFile forActionName="requestToken"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Oauth">
+                <viewScriptFile forActionName="accessToken"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Oauth">
+                <viewScriptFile forActionName="authorize"/>
+              </viewControllerScriptsDirectory>
+            </viewScriptsDirectory>
+            <viewHelpersDirectory/>
+            <viewFiltersDirectory/>
+          </viewsDirectory>
+        </moduleDirectory>
+      </modulesDirectory>
       <servicesDirectory enabled="false"/>
       <viewsDirectory>
         <viewScriptsDirectory>
@@ -129,6 +168,18 @@
             <testApplicationActionMethod forActionName="list"/>
           </testApplicationControllerFile>
         </testApplicationControllerDirectory>
+        <testApplicationModulesDirectory>
+          <testApplicationModuleDirectory forModuleName="api">
+            <testApplicationControllerDirectory>
+              <testApplicationControllerFile forControllerName="Oauth">
+                <testApplicationActionMethod forActionName="index"/>
+                <testApplicationActionMethod forActionName="requestToken"/>
+                <testApplicationActionMethod forActionName="accessToken"/>
+                <testApplicationActionMethod forActionName="authorize"/>
+              </testApplicationControllerFile>
+            </testApplicationControllerDirectory>
+          </testApplicationModuleDirectory>
+        </testApplicationModulesDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory/>
     </testsDirectory>
