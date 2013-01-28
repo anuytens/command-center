@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class EventsController extends Zend_Controller_Action
 {
 
     public function init()
@@ -13,7 +13,7 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
-    public function authenticateAction()
+    public function addAction()
     {
         // action body
     }

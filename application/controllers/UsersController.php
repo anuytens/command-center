@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class UsersController extends Zend_Controller_Action
 {
 
     public function init()
@@ -13,13 +13,20 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
-    public function authenticateAction()
+    public function editAction()
+    {
+        // action body
+    }
+
+    public function listAction()
     {
         // action body
     }
 
 
 }
+
+
 
 
 
