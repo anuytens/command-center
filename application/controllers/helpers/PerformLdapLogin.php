@@ -24,7 +24,27 @@ class Application_Controller_Helper_PerformLdapLogin extends Zend_Controller_Act
 
         if($auth_result->isValid())
         {
+            // get the user model
+            $model_users = new Application_Model_Users;
+        
+            // get the LDAP account object
             $user = $auth_adapter_ldap->getAccountObject();
+            
+            // try to retrieve the user into the db
+            $row_user = $model_users->findUserByLDAPId($user->objectguid);
+
+            // if the user is not in the db, the app store his info
+            if($row_user == null)
+            {
+                $row_user = $model_users->createRow();
+                $row_user->id_ldap = $user->objectguid;
+                $row_user->save();
+            }
+            
+             // Add attributes
+            $user->id_user = $row_user->id_user;
+            
+            // persist the user
             $auth->getStorage()->write($user);
         }
     }
