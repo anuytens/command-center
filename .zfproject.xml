@@ -10,6 +10,7 @@
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
           <actionMethod actionName="authenticate"/>
+          <actionMethod actionName="logout"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="Users">
@@ -59,6 +60,7 @@
             <modelFile modelName="TokenTypes"/>
             <modelFile modelName="Consumers"/>
             <modelFile modelName="ConsumersNonce"/>
+            <modelFile modelName="TokensUser"/>
           </modelsDirectory>
           <servicesDirectory enabled="false"/>
           <viewsDirectory>
@@ -120,6 +122,9 @@
           <viewControllerScriptsDirectory forControllerName="Groups">
             <viewScriptFile forActionName="list"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="logout"/>
+          </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
         <viewFiltersDirectory enabled="false"/>
@@ -157,6 +162,7 @@
           <testApplicationControllerFile forControllerName="Index">
             <testApplicationActionMethod forActionName="index"/>
             <testApplicationActionMethod forActionName="authenticate"/>
+            <testApplicationActionMethod forActionName="logout"/>
           </testApplicationControllerFile>
           <testApplicationControllerFile forControllerName="Users">
             <testApplicationActionMethod forActionName="index"/>

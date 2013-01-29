@@ -18,8 +18,19 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
+    public function logoutAction()
+    {
+        // get the instance of auth
+        $auth = Zend_Auth::getInstance();
+        
+        // clear the identity
+        $auth->clearIdentity();
+    }
+
 
 }
+
+
 
 
 
