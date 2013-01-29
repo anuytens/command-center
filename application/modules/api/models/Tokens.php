@@ -3,18 +3,23 @@
 class Api_Model_Tokens extends Zend_Db_Table_Abstract
 {
     protected $_name = "tokens";
-    protected $_referencemap = array(
+    protected $_referenceMap = array(
         'consumer' => array(
             'columns' => 'id_consumer',
-            'refTableClass' => 'Api_Model_Consumers'
+            'refTableClass' => 'Api_Model_Consumers',
 		),
         'token-type' => array(
             'columns' => 'id_token-types',
             'refTableClass' => 'Api_Model_TokenTypes'
-		),
-        'user' => array(
-            'columns' => 'id_user',
-            'refTableClass' => 'Application_Model_Users'
 		)
     );
+    protected $_dependentTables = array("Api_Model_TokensUser");
+    
+    public function getTokenByToken($token)
+    {
+        $select = $this->select()
+            ->where("token = ?", $token);
+
+        return $this->fetchRow($select);
+    }
 }
