@@ -34,8 +34,6 @@ class Api_UsersController extends Zend_Controller_Action
             
             // get the LDAP account object
             $this->view->results = $this->_helper->retrieveLdapAccountObject($row_token->getUser()->id_ldap);
-            
-            $test = new Api_Service_User();
         }
     }
 
