@@ -6,7 +6,7 @@ class Api_Model_TokensUser extends Zend_Db_Table_Abstract
     protected $_referenceMap = array(
         'user' => array(
             'columns' => 'id_user',
-            'refTableClass' => 'Api_Model_Users'
+            'refTableClass' => 'Application_Model_Users'
 		),
         'token' => array(
             'columns' => 'id_token',

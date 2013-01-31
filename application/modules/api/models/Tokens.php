@@ -14,6 +14,7 @@ class Api_Model_Tokens extends Zend_Db_Table_Abstract
 		)
     );
     protected $_dependentTables = array("Api_Model_TokensUser");
+    protected $_rowClass = 'Api_Model_Row_Token';
     
     public function getTokenByToken($token)
     {
