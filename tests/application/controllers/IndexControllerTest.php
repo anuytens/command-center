@@ -66,7 +66,7 @@ class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     
     
     // connexion fictive
-    public function loginUser($user, $password)
+    public function testRedirectionLoginUser($user, $password)
     {
         $this->request->setMethod('POST')
                       ->setPost(array(
@@ -81,8 +81,6 @@ class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
  
         $this->request->setPost(array());
     }
-
-
 }
 
 
