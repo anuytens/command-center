@@ -13,11 +13,9 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             ->append(strip_tags( $view->navigation()->breadcrumbs()->setMinDepth(0)->setSeparator(" > ") ));
             
         // On lie les feuilles de style
-        $view->headLink();
-        /*
-            ->appendStylesheet("/css/core/core.css")
-            ->appendStylesheet("/css/style.css");
-        */
+        $view->headLink()
+            ->appendStylesheet('components/bootstrap/less/bootstrap.less', 'all', null, array('rel' => 'stylesheet/less'))
+            ->appendStylesheet('components/bootstrap/less/responsive.less', 'all', null, array('rel' => 'stylesheet/less'));
             
         // Balises META de l'application
         $view->headMeta()
@@ -30,13 +28,9 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             */
             
         // Scripts éxecutés en fin de page
-        $view->inlineScript();
-        /*
-        ->appendFile("//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js")
-        ->appendFile("/js/libs/twitter.bootstrap.js")
-        ->appendFile("/js/script.js")
-        ->appendFile("/js/plugins.js");
-        */
+        $view->inlineScript()
+            ->appendFile("components/less.js/dist/less-1.3.3.min.js")
+            ->appendFile("components/jquery/jquery.min.js");
             
         // Icône du site
         $view->headLink()
