@@ -16,7 +16,21 @@ class Application_Controller_Helper_RetrieveLdapAccountObject extends Zend_Contr
         
         if(count($array_entries) == 1)
         {
-            return (object) $array_entries[0];
+            $returnObject = new stdClass();
+        
+            // avoid array with only one value
+            foreach ($array_entries[0] as $attr => $value) {
+                if (is_array($value))
+                {
+                    $returnObject->$attr = (count($value) > 1) ? $value : $value[0];
+                }
+                else
+                {
+                    $returnObject->$attr = $value;
+                }
+            }
+            
+            return $returnObject;
         }
         else
         {
