@@ -6,6 +6,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
 		$this->loadActionHelpers();
 		$this->loadViewHelpers();
+        $this->loadNavigation();
+        $this->loadPlugins();
 		parent::run();
 	}
 
@@ -27,4 +29,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'Application_View_Helper_'
         );
 	}
+    
+    public function loadNavigation()
+    {
+        $layout = $this->getResource("layout");
+		$view = $layout->getView();
+        $container = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav');
+        $navigation = new Zend_Navigation($container);
+        $view->navigation( $navigation );
+    }
+    
+    public function loadPlugins()
+    {
+        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_Layout);
+    }
 }
