@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<configdata>
+	<nav>
+		<home>
+			<label>Accueil</label>
+			<module>default</module>
+			<controller>index</controller>
+			<action>index</action>
+            <pages>
+                <login>
+                    <label>Se connecter</label>
+                    <module>default</module>
+                    <controller>index</controller>
+                    <action>login</action>
+                </login>
+                <logout>
+                    <label>Se déconnecter</label>
+                    <module>default</module>
+                    <controller>index</controller>
+                    <action>logout</action>
+                </logout>
+            </pages>
+		</home>
+	</nav>
+</configdata>
