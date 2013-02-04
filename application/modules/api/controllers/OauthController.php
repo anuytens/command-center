@@ -37,6 +37,7 @@ class Api_OauthController extends Zend_Controller_Action
     public function requestTokenAction()
     {
         // Disable the renderer
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         // Define the endpoint
@@ -76,6 +77,7 @@ class Api_OauthController extends Zend_Controller_Action
     public function accessTokenAction()
     {
         // Disable the renderer
+        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         
         // Check the request
