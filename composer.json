@@ -1,0 +1,6 @@
+{
+    "require":
+    {
+        "emagister/zend-form-decorators-bootstrap": "dev-master"
+    }
+}
