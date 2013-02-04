@@ -36,12 +36,10 @@ class IndexController extends Zend_Controller_Action
             if($this->_request->isPost() && $form_login->isValid($this->_request->getPost()))
             {
                 // perform login
-                $this->_helper->performLdapLogin(
-                    $this->_request->getPost("username"),
-                    $this->_request->getPost("password")
-                );
-                
-                $this->_helper->redirector("index");
+                if($this->_helper->performLdapLogin($this->_request->getPost("username"), $this->_request->getPost("password")))
+                {
+                    $this->_helper->redirector("index");
+                }
             }
             
             $this->view->form = $form_login;

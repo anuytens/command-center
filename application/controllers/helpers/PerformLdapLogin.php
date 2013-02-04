@@ -46,6 +46,10 @@ class Application_Controller_Helper_PerformLdapLogin extends Zend_Controller_Act
             
             // persist the user
             $auth->getStorage()->write($user);
+            
+            return true;
         }
+        
+        return false;
     }
 }
