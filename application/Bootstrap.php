@@ -7,6 +7,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->loadActionHelpers();
 		$this->loadViewHelpers();
         $this->loadNavigation();
+        $this->loadThirdParty();
         $this->loadPlugins();
 		parent::run();
 	}
@@ -42,5 +43,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     public function loadPlugins()
     {
         Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_Layout);
+    }
+    
+    public function loadThirdParty()
+    {
+        $loader = require APPLICATION_PATH . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+        $loader->add('Twitter_', __DIR__);
     }
 }
