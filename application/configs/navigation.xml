@@ -3,23 +3,39 @@
 	<nav>
 		<home>
 			<label>Accueil</label>
-			<module>default</module>
 			<controller>index</controller>
-			<action>index</action>
             <pages>
                 <login>
                     <label>Se connecter</label>
-                    <module>default</module>
-                    <controller>index</controller>
+                    <controller>authentication</controller>
                     <action>login</action>
                 </login>
                 <logout>
                     <label>Se déconnecter</label>
-                    <module>default</module>
-                    <controller>index</controller>
+                    <controller>authentication</controller>
                     <action>logout</action>
                 </logout>
+                <about>
+                    <label>À propos</label>
+                    <controller>index</controller>
+                    <action>about</action>
+                </about>
             </pages>
 		</home>
+        <applications>
+            <label>Applications</label>
+            <controller>index</controller>
+        </applications>
+        <profile>
+            <label>Utilisateur</label>
+            <controller>users</controller>
+            <pages>
+                <edit>
+                    <label>Modifier le profil</label>
+                    <controller>users</controller>
+                    <action>edit</action>
+                </edit>
+            </pages>
+        </profile>
 	</nav>
 </configdata>

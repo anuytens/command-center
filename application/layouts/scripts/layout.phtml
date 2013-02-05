@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="fr" >
+
     <head>
         <meta charset="utf-8">
         
@@ -14,13 +15,14 @@
         <?php echo $this->headLink() ?>
         <?php echo $this->headStyle() ?>
         <?php echo $this->headScript() ?>
-        
-        
 
         <!--<script src="/js/libs/modernizr-2.5.3.min.js"></script>-->
     </head>
+    
     <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
+    
+        <!-- Nav bar -->
+        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -28,32 +30,34 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">Module utilisateur</a>
+                    <a class="brand" href="#">SDIS62 ID</a>
                     <div class="nav-collapse collapse">
-                        <?php echo $this->navigation()->menu()->setMaxDepth(0)->setUlClass('nav'); ?>
-                        <ul class="nav pull-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Kévin DUBUC <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Mon profil</a></li>
-                                    <li><a href="#">Modifier mes informations</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Deconnexion</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <ul class="nav"></ul>
+                        <ul class="nav pull-right"></ul>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Container -->
         <div class="container">
-            <h1>Bootstrap starter template</h1>
+            <!-- Notifications -->
+            <?php if( $this->flashMessenger()->hasMessages() ): ?>
+                <ul id="flashmessenger" class="unstyled" >
+                <?php echo $this->flashMessenger()->output(); ?>
+                </ul>
+            <?php endif ?>
+            
+            <!-- breadcrumb -->
+            <?php echo $this->navigation()->breadcrumbs()->setPartial(array('breadcrumbs.phtml', 'default')); ?>
+            
+            <!-- Content -->
             <?php echo $this->layout()->content ?>
         </div>
 
-        
-        
+        <!-- javascript (fast load)-->
         <?php echo $this->inlineScript() ?>
+        
     </body>
+    
 </html>

@@ -1,0 +1,15 @@
+<ul class="breadcrumb">
+<?php
+foreach($this->pages as $page)
+{
+    if(!$page->isActive())
+    {
+        echo "<li><a href='" . $page->getHref() . "'>" . $page->getLabel() . "</a> <span class='divider'>/</span></li>";
+    }
+    else
+    {
+        echo "<li class='active'>" . $page->getLabel() . "</li>";
+    }
+}
+?>
+</ul>

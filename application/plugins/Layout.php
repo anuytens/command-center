@@ -32,7 +32,8 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             ->appendFile("/components/less.js/dist/less-1.3.3.min.js")
             ->appendFile("/components/jquery/jquery.min.js")
             ->appendFile("/components/bootstrap/js/bootstrap-collapse.js")
-            ->appendFile("/components/bootstrap/js/bootstrap-dropdown.js");
+            ->appendFile("/components/bootstrap/js/bootstrap-dropdown.js")
+            ->appendFile("/components/bootstrap/js/bootstrap-alert.js");
         // Icône du site
         $view->headLink()
             ->headLink(array("rel" => "shortcut icon", "href" => "/favicon.ico"));
