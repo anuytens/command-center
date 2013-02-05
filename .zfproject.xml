@@ -17,6 +17,7 @@
           <actionMethod actionName="index"/>
           <actionMethod actionName="edit"/>
           <actionMethod actionName="list"/>
+          <actionMethod actionName="me"/>
         </controllerFile>
         <controllerFile controllerName="Events">
           <actionMethod actionName="index"/>
@@ -125,6 +126,9 @@
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="logout"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Users">
+            <viewScriptFile forActionName="me"/>
+          </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
         <viewFiltersDirectory enabled="false"/>
@@ -168,6 +172,7 @@
             <testApplicationActionMethod forActionName="index"/>
             <testApplicationActionMethod forActionName="edit"/>
             <testApplicationActionMethod forActionName="list"/>
+            <testApplicationActionMethod forActionName="me"/>
           </testApplicationControllerFile>
           <testApplicationControllerFile forControllerName="Events">
             <testApplicationActionMethod forActionName="index"/>

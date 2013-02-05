@@ -9,64 +9,50 @@ class UsersControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
         parent::setUp();
     }
 
+    private function _isIdExists()
+    {
+        $this->getRequest()->setQuery("id", 1);
+        $this->dispatch($this->url(array("action" => "index", "controller" => "users")));
+        $this->assertResponseCode(200);
+        $this->resetRequest()->resetResponse();
+        $this->dispatch($this->url(array("action" => "index", "controller" => "users")));
+        $this->assertRedirectTo("list");
+        $this->resetRequest()->resetResponse();
+    }
+    
     public function testIndexAction()
     {
-        $params = array('action' => 'index', 'controller' => 'Users', 'module' => 'default');
-        $urlParams = $this->urlizeOptions($params);
-        $url = $this->url($urlParams);
-        $this->dispatch($url);
-        
-        // assertions
-        $this->assertModule($urlParams['module']);
-        $this->assertController($urlParams['controller']);
-        $this->assertAction($urlParams['action']);
-        $this->assertQueryContentContains(
-            'div#view-content p',
-            'View script for controller <b>' . $params['controller'] . '</b> and script/action name <b>' . $params['action'] . '</b>'
-            );
-            
-        $row = new Application_Controller_Users();
-        $this->assertInstanceOf('Zend_Db_Table_Row',$row);
+        $this->_isIdExists();
     }
 
     public function testEditAction()
     {
-        $params = array('action' => 'edit', 'controller' => 'Users', 'module' => 'default');
-        $urlParams = $this->urlizeOptions($params);
-        $url = $this->url($urlParams);
-        $this->dispatch($url);
+        $this->_isIdExists();
+        $this->getRequest()->setQuery("id", 1);
+        $this->dispatch($this->url(array("action" => "index", "controller" => "users")));
+        $this->assertQuery('form');
         
-        // assertions
-        $this->assertModule($urlParams['module']);
-        $this->assertController($urlParams['controller']);
-        $this->assertAction($urlParams['action']);
-        $this->assertQueryContentContains(
-            'div#view-content p',
-            'View script for controller <b>' . $params['controller'] . '</b> and script/action name <b>' . $params['action'] . '</b>'
-            );
-            
-        $form = new Application_Form_EditUser();
-        $this->assertInstanceOf('Zend_Form',$form);
     }
 
     public function testListAction()
     {
-        $params = array('action' => 'list', 'controller' => 'Users', 'module' => 'default');
-        $urlParams = $this->urlizeOptions($params);
-        $url = $this->url($urlParams);
-        $this->dispatch($url);
-        
-        // assertions
-        $this->assertModule($urlParams['module']);
-        $this->assertController($urlParams['controller']);
-        $this->assertAction($urlParams['action']);
-        $this->assertQueryContentContains(
-            'div#view-content p',
-            'View script for controller <b>' . $params['controller'] . '</b> and script/action name <b>' . $params['action'] . '</b>'
-            );
+        $this->assertResponseCode(200);
+        $this->assertQuery('table');
+
     }
     
-    
+    public function testMeAction()
+    {
+        if( Zend_Auth::getInstance()->hasIdentity()  === true)
+        {
+            $this->assertResponseCode(200);
+        }
+        else
+        {
+            $this->assertRedirectTo("index");
+        }
+
+    }
 
 
 }
