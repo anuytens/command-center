@@ -39,7 +39,7 @@ class AuthenticationController extends Zend_Controller_Action
                         'message' => 'Vous êtes à présent connecté sur votre SDIS 62 ID !'
 					));
                     
-                    $this->_helper->redirector("index");
+                    $this->_helper->redirector("index", "index");
                 }
                 else
                 {
@@ -55,7 +55,7 @@ class AuthenticationController extends Zend_Controller_Action
         }
         else
         {
-            $this->_helper->redirector("index");
+            $this->_helper->redirector("index", "index");
         }
     }
 
@@ -78,7 +78,7 @@ class AuthenticationController extends Zend_Controller_Action
         ));
         
         // redirect to index
-        $this->_helper->redirector("index");
+        $this->_helper->redirector("index", "index");
     }
 
 
