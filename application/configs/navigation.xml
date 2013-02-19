@@ -1,41 +1,57 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <configdata>
 	<nav>
+    
 		<home>
 			<label>Accueil</label>
 			<controller>index</controller>
+            <id>home</id>
             <pages>
+            
                 <login>
                     <label>Se connecter</label>
                     <controller>authentication</controller>
                     <action>login</action>
+                    <id>login</id>
                 </login>
-                <logout>
-                    <label>Se déconnecter</label>
-                    <controller>authentication</controller>
-                    <action>logout</action>
-                </logout>
+
                 <about>
                     <label>À propos</label>
                     <controller>index</controller>
                     <action>about</action>
+                    <id>about</id>
                 </about>
+                
             </pages>
 		</home>
+        
         <applications>
             <label>Applications</label>
-            <controller>index</controller>
+            <controller>applications</controller>
+            <id>applications</id>
         </applications>
-        <profile>
+        
+        <user>
             <label>Utilisateur</label>
-            <controller>users</controller>
+            <uri>#</uri>
+            <id>user</id>
             <pages>
+            
                 <edit>
                     <label>Modifier le profil</label>
                     <controller>users</controller>
                     <action>edit</action>
                 </edit>
+                
+                <logout>
+                    <label>Se déconnecter</label>
+                    <controller>authentication</controller>
+                    <action>logout</action>
+                    <id>logout</id>
+                </logout>
+                
             </pages>
-        </profile>
+        </user>
+        
 	</nav>
 </configdata>
