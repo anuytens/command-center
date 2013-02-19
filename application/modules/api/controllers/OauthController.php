@@ -114,9 +114,10 @@ class Api_OauthController extends Zend_Controller_Action
         // Check if there is a request
         if($this->_request->isPost() && $form_login->isValid($this->_request->getPost()))
         {
-            $this->_helper->performLdapLogin(
-                $this->_request->getPost("username"),
-                $this->_request->getPost("password")
+            $this->_helper->performLogin(
+                $this->_request->getPost("email"),
+                $this->_request->getPost("password"),
+                $this->_request->getPost("remember_me")
             );
         }
 

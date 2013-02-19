@@ -20,6 +20,9 @@ class AuthenticationController extends Zend_Controller_Action
     {
         // get the auth instance
         $auth = Zend_Auth::getInstance();
+        
+        // Set the layout
+        $this->_helper->layout()->setLayout("signin");
 
         // if the user is authenticated, redirect to index action
         if(!$auth->hasIdentity())
@@ -31,14 +34,14 @@ class AuthenticationController extends Zend_Controller_Action
             if($this->_request->isPost() && $form_login->isValid($this->_request->getPost()))
             {
                 // perform login
-                if($this->_helper->performLdapLogin($this->_request->getPost("username"), $this->_request->getPost("password")))
+                if($this->_helper->performLogin($this->_request->getPost("email"), $this->_request->getPost("password"), $this->_request->getPost("remember_me")))
                 {
                     $this->_helper->flashMessenger(array(
                         'context' => 'success',
                         'title' => 'Bonjour ' . $auth->getIdentity()->displayname . ' !',
-                        'message' => 'Vous êtes à présent connecté sur votre SDIS 62 ID !'
+                        'message' => 'Vous êtes à présent connecté sur votre espace !'
 					));
-                    
+
                     $this->_helper->redirector("index", "index");
                 }
                 else
@@ -69,6 +72,9 @@ class AuthenticationController extends Zend_Controller_Action
         
         // clear the identity
         $auth->clearIdentity();
+        
+        // Forget the session lifetime
+        Zend_Session::forgetMe();
 
         // build the message
         $this->_helper->flashMessenger(array(
