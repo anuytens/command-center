@@ -1,13 +1,15 @@
 <?php
 
+use ZFBootstrap\View\Helper\Navigation\Menu;
+
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     public function run()
     {
+        $this->loadThirdParty();
 		$this->loadActionHelpers();
 		$this->loadViewHelpers();
         $this->loadNavigation();
-        $this->loadThirdParty();
         $this->loadPlugins();
 		parent::run();
 	}
@@ -29,6 +31,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             APPLICATION_PATH . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "helpers",
             'Application_View_Helper_'
         );
+        
+        $view->registerHelper(new Menu(), 'menu');
 	}
     
     public function loadNavigation()
@@ -49,5 +53,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $loader = require APPLICATION_PATH . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
         $loader->add('Twitter_', __DIR__);
+        $loader->add('ZFBootstrap_', __DIR__);
     }
 }
