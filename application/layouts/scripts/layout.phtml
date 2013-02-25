@@ -32,8 +32,30 @@
                     </a>
                     <a class="brand" href="#">SDIS62 ID</a>
                     <div class="nav-collapse collapse">
-                        <ul class="nav"></ul>
-                        <ul class="nav pull-right"></ul>
+                        <ul class="nav">
+                            <?php echo $this->partial("menu.phtml", array("page" => $this->navigation()->findOneById("home"))) ?>
+                            <?php echo $this->partial("menu.phtml", array("page" => $this->navigation()->findOneById("applications"))) ?>
+                        </ul>
+                        
+                            <?php
+                            if(Zend_Auth::getInstance()->hasIdentity())
+                            {
+                                echo "<ul class=\"nav pull-right\">";
+                                echo "<li class=\"dropdown\">";
+                                echo "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . Zend_Auth::getInstance()->getIdentity()->display_name . " <b class=\"caret\"></b></a>";
+                                echo $this->navigation($this->navigation)
+                                    ->menu($this->navigation()->findOneById('user'))
+                                    ->setRenderParents(true)
+                                    ->setUlClass('dropdown-menu');
+                                 echo "</ul>";
+                            }
+                            else
+                            {
+                                echo "<ul class=\"nav pull-right\">";
+                                echo $this->partial("menu.phtml", array("page" => $this->navigation()->findOneById("login")));
+                                echo "</ul>";
+                            }
+                            ?>
                     </div>
                 </div>
             </div>

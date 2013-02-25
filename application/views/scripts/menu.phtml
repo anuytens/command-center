@@ -1,0 +1,6 @@
+<?php
+echo "<li class='" . ($this->page->isActive() ? "active" : "") . "'>";
+echo "<a href='" . $this->page->getHref() . "'>";
+echo $this->page->getLabel();
+echo "</a>";
+echo "</li>";
