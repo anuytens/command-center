@@ -31,21 +31,26 @@ class Application_Controller_Helper_PerformLogin extends Zend_Controller_Action_
                 $model_users = new Application_Model_Users;
             
                 // get the LDAP account object
-                $user = $auth_adapter_ldap->getAccountObject();
+                $user_ldap = $auth_adapter_ldap->getAccountObject();
                 
                 // try to retrieve the user into the db
-                $row_user = $model_users->findUserByLDAPId($user->objectguid);
+                $row_user = $model_users->findUserByLDAPId($user_ldap->objectguid);
 
                 // if the user is not in the db, the app store his info
                 if($row_user == null)
                 {
                     $row_user = $model_users->createRow();
-                    $row_user->id_ldap = $user->objectguid;
+                    $row_user->id_ldap = $user_ldap->objectguid;
                     $row_user->save();
                 }
                 
-                 // Add attributes
-                $user->id_user = $row_user->id_user;
+                // User attributes
+                $user = new StdClass;
+                $user->id = $row_user->id_user;
+                $user->mail = $user_ldap->mail;
+                $user->first_name = $user_ldap->givenname;
+                $user->last_name = $user_ldap->sn;
+                $user->display_name = $user_ldap->sn . " " . $user_ldap->givenname;
                 
                 // persist the user
                 $auth->getStorage()->write($user);
@@ -73,7 +78,7 @@ class Application_Controller_Helper_PerformLogin extends Zend_Controller_Action_
             
             // Set the users's columns
             $auth_adapter_db->setTableName('users')
-                ->setIdentityColumn('non_ldap_username')
+                ->setIdentityColumn('non_ldap_mail')
                 ->setCredentialColumn('non_ldap_password')
                 ->setCredentialTreatment("MD5(CONCAT(?, '" . $secret_config->security->salt . "'))");
                 
@@ -86,6 +91,28 @@ class Application_Controller_Helper_PerformLogin extends Zend_Controller_Action_
             
             if($auth_result->isValid())
             {
+                // User attributes
+                $user = new StdClass;
+                $user->id = $auth_result->id_user;
+                $user->mail = $auth_result->non_ldap_mail;
+                $user->first_name = $auth_result->non_ldap_firstname;
+                $user->last_name = $auth_result->non_ldap_lastname;
+                $user->display_name = $auth_result->non_ldap_lastname . " " . $auth_result->non_ldap_firstname;
+                
+                // persist the user
+                $auth->getStorage()->write($user);
+                
+                // remember the user ?
+                if($remember_me == 1)
+                {
+                    $seconds  = 60 * 60 * 24 * 7; // 7 days
+                    Zend_Session::rememberMe($seconds);
+                }
+                else
+                {
+                    Zend_Session::forgetMe();
+                }
+                
                 return true;
             }
         }
