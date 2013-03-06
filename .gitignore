@@ -163,11 +163,6 @@ pip-log.txt
 .DS_Store
 
 #################
-## Zend
-#################
-.zfproject.xml
-
-#################
 ## Composer
 #################
 vendor
