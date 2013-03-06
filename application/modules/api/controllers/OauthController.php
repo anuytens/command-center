@@ -108,6 +108,8 @@ class Api_OauthController extends Zend_Controller_Action
      */
     public function authorizeAction()
     {
+        $this->_helper->layout()->setLayout("signin");
+    
         // Log in Form
         $form_login = new Application_Form_Login;
 
@@ -142,7 +144,7 @@ class Api_OauthController extends Zend_Controller_Action
             $model_tokensUser = new Api_Model_TokensUser;
             $row_newTokenUser = $model_tokensUser->createRow();
             $row_newTokenUser->id_token = $row_token->id_token;
-            $row_newTokenUser->id_user = $auth->getIdentity()->id_user;
+            $row_newTokenUser->id_user = $auth->getIdentity()->id;
             $row_newTokenUser->save();
             
             header( 'location: ' . $row_token->callback . '?oauth_token=' . $oauth_token . '&oauth_verifier=' . $oauth_verifier );
