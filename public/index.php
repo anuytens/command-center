@@ -8,14 +8,30 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
-// Get ibnclude path
+// Get include path
 set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
-// load zend
-$loader = require APPLICATION_PATH . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
-$loader->add('Zend_', __DIR__);
+// Load libraries
+try
+{
+    $path_to_autoload = APPLICATION_PATH . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . DIRECTORY_SEPARATOR . "autoload.php";
+
+    if (!file_exists($path_to_autoload))
+    {
+        throw new Exception ('autoload.php does not exist. run \'php composer.phar install\'.');
+    }
+
+    $loader = require $path_to_autoload;
+    $loader->add('Zend_', __DIR__);
+}
+catch(Exception $e)
+{
+    echo "Message : " . $e->getMessage();
+    echo "Code : " . $e->getCode();
+    die();
+}
 
 /** Zend_Application */
 require_once 'Zend/Application.php';
