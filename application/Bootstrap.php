@@ -27,11 +27,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
 		$layout = $this->getResource("layout");
 		$view = $layout->getView();
+        
+        $view->addHelperPath(APPLICATION_PATH . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . 
+            DIRECTORY_SEPARATOR . "sdis62" . DIRECTORY_SEPARATOR . "toolbox" . DIRECTORY_SEPARATOR . "library" . 
+            DIRECTORY_SEPARATOR . "SDIS62" . DIRECTORY_SEPARATOR . "View" . DIRECTORY_SEPARATOR . "Helper", "SDIS62_View_Helper_");
+        
+        /*
 		$view->setHelperPath(
             APPLICATION_PATH . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "helpers",
             'Application_View_Helper_'
         );
+        */
         
+        // get the ZFBootstrap menu helper
         $view->registerHelper(new Menu(), 'menu');
 	}
     

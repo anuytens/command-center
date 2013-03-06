@@ -3,6 +3,7 @@
     "require": {
         "emagister/zend-form-decorators-bootstrap": "dev-master",
         "kdubuc/zf1-navigation-view-helper-bootstrap": "dev-master",
-        "zendframework/zendframework1": "1.*"
+        "zendframework/zendframework1": "1.*",
+        "sdis62/toolbox": "dev-master"
     }
 }
