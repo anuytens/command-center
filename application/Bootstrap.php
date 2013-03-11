@@ -20,7 +20,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			APPLICATION_PATH . DIRECTORY_SEPARATOR . "controllers" . DIRECTORY_SEPARATOR . "helpers",
 			"Application_Controller_Helper_"
 		);
-
 	}
 	
 	public function loadViewHelpers()

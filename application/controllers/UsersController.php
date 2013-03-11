@@ -11,8 +11,6 @@ class UsersController extends Zend_Controller_Action
     public function indexAction()
     {
         // action body
-        $test = new Application_Model_Users;
-        $test->test();
     }
 
     public function editAction()
