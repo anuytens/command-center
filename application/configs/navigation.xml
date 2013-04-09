@@ -1,57 +1,52 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <configdata>
-	<nav>
-    
-		<home>
-			<label>Accueil</label>
-			<controller>index</controller>
-            <id>home</id>
-            <pages>
-            
-                <login>
-                    <label>Se connecter</label>
-                    <controller>authentication</controller>
-                    <action>login</action>
-                    <id>login</id>
-                </login>
 
-                <about>
-                    <label>À propos</label>
-                    <controller>index</controller>
-                    <action>about</action>
-                    <id>about</id>
-                </about>
-                
-            </pages>
+	<nav>
+		<home>
+			<label>Flux d'activitÃ©s</label>
+			<controller>index</controller>
 		</home>
-        
+        <users>
+            <label>Gestion des utilisateurs</label>
+            <controller>users</controller>
+        </users>
         <applications>
-            <label>Applications</label>
+            <label>Gestion des applications</label>
             <controller>applications</controller>
-            <id>applications</id>
         </applications>
-        
+	</nav>
+    
+    <user_nav>
         <user>
-            <label>Utilisateur</label>
+            <label>[NOM_UTILISATEUR]</label>
             <uri>#</uri>
-            <id>user</id>
             <pages>
-            
+                <view>
+                    <label>Voir mon profil</label>
+                    <controller>user</controller>
+                    <action>index</action>
+                </view>
+                <calendar>
+                    <label>Voir mon emploi du temps</label>
+                    <uri>https://mail.sdis62.fr/owa/?cmd=contents&amp;module=calendar&amp;view=weekly</uri>
+                </calendar>
                 <edit>
-                    <label>Modifier le profil</label>
-                    <controller>users</controller>
+                    <label>Modifier mes informations</label>
+                    <controller>user</controller>
                     <action>edit</action>
                 </edit>
-                
                 <logout>
-                    <label>Se déconnecter</label>
+                    <label>Se dÃ©connecter</label>
                     <controller>authentication</controller>
                     <action>logout</action>
-                    <id>logout</id>
                 </logout>
-                
             </pages>
         </user>
-        
-	</nav>
+        <login>
+            <label>Se connecter</label>
+            <controller>authentication</controller>
+            <action>login</action>
+        </login>
+    </user_nav>
+    
 </configdata>

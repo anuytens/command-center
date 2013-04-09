@@ -44,11 +44,33 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     public function loadNavigation()
     {
+        // get the view
         $layout = $this->getResource("layout");
 		$view = $layout->getView();
-        $container = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav');
-        $navigation = new Zend_Navigation($container);
-        $view->navigation( $navigation );
+
+        // create the navigation menus
+        $view->general_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav'));
+        $view->user_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'user_nav'));
+        
+        // setup the acl
+        $acl = new Zend_Acl();
+        
+        $acl->addRole(new Zend_Acl_Role('guest')); // not authenicated
+        
+        $acl->add(new Zend_Acl_Resource('login'));
+        $acl->add(new Zend_Acl_Resource('account'));
+        
+        //$acl->allow('guest', 'login');
+        //$acl->deny('guest', 'account');
+        
+        $view->navigation($view->general_nav)->setAcl($acl)->setRole("guest");
+        
+        // If we are connected, replace the label by the username
+        if(Zend_Auth::getInstance()->hasIdentity())
+        {
+            $identity = Zend_Auth::getInstance()->getIdentity();
+            $view->user_nav->findOneByLabel("[NOM_UTILISATEUR]")->setLabel($identity->last_name . " " . $identity->first_name);
+        }
     }
     
     public function loadPlugins()

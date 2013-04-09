@@ -30,32 +30,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">SDIS62:Administration Système</a>
+                    <a class="brand" href="#">SDIS62:Command Center</a>
                     <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <?php echo $this->partial("menu.phtml", array("page" => $this->navigation()->findOneById("home"))) ?>
-                            <?php echo $this->partial("menu.phtml", array("page" => $this->navigation()->findOneById("applications"))) ?>
-                        </ul>
-                        
-                            <?php
-                            if(Zend_Auth::getInstance()->hasIdentity())
-                            {
-                                echo "<ul class=\"nav pull-right\">";
-                                echo "<li class=\"dropdown\">";
-                                echo "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" . Zend_Auth::getInstance()->getIdentity()->display_name . " <b class=\"caret\"></b></a>";
-                                echo $this->navigation($this->navigation)
-                                    ->menu($this->navigation()->findOneById('user'))
-                                    ->setRenderParents(true)
-                                    ->setUlClass('dropdown-menu');
-                                 echo "</ul>";
-                            }
-                            else
-                            {
-                                echo "<ul class=\"nav pull-right\">";
-                                echo $this->partial("menu.phtml", array("page" => $this->navigation()->findOneById("login")));
-                                echo "</ul>";
-                            }
-                            ?>
+                        <?php echo $this->navigation()->menu()->setMaxDepth(0)->setUlClass('nav')->renderMenu($this->general_nav); ?>
+                        <?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->setMaxDepth(-1)->renderMenu($this->user_nav); ?>
                     </div>
                 </div>
             </div>
