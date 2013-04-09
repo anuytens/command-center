@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Business_UsersGroup
  */
-class Application_Model_Business_UsersGroup implements Countable
+class Application_Model_Business_UsersGroup extends Application_Model_Business_Abstract implements Countable
 {
     /**
      * Users list
@@ -34,6 +34,13 @@ class Application_Model_Business_UsersGroup implements Countable
      * @var Application_Model_Business_Role
      */
      private $role;
+     
+     /**
+     * Users Group's description
+     *
+     * @var string
+     */
+     private $description;
     
     /**
      * Get Users Group's name.
@@ -54,6 +61,28 @@ class Application_Model_Business_UsersGroup implements Countable
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+    
+        /**
+     * Get Users Group's description.
+     *
+     * @return string
+     */      
+    public function getDesc()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set Users Group's description
+     *
+     * @param  string $description
+     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     */
+    public function setDesc($description)
+    {
+        $this->description = $description;
         return $this;
     }
     

@@ -40,10 +40,11 @@ class Application_Model_Business_User_Db extends Application_Model_Business_User
     public function setPassword($password)
     {
         // Get the SALT for password's hash
-        $salt = md5("salt");
+        $config = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'secret.ini', APPLICATION_ENV);
+        $salt = $config->security->salt;
         
         // Get the user's login
-        $login = $this->getProfile()->getEmail();
+        $login = $this->getLogin();
         
         // Set the password with salt
         $this->password = md5($login . $salt . $password);

@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Business_ApplicationsGroup
  */
-class Application_Model_Business_ApplicationsGroup implements Countable
+class Application_Model_Business_ApplicationsGroup extends Application_Model_Business_Abstract implements Countable
 {
     /**
      * Applications list

@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Business_Profile_Pompier
  */
-abstract class Application_Model_Business_Profile_Pompier extends Application_Model_Business_Profile
+class Application_Model_Business_Profile_Pompier extends Application_Model_Business_Profile
 {
     /**
      * Grade.

@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Business_User
  */
-abstract class Application_Model_Business_User
+abstract class Application_Model_Business_User extends Application_Model_Business_Abstract
 {
     /**
      * User's profile
@@ -48,6 +48,18 @@ abstract class Application_Model_Business_User
      * @var bool
      */
      protected $is_in_sdis;
+     
+     
+     /**
+     * Construct the user with a profile
+     *
+     * @param  Application_Model_Business_Profile $profile
+      * @return Application_Model_Business_User
+     */
+     public function __construct(Application_Model_Business_Profile $profile)
+     {
+        $this->setProfile($profile);
+     }
      
      /**
      * Get the user's role
@@ -114,7 +126,7 @@ abstract class Application_Model_Business_User
     
          if(null === $profile)
         {
-            throw new Zend_Exception("User's profile is null.");
+            throw new Exception("User's profile is null.");
         }
         
         return $profile->getEmail();

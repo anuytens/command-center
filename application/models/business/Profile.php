@@ -7,12 +7,12 @@
  */
 
  /**
- * Abstract class for Profil instance.
+ * Class for Profil instance.
  *
  * @category   Application
  * @package    Application_Model_Business_Profile
  */
-abstract class Application_Model_Business_Profile
+class Application_Model_Business_Profile extends Application_Model_Business_Abstract
 {
     /**
      * First name.

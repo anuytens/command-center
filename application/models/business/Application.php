@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Business_Application
  */
-class Application_Model_Business_Application
+class Application_Model_Business_Application extends Application_Model_Business_Abstract
 {
     /**
      * Name of the application
@@ -27,6 +27,27 @@ class Application_Model_Business_Application
      * @var string
      */
     private $url;
+    
+    /**
+     * Consumer secret (for oauth)
+     *
+     * @var string
+     */
+    private $consumer_secret;
+
+    /**
+     * Consumer key (for oauth)
+     *
+     * @var string
+     */
+    private $consumer_key;
+    
+    /**
+     * Application status
+     *
+     * @var bool
+     */
+    private $is_active;
     
     /**
      * Get the application's name.
@@ -47,6 +68,72 @@ class Application_Model_Business_Application
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+    
+    /**
+     * Get the consumer secret
+     *
+     * @return string
+     */      
+    public function getConsumerSecret()
+    {
+        return $this->consumer_secret;
+    }
+
+    /**
+     * Set the consumer secret
+     *
+     * @param  string $consumer_secret
+     * @return Application_Model_Business_Application Provides fluent interface
+     */
+    public function setConsumerSecret($consumer_secret)
+    {
+        $this->consumer_secret = $consumer_secret;
+        return $this;
+    }
+    
+    /**
+     * Get the consumer key
+     *
+     * @return string
+     */      
+    public function getConsumerKey()
+    {
+        return $this->consumer_key;
+    }
+
+    /**
+     * Set the consumer key
+     *
+     * @param  string $consumer_key
+     * @return Application_Model_Business_Application Provides fluent interface
+     */
+    public function setConsumerKey($consumer_key)
+    {
+        $this->consumer_key = $consumer_key;
+        return $this;
+    }
+    
+    /**
+     * Get application status
+     *
+     * @return bool
+     */      
+    public function isActive()
+    {
+        return $this->is_active;
+    }
+
+    /**
+     * Set the application's status
+     *
+     * @param  bool $status
+     * @return Application_Model_Business_Application Provides fluent interface
+     */
+    public function setActiveStatus($status)
+    {
+        $this->is_active = $status;
         return $this;
     }
     
