@@ -41,3 +41,15 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
+
+// Configure database connection
+$dbConfig = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini', APPLICATION_ENV);
+
+$dbAdapter = Zend_Db::factory($dbConfig->resources->db->adapter, array(
+    'host'     => $dbConfig->resources->db->params->host,
+    'username' => $dbConfig->resources->db->params->username,
+    'password' => $dbConfig->resources->db->params->password,
+    'dbname'   => $dbConfig->resources->db->params->dbname
+));
+
+Zend_Db_Table::setDefaultAdapter($dbAdapter);
