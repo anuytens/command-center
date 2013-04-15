@@ -10,23 +10,32 @@ class UsersController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
+        $this->_helper->redirector('list');
     }
-
-    public function editAction()
-    {
-        // action body
-    }
-
+    
     public function listAction()
     {
-        // action body
+        $user_service = new Application_Service_User;
+        
+        $this->view->users = $user_service->getAllUsers();
     }
 
-    public function meAction()
+    public function addAction()
     {
-        // action body
+        $user_service = new Application_Service_User;
+        
+        if($this->_request->isPost())
+        {
+            if($user_service->create($this->_request->getPost()))
+            {
+                $this->_helper->redirector('list');
+            }
+            else
+            {
+            }
+        }
+        
+        $this->view->form = $user_service->getUserForm();
     }
-
 
 }

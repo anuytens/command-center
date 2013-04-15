@@ -16,31 +16,49 @@
         <?php echo $this->headStyle() ?>
         <?php echo $this->headScript() ?>
 
-        <!--<script src="/js/libs/modernizr-2.5.3.min.js"></script>-->
+        <script src="/components/modernizr/modernizr.js"></script>
     </head>
     
     <body>
-    
-        <!-- Nav bar -->
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="#">SDIS62:Command Center</a>
-                    <div class="nav-collapse collapse">
-                        <?php echo $this->navigation()->menu()->setMaxDepth(0)->setUlClass('nav')->renderMenu($this->general_nav); ?>
-                        <?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->setMaxDepth(-1)->renderMenu($this->user_nav); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Container -->
         <div class="container">
+        
+            <!-- Nav bar -->
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="#">SDIS62:<span style="color: #D01F3C">Command Center</span></a>
+                        <div class="nav-collapse collapse">
+                            <?php
+                                echo $this->navigation()
+                                    ->menu()
+                                    ->setUlClass('nav')
+                                    ->setMaxDepth(0)
+                                    ->setMinDepth(0)
+                                    ->setRenderParents(false)
+                                    ->setOnlyActiveBranch(false)
+                                    ->renderMenu($this->nav);
+                                    
+                                echo $this->navigation()
+                                    ->menu()
+                                    ->setUlClass('nav pull-right')
+                                    ->setMaxDepth(-1)
+                                    ->setMinDepth(0)
+                                    ->setRenderParents(false)
+                                    ->setOnlyActiveBranch(false)
+                                    ->renderMenu($this->user_nav);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Notifications -->
             <?php if( $this->flashMessenger()->hasMessages() ): ?>
                 <ul id="flashmessenger" class="unstyled" >
@@ -50,9 +68,10 @@
             
             <!-- breadcrumb -->
             <?php echo $this->navigation()->breadcrumbs()->setPartial(array('breadcrumbs.phtml', 'default')); ?>
-            
+
             <!-- Content -->
             <?php echo $this->layout()->content ?>
+
         </div>
 
         <!-- javascript (fast load)-->
