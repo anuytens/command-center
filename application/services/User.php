@@ -8,6 +8,11 @@ class Application_Service_User
         
     }
     
+    public function getAllUsers()
+    {
+        
+    }
+    
     public function getAccountInformations($userId)
     {
         
