@@ -49,7 +49,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view = $layout->getView();
 
         // create the navigation menus
-        $view->general_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav'));
+        $view->nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav'));
         $view->user_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'user_nav'));
         
         // setup the acl
@@ -63,7 +63,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //$acl->allow('guest', 'login');
         //$acl->deny('guest', 'account');
         
-        $view->navigation($view->general_nav)->setAcl($acl)->setRole("guest");
+        $view->navigation($view->nav)->setAcl($acl)->setRole("guest");
         
         // If we are connected, replace the label by the username
         if(Zend_Auth::getInstance()->hasIdentity())

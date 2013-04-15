@@ -9,6 +9,45 @@
         <users>
             <label>Gestion des utilisateurs</label>
             <controller>users</controller>
+            <pages>
+                <navheader1>
+                    <label>Liste des utilisateurs</label>
+                    <uri>navheader</uri>
+                </navheader1>
+                <list_all>
+                    <label>Voir tout</label>
+                    <controller>users</controller>
+                    <action>list</action>
+                </list_all>
+                <list_group>
+                    <label>Voir par groupe</label>
+                    <controller>users</controller>
+                    <action>groups</action>
+                </list_group>
+                <navheader2>
+                    <label>Actions sur les utilisateurs</label>
+                    <uri>navheader</uri>
+                </navheader2>
+                <add>
+                    <label>Ajout d'un utilisateur</label>
+                    <controller>users</controller>
+                    <action>add</action>
+                </add>
+                <acl>
+                    <label>Gestion des droits d'accès aux applications</label>
+                    <controller>users</controller>
+                    <action>acl</action>
+                </acl>
+                <navheader3>
+                    <label>Paramétrages</label>
+                    <uri>navheader</uri>
+                </navheader3>
+                <ldap>
+                    <label>Paramétrage de la connexion LDAP</label>
+                    <controller>users</controller>
+                    <action>ldap</action>
+                </ldap>
+            </pages>
         </users>
         <applications>
             <label>Gestion des applications</label>
@@ -35,6 +74,9 @@
                     <controller>user</controller>
                     <action>edit</action>
                 </edit>
+                <divider>
+                    <uri>divider</uri>
+                </divider>
                 <logout>
                     <label>Se déconnecter</label>
                     <controller>authentication</controller>
