@@ -17,11 +17,11 @@ class Application_Model_Mapper_User_LDAP extends Application_Model_Mapper_User
     /**
      * Save the user
      *
-     * @param  Application_Model_Business_User_LDAP $user
+     * @param  Application_Model_User_LDAP $user
      * @return int
      * 
      */
-     public function save(Application_Model_Business_User_LDAP &$user)
+     public function save(Application_Model_User_LDAP &$user)
      {    
         // On détermine si on ajoute ou on update un user
         $is_new_user = $user->getId() === null;
@@ -60,7 +60,7 @@ class Application_Model_Mapper_User_LDAP extends Application_Model_Mapper_User
      * Find users with criterias
      *
      * @param  array $criterias
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      */
      public function findByCriteria(array $criterias)
      {

@@ -19,12 +19,12 @@ abstract class Application_Model_Mapper_Profile
      * Save the profile
      *
      * @param  int $id_userdb
-     * @param  Application_Model_Business_Profile $profile
+     * @param  Application_Model_Profile $profile
      * @return int
      * @abstract
      * 
      */
-     public function save($id_userdb, Application_Model_Business_Profile &$profile)
+     public function save($id_userdb, Application_Model_Profile &$profile)
      {
         // On commence la transaction
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -64,24 +64,24 @@ abstract class Application_Model_Mapper_Profile
      /**
      * Get the right profile mapper
      *
-     * @param  Application_Model_Business_Profile $profile
+     * @param  Application_Model_Profile $profile
      * @return Application_Model_Mapper_Profile|null
      * @static
      * 
      */     
-     static public function getProfileMapper(Application_Model_Business_Profile $profile)
+     static public function getProfileMapper(Application_Model_Profile $profile)
      {
         switch(get_class($profile))
         {
-            case "Application_Model_Business_Profile_Pompier" :
+            case "Application_Model_Profile_Pompier" :
                 return new Application_Model_Mapper_Profile_Pompier;
                 break;
                 
-            case "Application_Model_Business_Profile_Elu_Maire" :
+            case "Application_Model_Profile_Elu_Maire" :
                 return new Application_Model_Mapper_Profile_Elu_Maire;
                 break;
                 
-            case "Application_Model_Business_Profile_Elu_Prefet" :
+            case "Application_Model_Profile_Elu_Prefet" :
                 return new Application_Model_Mapper_Profile_Elu_Prefet;
                 break;
         }

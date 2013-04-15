@@ -3,21 +3,21 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_UsersGroup
+ * @package    Application_Model_UsersGroup
  */
 
  /**
  * Class for users group instance.
  *
  * @category   Application
- * @package    Application_Model_Business_UsersGroup
+ * @package    Application_Model_UsersGroup
  */
-class Application_Model_Business_UsersGroup extends Application_Model_Business_Abstract implements Countable
+class Application_Model_UsersGroup extends Application_Model_Abstract implements Countable
 {
     /**
      * Users list
      *
-     * @var array<Application_Model_Business_User>
+     * @var array<Application_Model_User>
      */
     private $users = array();
     
@@ -31,7 +31,7 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
     /**
      * User's role
      *
-     * @var Application_Model_Business_Role
+     * @var Application_Model_Role
      */
      private $role;
      
@@ -56,7 +56,7 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
      * Set Users Group's name
      *
      * @param  string $name
-     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     * @return Application_Model_UsersGroup Provides fluent interface
      */
     public function setName($name)
     {
@@ -78,7 +78,7 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
      * Set Users Group's description
      *
      * @param  string $description
-     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     * @return Application_Model_UsersGroup Provides fluent interface
      */
     public function setDesc($description)
     {
@@ -89,7 +89,7 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
      /**
      * Get the users group's role
      *
-     * @return Application_Model_Business_Role
+     * @return Application_Model_Role
      */      
     public function getRole()
     {
@@ -100,7 +100,7 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
      * Set the users group's role
      *
      * @param  int $role
-     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     * @return Application_Model_UsersGroup Provides fluent interface
      */
     public function setRole($role)
     {
@@ -111,7 +111,7 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
     /**
      * Get the users
      *
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      */      
     public function getUsers()
     {
@@ -121,8 +121,8 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
     /**
      * Set the array of users
      *
-     * @param  array<Application_Model_Business_User> $users
-     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     * @param  array<Application_Model_User> $users
+     * @return Application_Model_UsersGroup Provides fluent interface
      */
     public function setUsers(array $users)
     {
@@ -133,10 +133,10 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
     /**
      * Add user
      *
-     * @param  Application_Model_Business_User $user
-     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     * @param  Application_Model_User $user
+     * @return Application_Model_UsersGroup Provides fluent interface
      */ 
-    public function add(Application_Model_Business_User $user)
+    public function add(Application_Model_User $user)
     {
         // avoid duplication
         if(false !== array_search($user, $this->users))
@@ -152,10 +152,10 @@ class Application_Model_Business_UsersGroup extends Application_Model_Business_A
     /**
      * Remove a user
      *
-     * @param  Application_Model_Business_User $user
-     * @return Application_Model_Business_UsersGroup Provides fluent interface
+     * @param  Application_Model_User $user
+     * @return Application_Model_UsersGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_Business_User $user)
+    public function remove(Application_Model_User $user)
     {
         // Search user in array
         $key_of_user_to_remove = array_search($user, $this->users);

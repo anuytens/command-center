@@ -18,22 +18,22 @@ abstract class Application_Model_Mapper_User
     /**
      * Create the user
      *
-     * @param  Application_Model_Business_User $user
+     * @param  Application_Model_User $user
      * @return int
      * 
      */
-     public function create(Application_Model_Business_User &$user)
+     public function create(Application_Model_User &$user)
      {
      }
      
     /**
      * Save the user
      *
-     * @param  Application_Model_Business_User $user
+     * @param  Application_Model_User $user
      * @return int
      * 
      */
-     public function save(Application_Model_Business_User &$user)
+     public function save(Application_Model_User &$user)
      {
         // On commence la transaction
         $db = Zend_Db_Table::getDefaultAdapter();
@@ -68,10 +68,10 @@ abstract class Application_Model_Mapper_User
      /**
      * Delete user
      *
-     * @param  Application_Model_Business_User $user
+     * @param  Application_Model_User $user
      * 
      */
-     final public function delete(Application_Model_Business_User &$user)
+     final public function delete(Application_Model_User &$user)
      {
         if($user->getId() !== null)
         {
@@ -100,7 +100,7 @@ abstract class Application_Model_Mapper_User
      * Find users with criterias
      *
      * @param  array $criterias
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      * @abstract
      */
      abstract public function findByCriteria(array $criterias);
@@ -109,7 +109,7 @@ abstract class Application_Model_Mapper_User
      * Get users by last name
      *
      * @param  string $last_name
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      * @final
      */
      final public function getByLastName($last_name)
@@ -123,7 +123,7 @@ abstract class Application_Model_Mapper_User
      * Get users by id
      *
      * @param  int $id
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      * @final
      */
      final public function getById($id)
@@ -136,7 +136,7 @@ abstract class Application_Model_Mapper_User
       /**
      * Fetch all users
      *
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      * @final
      */
      final public function fetchAll()

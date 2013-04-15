@@ -3,21 +3,21 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_ApplicationsGroup
+ * @package    Application_Model_ApplicationsGroup
  */
 
  /**
  * Class for application group instance.
  *
  * @category   Application
- * @package    Application_Model_Business_ApplicationsGroup
+ * @package    Application_Model_ApplicationsGroup
  */
-class Application_Model_Business_ApplicationsGroup extends Application_Model_Business_Abstract implements Countable
+class Application_Model_ApplicationsGroup extends Application_Model_Abstract implements Countable
 {
     /**
      * Applications list
      *
-     * @var array<Application_Model_Business_Application>
+     * @var array<Application_Model_Application>
      */
     private $applications = array();
     
@@ -42,7 +42,7 @@ class Application_Model_Business_ApplicationsGroup extends Application_Model_Bus
      * Set Applications Group's name
      *
      * @param  string $name
-     * @return Application_Model_Business_ApplicationsGroup Provides fluent interface
+     * @return Application_Model_ApplicationsGroup Provides fluent interface
      */
     public function setName($name)
     {
@@ -53,7 +53,7 @@ class Application_Model_Business_ApplicationsGroup extends Application_Model_Bus
     /**
      * Get the applications
      *
-     * @return array<Application_Model_Business_Application>
+     * @return array<Application_Model_Application>
      */      
     public function getApplications()
     {
@@ -63,8 +63,8 @@ class Application_Model_Business_ApplicationsGroup extends Application_Model_Bus
     /**
      * Set the array of applications
      *
-     * @param  array<Application_Model_Business_Application> $applications
-     * @return Application_Model_Business_ApplicationsGroup Provides fluent interface
+     * @param  array<Application_Model_Application> $applications
+     * @return Application_Model_ApplicationsGroup Provides fluent interface
      */
     public function setApplications(array $applications)
     {
@@ -75,10 +75,10 @@ class Application_Model_Business_ApplicationsGroup extends Application_Model_Bus
     /**
      * Add an application
      *
-     * @param  Application_Model_Business_Application $application
-     * @return Application_Model_Business_ApplicationsGroup Provides fluent interface
+     * @param  Application_Model_Application $application
+     * @return Application_Model_ApplicationsGroup Provides fluent interface
      */ 
-    public function add(Application_Model_Business_Application $application)
+    public function add(Application_Model_Application $application)
     {
         // avoid duplication
         if(false !== array_search($application, $this->applications))
@@ -94,10 +94,10 @@ class Application_Model_Business_ApplicationsGroup extends Application_Model_Bus
     /**
      * Remove an application
      *
-     * @param  Application_Model_Business_Application $application
-     * @return Application_Model_Business_ApplicationsGroup Provides fluent interface
+     * @param  Application_Model_Application $application
+     * @return Application_Model_ApplicationsGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_Business_Application $application)
+    public function remove(Application_Model_Application $application)
     {
         // Serach application in user's applications array
         $key_of_application_to_remove = array_search($application, $this->applications);

@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_Profile_Elu_Maire
+ * @package    Application_Model_Profile_Elu_Maire
  */
 
  /**
  * Abstract class for Profil instance.
  *
  * @category   Application
- * @package    Application_Model_Business_Profile_Elu_Maire
+ * @package    Application_Model_Profile_Elu_Maire
  */
-class Application_Model_Business_Profile_Elu_Maire extends Application_Model_Business_Profile_Elu
+class Application_Model_Profile_Elu_Maire extends Application_Model_Profile_Elu
 {
     /**
      * City.
@@ -35,7 +35,7 @@ class Application_Model_Business_Profile_Elu_Maire extends Application_Model_Bus
      * Set the city
      *
      * @param  string $city
-     * @return Application_Model_Business_Profile_Elu_Maire Provides fluent interface
+     * @return Application_Model_Profile_Elu_Maire Provides fluent interface
      */    
     public function setCity($city)
     {

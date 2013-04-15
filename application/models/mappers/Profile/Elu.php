@@ -18,12 +18,12 @@ abstract class Application_Model_Mapper_Profile_Elu extends Application_Model_Ma
      * Save the profile
      *
      * @param  int $id_userdb
-     * @param  Application_Model_Business_Profile_Elu $profile
+     * @param  Application_Model_Profile_Elu $profile
      * @return int
      * @abstract
      * 
      */
-     public function save($id_userdb, Application_Model_Business_Profile_Elu &$profile)
+     public function save($id_userdb, Application_Model_Profile_Elu &$profile)
      {
         // On détermine si on ajoute ou on update un user
         $is_new_profile = $profile->getId() === null;

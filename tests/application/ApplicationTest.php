@@ -5,14 +5,14 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
     public function testBusinessLogic()
     {
         // Définition du profil maire
-        $profile = new Application_Model_Business_Profile_Elu_Maire;
+        $profile = new Application_Model_Profile_Elu_Maire;
         $profile->setEmail("kdubuc@sdis62.fr");
         $profile->setFirstName("Kévin");
         $profile->setLastName("DUBUC");
         $profile->setCity("Arras");
         
         // création d'une application
-        $application = new Application_Model_Business_Application;
+        $application = new Application_Model_Application;
         $application->setName("Application 1");
         $application->setConsumerSecret("aaa");
         $application->setUrl("https://apps.sdis62.fr/prevarisc");
@@ -25,20 +25,20 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($application->getConsumerKey(), "aa");
         
         // création d'un groupe d'application contenant l'application précédemment créée
-        $applicationsGroup = new Application_Model_Business_ApplicationsGroup;
+        $applicationsGroup = new Application_Model_ApplicationsGroup;
         $applicationsGroup->setName("Service prévention");
         $applicationsGroup->add($application);
         $this->assertCount(1, $applicationsGroup);
 
         // assigne l'utilisateur avec le profil
-        $user = new Application_Model_Business_User_Db($profile);
+        $user = new Application_Model_User_Db($profile);
         $user->setPassword("test");
         $user->setActiveStatus(true);
         $this->assertEquals($user->getLogin(), "kdubuc@sdis62.fr");
         $this->assertEquals($user->getProfile()->getCity(), "Arras");
         
         // création d'un groupe d'utilisateur
-        $usersGroup = new Application_Model_Business_UsersGroup;
+        $usersGroup = new Application_Model_UsersGroup;
         $usersGroup->setName("Administrateur");
         $this->assertEquals($usersGroup->getName(), "Administrateur");
         $usersGroup->add($user);
@@ -57,10 +57,10 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($user->hasApplication($application));
         
         // On test les roles
-        $this->assertTrue(Application_Model_Business_Role::GUEST < Application_Model_Business_Role::USER);
-        $user->setRole(Application_Model_Business_Role::GUEST);
-        $usersGroup->setRole(Application_Model_Business_Role::USER);
-        $this->assertEquals($user->getRole(), Application_Model_Business_Role::GUEST);
+        $this->assertTrue(Application_Model_Role::GUEST < Application_Model_Role::USER);
+        $user->setRole(Application_Model_Role::GUEST);
+        $usersGroup->setRole(Application_Model_Role::USER);
+        $this->assertEquals($user->getRole(), Application_Model_Role::GUEST);
     }
 
     public function testUsersDbMappers()
@@ -70,7 +70,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $last_name = rand(9,2) . "Tost" . rand(9,2) . rand(9,2);
 
         // Création du profile que l'on affectera à l'utilisateur test
-        $profile = new Application_Model_Business_Profile_Elu_Maire;
+        $profile = new Application_Model_Profile_Elu_Maire;
         $profile->setEmail("kdubuc@sdis62.fr")
             ->setFirstName("Kévin")
             ->setLastName($last_name)
@@ -78,10 +78,10 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
             ->setAsMan();
         
         // Création de l'utilisateur test
-        $user = new Application_Model_Business_User_Db($profile);
+        $user = new Application_Model_User_Db($profile);
         $user->setPassword("test")
             ->setActiveStatus(true)
-            ->setRole(Application_Model_Business_Role::GUEST);
+            ->setRole(Application_Model_Role::GUEST);
 
         // Test de sauvegarde dans la base de données
         $this->assertEquals($user->getId(), 0);
@@ -98,7 +98,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($rowset_user));
         $this->assertCount(1, $rowset_user);
         $user = $rowset_user[0];
-        $this->assertInstanceOf("Application_Model_Business_User", $user);
+        $this->assertInstanceOf("Application_Model_User", $user);
         $this->assertEquals($user->getProfile()->getLastName(), $last_name);
         $this->assertGreaterThan(0, $user->getId());
         $user->getProfile()->setFirstName("YOOOOOO");
@@ -113,18 +113,18 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $user_mapper = new Application_Model_Mapper_User_LDAP;
         
         // Création du profile que l'on affectera à l'utilisateur test
-        $profile = new Application_Model_Business_Profile;
+        $profile = new Application_Model_Profile;
         $profile->setEmail("kdubuc@sdis62.fr")
             ->setFirstName("Kévin")
             ->setLastName("fdfd")
             ->setAsMan();
         
         // Création de l'utilisateur test
-        $user = new Application_Model_Business_User_LDAP($profile);
+        $user = new Application_Model_User_LDAP($profile);
         $user->setObjectId("test")
             ->setDN(Zend_Ldap_Dn::fromString('CN=Baker\\, Alice,CN=Users+OU=Lab,DC=example,DC=com'))
             ->setActiveStatus(true)
-            ->setRole(Application_Model_Business_Role::GUEST);
+            ->setRole(Application_Model_Role::GUEST);
             
         $user_mapper->save($user);
         $user_mapper->delete($user);

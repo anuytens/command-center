@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_Profile
+ * @package    Application_Model_Profile
  */
 
  /**
  * Class for Profil instance.
  *
  * @category   Application
- * @package    Application_Model_Business_Profile
+ * @package    Application_Model_Profile
  */
-class Application_Model_Business_Profile extends Application_Model_Business_Abstract
+class Application_Model_Profile extends Application_Model_Abstract
 {
     /**
      * First name.
@@ -140,7 +140,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
      * Set the first name
      *
      * @param  string $first_name
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */
     public function setFirstName($first_name)
     {
@@ -152,7 +152,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
      * Set the last name
      *
      * @param  string $last_name
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */
     public function setLastName($last_name)
     {
@@ -163,7 +163,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
     /**
      * Set the profile to man
      *
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */
     public function setAsMan()
     {
@@ -174,7 +174,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
     /**
      * Set the profile to woman
      *
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */
     public function setAsWoman()
     {
@@ -186,7 +186,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
      * Set the phone number
      *
      * @param  string $phone
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */
     public function setPhone($phone)
     {
@@ -198,7 +198,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
      * Set the postal address
      *
      * @param  string $address
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */
     public function setAddress($address)
     {
@@ -210,7 +210,7 @@ class Application_Model_Business_Profile extends Application_Model_Business_Abst
      * Set email
      *
      * @param  string $email
-     * @return Application_Model_Business_Profile Provides fluent interface
+     * @return Application_Model_Profile Provides fluent interface
      */   
     public function setEmail($email)
     {    

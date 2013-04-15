@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_User_Db
+ * @package    Application_Model_User_Db
  */
 
  /**
  * Class for Profil instance.
  *
  * @category   Application
- * @package    Application_Model_Business_User_Db
+ * @package    Application_Model_User_Db
  */
-class Application_Model_Business_User_Db extends Application_Model_Business_User
+class Application_Model_User_Db extends Application_Model_User
 {
     /**
      * User's password
@@ -35,7 +35,7 @@ class Application_Model_Business_User_Db extends Application_Model_Business_User
      * Set the user's password
      *
      * @param  string $password
-     * @return Application_Model_Business_User_Db Provides fluent interface
+     * @return Application_Model_User_Db Provides fluent interface
      */
     public function setPassword($password)
     {

@@ -17,11 +17,11 @@ class Application_Model_Mapper_Profile_Elu_Prefet extends Application_Model_Mapp
     /**
      * Save the profile
      *
-     * @param  Application_Model_Business_Profile_Elu_Prefet $profile
+     * @param  Application_Model_Profile_Elu_Prefet $profile
      * @return int
      * 
      */
-     public function save(Application_Model_Business_Profile_Elu_Prefet &$profile)
+     public function save(Application_Model_Profile_Elu_Prefet &$profile)
      {
          // On détermine si on ajoute ou on update un user
         $is_new_profile = $profile->getId() === null;

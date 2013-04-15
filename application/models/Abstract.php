@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_Abstract
+ * @package    Application_Model_Abstract
  */
 
  /**
  * Abstract class to business class.
  *
  * @category   Application
- * @package    Application_Model_Business_Abstract
+ * @package    Application_Model_Abstract
  */
-abstract class Application_Model_Business_Abstract
+abstract class Application_Model_Abstract
 {
     /**
      * Object unique id
@@ -35,7 +35,7 @@ abstract class Application_Model_Business_Abstract
      * Set the unique id for the current model
      *
      * @param  int $id
-     * @return Application_Model_Business_Abstract Provides fluent interface
+     * @return Application_Model_Abstract Provides fluent interface
      */    
     public function setId($id)
     {

@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_Profile_Pompier
+ * @package    Application_Model_Profile_Pompier
  */
 
  /**
  * Abstract class for Profil instance.
  *
  * @category   Application
- * @package    Application_Model_Business_Profile_Pompier
+ * @package    Application_Model_Profile_Pompier
  */
-class Application_Model_Business_Profile_Pompier extends Application_Model_Business_Profile
+class Application_Model_Profile_Pompier extends Application_Model_Profile
 {
     /**
      * Grade.
@@ -35,7 +35,7 @@ class Application_Model_Business_Profile_Pompier extends Application_Model_Busin
      * Set grade
      *
      * @param  string $grade
-     * @return Application_Model_Business_Profile_Pompier Provides fluent interface
+     * @return Application_Model_Profile_Pompier Provides fluent interface
      */    
     public function setGrade($grade)
     {

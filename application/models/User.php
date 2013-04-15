@@ -3,21 +3,21 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_User
+ * @package    Application_Model_User
  */
 
  /**
  * Abstract class for user instance.
  *
  * @category   Application
- * @package    Application_Model_Business_User
+ * @package    Application_Model_User
  */
-abstract class Application_Model_Business_User extends Application_Model_Business_Abstract
+abstract class Application_Model_User extends Application_Model_Abstract
 {
     /**
      * User's profile
      *
-     * @var Application_Model_Business_Profile
+     * @var Application_Model_Profile
      */
      protected $profile;
      
@@ -31,14 +31,14 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      /**
      * List of user's applications
      *
-     * @var array<Application_Model_Business_Application>
+     * @var array<Application_Model_Application>
      */
      protected $applications = array();
      
     /**
      * User's role
      *
-     * @var Application_Model_Business_Role
+     * @var Application_Model_Role
      */
      protected $role;
      
@@ -53,10 +53,10 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      /**
      * Construct the user with a profile
      *
-     * @param  Application_Model_Business_Profile $profile
-      * @return Application_Model_Business_User
+     * @param  Application_Model_Profile $profile
+      * @return Application_Model_User
      */
-     public function __construct(Application_Model_Business_Profile $profile)
+     public function __construct(Application_Model_Profile $profile)
      {
         $this->setProfile($profile);
      }
@@ -64,7 +64,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      /**
      * Get the user's role
      *
-     * @return Application_Model_Business_Role
+     * @return Application_Model_Role
      */      
     public function getRole()
     {
@@ -75,7 +75,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      * Set the user's role
      *
      * @param  int $role
-     * @return Application_Model_Business_User Provides fluent interface
+     * @return Application_Model_User Provides fluent interface
      */
     public function setRole($role)
     {
@@ -97,7 +97,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      * Set the boolean is_in_sdis
      *
      * @param  bool $is_in_sdis
-     * @return Application_Model_Business_User Provides fluent interface
+     * @return Application_Model_User Provides fluent interface
      */
     public function setIsInSDIS($is_in_sdis)
     {
@@ -108,7 +108,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      /**
      * Get the user's profile.
      *
-     * @return Application_Model_Business_Profile
+     * @return Application_Model_Profile
      */
      public function getProfile()
      {
@@ -145,10 +145,10 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Set the user's profile
      *
-     * @param  Application_Model_Business_Profile $profile
-     * @return Application_Model_Business_User Provides fluent interface
+     * @param  Application_Model_Profile $profile
+     * @return Application_Model_User Provides fluent interface
      */
-    public function setProfile(Application_Model_Business_Profile $profile)
+    public function setProfile(Application_Model_Profile $profile)
     {
         $this->profile = $profile;
         return $this;
@@ -158,7 +158,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
      * Set the user's status (1= active, 0 = inactive)
      *
      * @param  bool $status
-     * @return Application_Model_Business_User Provides fluent interface
+     * @return Application_Model_User Provides fluent interface
      */
     public function setActiveStatus($status)
     {
@@ -169,7 +169,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Get an array with user's applications.
      *
-     * @return array<Application_Model_Business_Application>
+     * @return array<Application_Model_Application>
      */      
     public function getApplications()
     {
@@ -179,8 +179,8 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Set the array of user's applications.
      *
-     * @param  array<Application_Model_Business_Application> $applications
-     * @return Application_Model_Business_User Provides fluent interface
+     * @param  array<Application_Model_Application> $applications
+     * @return Application_Model_User Provides fluent interface
      */
     public function setApplications(array $applications)
     {
@@ -191,10 +191,10 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Add an application in the array of user's applications.
      *
-     * @param  Application_Model_Business_Application $application
-     * @return Application_Model_Business_User Provides fluent interface
+     * @param  Application_Model_Application $application
+     * @return Application_Model_User Provides fluent interface
      */ 
-    public function addApplication(Application_Model_Business_Application $application)
+    public function addApplication(Application_Model_Application $application)
     {
         // avoid duplication
         if(false !== array_search($application, $this->applications))
@@ -210,8 +210,8 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Add a collection of applications in the array of user's applications.
      *
-     * @param  array<Application_Model_Business_Application>|Application_Model_Business_ApplicationsGroup $applications
-     * @return Application_Model_Business_User Provides fluent interface
+     * @param  array<Application_Model_Application>|Application_Model_ApplicationsGroup $applications
+     * @return Application_Model_User Provides fluent interface
      */ 
     public function addApplications($applications)
     {
@@ -222,7 +222,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
                 $this->addApplication($application);
             }
         }
-        else if($applications instanceof Application_Model_Business_ApplicationsGroup)
+        else if($applications instanceof Application_Model_ApplicationsGroup)
         {
             $this->addApplications($applications->getApplications());
         }
@@ -233,10 +233,10 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Remove an application in the array of user's applications.
      *
-     * @param  Application_Model_Business_Application $application
-     * @return Application_Model_Business_User Provides fluent interface
+     * @param  Application_Model_Application $application
+     * @return Application_Model_User Provides fluent interface
      */ 
-    public function removeApplication(Application_Model_Business_Application $application)
+    public function removeApplication(Application_Model_Application $application)
     {
         // Serach application in user's applications array
         $key_of_application_to_remove = array_search($application, $this->applications);
@@ -254,7 +254,7 @@ abstract class Application_Model_Business_User extends Application_Model_Busines
     /**
      * Test if the user has the application
      *
-     * @param  Application_Model_Business_Application $application
+     * @param  Application_Model_Application $application
      * @return bool True if the user has the application, else false
      */
     public function hasApplication($application)

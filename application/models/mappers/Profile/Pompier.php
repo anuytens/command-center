@@ -18,12 +18,12 @@ class Application_Model_Mapper_Profile_Pompier extends Application_Model_Mapper_
      * Save the profile
      *
      * @param  int $id_userdb
-     * @param  Application_Model_Business_Profile_Pompiers $profile
+     * @param  Application_Model_Profile_Pompiers $profile
      * @return int
      * @abstract
      * 
      */
-     public function save($id_userdb, Application_Model_Business_Profile_Pompier &$profile)
+     public function save($id_userdb, Application_Model_Profile_Pompier &$profile)
      {
         // On détermine si on ajoute ou on update un user
         $is_new_profile = $profile->getId() === null;

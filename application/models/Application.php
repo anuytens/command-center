@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_Application
+ * @package    Application_Model_Application
  */
 
  /**
  * Class for application instance.
  *
  * @category   Application
- * @package    Application_Model_Business_Application
+ * @package    Application_Model_Application
  */
-class Application_Model_Business_Application extends Application_Model_Business_Abstract
+class Application_Model_Application extends Application_Model_Abstract
 {
     /**
      * Name of the application
@@ -63,7 +63,7 @@ class Application_Model_Business_Application extends Application_Model_Business_
      * Set the application's name
      *
      * @param  string $name
-     * @return Application_Model_Business_Application Provides fluent interface
+     * @return Application_Model_Application Provides fluent interface
      */
     public function setName($name)
     {
@@ -85,7 +85,7 @@ class Application_Model_Business_Application extends Application_Model_Business_
      * Set the consumer secret
      *
      * @param  string $consumer_secret
-     * @return Application_Model_Business_Application Provides fluent interface
+     * @return Application_Model_Application Provides fluent interface
      */
     public function setConsumerSecret($consumer_secret)
     {
@@ -107,7 +107,7 @@ class Application_Model_Business_Application extends Application_Model_Business_
      * Set the consumer key
      *
      * @param  string $consumer_key
-     * @return Application_Model_Business_Application Provides fluent interface
+     * @return Application_Model_Application Provides fluent interface
      */
     public function setConsumerKey($consumer_key)
     {
@@ -129,7 +129,7 @@ class Application_Model_Business_Application extends Application_Model_Business_
      * Set the application's status
      *
      * @param  bool $status
-     * @return Application_Model_Business_Application Provides fluent interface
+     * @return Application_Model_Application Provides fluent interface
      */
     public function setActiveStatus($status)
     {
@@ -151,7 +151,7 @@ class Application_Model_Business_Application extends Application_Model_Business_
      * Set the URL
      *
      * @param  string $url
-     * @return Application_Model_Business_Application Provides fluent interface
+     * @return Application_Model_Application Provides fluent interface
      */
     public function setURL($url)
     {

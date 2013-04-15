@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_User_LDAP
+ * @package    Application_Model_User_LDAP
  */
 
  /**
  * Class for Profil instance.
  *
  * @category   Application
- * @package    Application_Model_Business_User_LDAP
+ * @package    Application_Model_User_LDAP
  */
-class Application_Model_Business_User_LDAP extends Application_Model_Business_User
+class Application_Model_User_LDAP extends Application_Model_User
 {
     /**
      * object id in LDAP directory.
@@ -52,7 +52,7 @@ class Application_Model_Business_User_LDAP extends Application_Model_Business_Us
      * Set the objectid
      *
      * @param  binary $objectid
-     * @return Application_Model_Business_User_LDAP Provides fluent interface
+     * @return Application_Model_User_LDAP Provides fluent interface
      */
     public function setObjectid($objectid)
     {
@@ -64,7 +64,7 @@ class Application_Model_Business_User_LDAP extends Application_Model_Business_Us
      * Set the DN object
      *
      * @param  Zend_Ldap_Dn $dn
-     * @return Application_Model_Business_User_LDAP Provides fluent interface
+     * @return Application_Model_User_LDAP Provides fluent interface
      */
     public function setDN(Zend_Ldap_Dn $dn)
     {

@@ -17,11 +17,11 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
     /**
      * Save the user
      *
-     * @param  Application_Model_Business_User_Db $user
+     * @param  Application_Model_User_Db $user
      * @return int
      * 
      */
-     public function save(Application_Model_Business_User_Db &$user)
+     public function save(Application_Model_User_Db &$user)
      {    
         // On détermine si on ajoute ou on update un user
         $is_new_user = $user->getId() === null;
@@ -61,7 +61,7 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
      * Find users with criteria
      *
      * @param  array $criterias optional
-     * @return array<Application_Model_Business_User>
+     * @return array<Application_Model_User>
      */
      public function findByCriteria(array $criterias = array())
      {
@@ -107,17 +107,17 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
                 
                 if($result->id_profileelumaire !== null)
                 {
-                    $profile = new Application_Model_Business_Profile_Elu_Maire;
+                    $profile = new Application_Model_Profile_Elu_Maire;
                     $profile->setCity($result->city);
                 }
                 else if($result->id_profileeluprefet !== null)
                 {
-                    $profile = new Application_Model_Business_Profile_Elu_Prefet;
+                    $profile = new Application_Model_Profile_Elu_Prefet;
                     $profile->setDepartment($result->department);
                 }
                 else if($result->id_profilepompier !== null)
                 {
-                    $profile = new Application_Model_Business_Profile_Pompier;
+                    $profile = new Application_Model_Profile_Pompier;
                     $profile->setGrade($result->grade);
                 }
                 
@@ -130,7 +130,7 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
                 $profile->setId($result->id_profile);
                 
                 // Create the user object
-                $user = new Application_Model_Business_User_Db($profile);
+                $user = new Application_Model_User_Db($profile);
                 $user->setActiveStatus($result->is_active);
                 $user->setRole($result->role);
                 $user->setId($result->id_user);

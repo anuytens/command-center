@@ -3,16 +3,16 @@
  * SDIS 62
  *
  * @category   Application
- * @package    Application_Model_Business_Profile_Elu_Prefet
+ * @package    Application_Model_Profile_Elu_Prefet
  */
 
  /**
  * Abstract class for Profil instance.
  *
  * @category   Application
- * @package    Application_Model_Business_Profile_Elu_Prefet
+ * @package    Application_Model_Profile_Elu_Prefet
  */
-class Application_Model_Business_Profile_Elu_Prefet extends Application_Model_Business_Profile_Elu
+class Application_Model_Profile_Elu_Prefet extends Application_Model_Profile_Elu
 {
     /**
      * Department.
@@ -35,7 +35,7 @@ class Application_Model_Business_Profile_Elu_Prefet extends Application_Model_Bu
      * Set the department
      *
      * @param  string $department
-     * @return Application_Model_Business_Profile_Elu_Prefet Provides fluent interface
+     * @return Application_Model_Profile_Elu_Prefet Provides fluent interface
      */    
     public function setDepartment($department)
     {
