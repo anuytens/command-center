@@ -158,4 +158,27 @@ class Application_Model_Business_Application extends Application_Model_Business_
         $this->url = $url;
         return $this;
     }
+    
+    /**
+     * Return true if the application is available
+     *
+     @return bool
+    */
+    public function isAvailable()
+    {
+        //make the connection with curl
+       $cl = curl_init($this->getURL());
+       
+       curl_setopt($cl,CURLOPT_CONNECTTIMEOUT,10);
+       curl_setopt($cl,CURLOPT_HEADER,true);
+       curl_setopt($cl,CURLOPT_NOBODY,true);
+       curl_setopt($cl,CURLOPT_RETURNTRANSFER,true);
+
+       //get response
+       $response = curl_exec($cl);
+
+       curl_close($cl);
+       
+       return (bool) $response;
+    }
 }
