@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configdata>
+    <user_nav>
+        <user>
+            <label>[NOM_UTILISATEUR]</label>
+            <uri>#</uri>
+            <pages>
+                <view>
+                    <label>Voir mon profil</label>
+                    <controller>user</controller>
+                    <action>index</action>
+                </view>
+                <calendar>
+                    <label>Voir mon emploi du temps</label>
+                    <uri>https://mail.sdis62.fr/owa/?cmd=contents&amp;module=calendar&amp;view=weekly</uri>
+                </calendar>
+                <edit>
+                    <label>Modifier mes informations</label>
+                    <controller>user</controller>
+                    <action>edit</action>
+                </edit>
+                <divider>
+                    <uri>divider</uri>
+                </divider>
+                <logout>
+                    <label>Se déconnecter</label>
+                    <controller>authentication</controller>
+                    <action>logout</action>
+                </logout>
+            </pages>
+        </user>
+        <login>
+            <label>Se connecter</label>
+            <controller>authentication</controller>
+            <action>login</action>
+        </login>
+    </user_nav>
+</configdata>

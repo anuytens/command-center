@@ -68,9 +68,34 @@
             
             <!-- breadcrumb -->
             <?php echo $this->navigation()->breadcrumbs()->setPartial(array('breadcrumbs.phtml', 'default')); ?>
+            
+            <!-- Menu gauche -->
+            <h1 class="page-header"><?php echo $this->navigation()->breadcrumbs()->setMinDepth(0)->setMaxDepth(0)->setPartial(null); ?></h1>
 
-            <!-- Content -->
-            <?php echo $this->layout()->content ?>
+            <div class="row">
+
+                <div class="span3">
+                <?php
+                    echo $this->navigation()->menu()
+                        ->setMinDepth(1)
+                        ->setMaxDepth(1)
+                        ->setUlClass("nav nav-list")
+                        ->setRenderParents(false)
+                        ->setOnlyActiveBranch(true)
+                        ->renderMenu($this->nav);
+                ?>
+                </div>
+                
+                <div class="span9">
+                
+                    <h2><?php echo $this->navigation()->findOneBy('active', true)->getLabel() ?></h2>
+                    
+                    <!-- Content -->
+                    <?php echo $this->layout()->content ?>
+                    
+                </div>
+
+            </div>
             
             <footer>
                 <hr/>

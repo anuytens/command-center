@@ -1,0 +1,24 @@
+<?php if(count($this->groups) == 0) : ?>
+<p class="muted">Il n'y a pas encore de groupes d'utilisateurs.</p>
+<?php else : ?>
+<table class="table tablesorter">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Nombre de membres</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->groups as $group) : ?>
+        <tr>
+            <td><?php echo $this->escape($group->getId()) ?></td>
+            <td><?php echo $this->escape($group->getName()) ?></td>
+            <td><?php echo $this->escape(count($group->getUsers())) ?></td>
+            <td><a href="<?php echo $this->url(array("action" => "edit-group", "id" => $group->getId())) ?>">Modifier</a></td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<?php endif ?>

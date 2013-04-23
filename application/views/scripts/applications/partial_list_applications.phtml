@@ -1,0 +1,35 @@
+<?php if(count($this->applications) == 0) : ?>
+<p class="muted">Il n'y a pas encore d'applications.</p>
+<?php else : ?>
+<table class="table tablesorter">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>URL</th>
+            <th>Clés</th>
+            <th>Statut</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->applications as $application) : ?>
+        <tr>
+            <td><?php echo $this->escape($application->getId()) ?></td>
+            <td><?php echo $this->escape($application->getName()) ?></td>
+            <td><a href="<?php echo $this->escape($application->getURL()) ?>"><?php echo $this->escape($application->getURL()) ?></a></td>
+            <td>
+                <?php if($application->getConsumerKey() != "" && $application->getConsumerSecret() != "") : ?>
+                <span class="muted">Consumer key :</span><br/><?php echo $this->escape($application->getConsumerKey()) ?><br/>
+                <span class="muted">Consumer secret :</span><br/><?php echo $this->escape($application->getConsumerSecret()) ?>
+                <?php else : ?>
+                <span class="muted">Pas de clés disponibles.</span>
+                <?php endif ?>
+            </td>
+            <td><?php echo $application->isAvailable() ? "<span class='label label-success'>Fonctionne</span>" : "<span class='label label-error'>Inaccessible</span>" ?></td>
+            <td><a href="<?php echo $this->url(array("action" => "edit-application", "id" => $application->getId())) ?>">Modifier</a></td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<?php endif ?>

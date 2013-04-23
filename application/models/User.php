@@ -7,12 +7,12 @@
  */
 
  /**
- * Abstract class for user instance.
+ * class for user instance.
  *
  * @category   Application
  * @package    Application_Model_User
  */
-abstract class Application_Model_User extends Application_Model_Abstract
+class Application_Model_User extends Application_Model_Abstract
 {
     /**
      * User's profile
@@ -43,22 +43,17 @@ abstract class Application_Model_User extends Application_Model_Abstract
      protected $role;
      
      /**
-     * Return true if the user is in SDIS
-     *
-     * @var bool
-     */
-     protected $is_in_sdis;
-     
-     
-     /**
      * Construct the user with a profile
      *
      * @param  Application_Model_Profile $profile
       * @return Application_Model_User
      */
-     public function __construct(Application_Model_Profile $profile)
+     public function __construct(Application_Model_Profile $profile = null)
      {
-        $this->setProfile($profile);
+        if($profile !== null)
+        {
+            $this->setProfile($profile);
+        }
      }
      
      /**
@@ -80,28 +75,6 @@ abstract class Application_Model_User extends Application_Model_Abstract
     public function setRole($role)
     {
         $this->role = $role;
-        return $this;
-    }
-    
-     /**
-     * Return true if the user is in SDIS
-     *
-     * @return bool
-     */      
-    public function isInSDIS()
-    {
-        return $this->is_in_sdis;
-    }
-
-    /**
-     * Set the boolean is_in_sdis
-     *
-     * @param  bool $is_in_sdis
-     * @return Application_Model_User Provides fluent interface
-     */
-    public function setIsInSDIS($is_in_sdis)
-    {
-        $this->is_in_sdis = $is_in_sdis;
         return $this;
     }
 

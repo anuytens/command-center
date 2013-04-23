@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configdata>
-
 	<nav>
 		<home>
 			<label>Flux d'activités</label>
@@ -18,11 +17,31 @@
                     <label>Voir tout</label>
                     <controller>users</controller>
                     <action>list</action>
+                    <pages>
+                        <edit-user>
+                            <label>[NOM_USER]</label>
+                            <controller>users</controller>
+                            <action>edit-user</action>
+                            <params>
+                                <ref>users</ref>
+                            </params>
+                        </edit-user>
+                    </pages>
                 </list_all>
                 <list_group>
                     <label>Voir par groupe</label>
                     <controller>users</controller>
-                    <action>groups</action>
+                    <action>list-groups</action>
+                    <pages>
+                        <edit-user>
+                            <label>[NOM_USER]</label>
+                            <controller>users</controller>
+                            <action>edit-user</action>
+                            <params>
+                                <ref>groups</ref>
+                            </params>
+                        </edit-user>
+                    </pages>
                 </list_group>
                 <navheader2>
                     <label>Actions sur les utilisateurs</label>
@@ -31,7 +50,7 @@
                 <add>
                     <label>Ajout d'un utilisateur</label>
                     <controller>users</controller>
-                    <action>add</action>
+                    <action>add-user</action>
                 </add>
                 <acl>
                     <label>Gestion des droits d'accès aux applications</label>
@@ -39,56 +58,79 @@
                     <action>acl</action>
                 </acl>
                 <navheader3>
-                    <label>Paramétrages</label>
+                    <label>Gestion des groupes</label>
                     <uri>navheader</uri>
                 </navheader3>
-                <ldap>
-                    <label>Paramétrage de la connexion LDAP</label>
+                <groups>
+                    <label>Voir les groupes existants</label>
                     <controller>users</controller>
-                    <action>ldap</action>
-                </ldap>
+                    <action>groups</action>
+                    <pages>
+                        <edit-group>
+                            <label>[NOM_GROUPE]</label>
+                            <controller>users</controller>
+                            <action>edit-group</action>
+                        </edit-group>
+                    </pages>
+                </groups>
+                <add-group>
+                    <label>Ajouter un groupe d'utilisateurs</label>
+                    <controller>users</controller>
+                    <action>add-group</action>
+                </add-group>
             </pages>
         </users>
         <applications>
             <label>Gestion des applications</label>
             <controller>applications</controller>
+           <pages>
+                <navheader1>
+                    <label>Liste des applications</label>
+                    <uri>navheader</uri>
+                </navheader1>
+                <list>
+                    <label>Voir par groupe</label>
+                    <controller>applications</controller>
+                    <action>list</action>
+                    <pages>
+                        <edit-application>
+                            <label>[NOM_APPLICATION]</label>
+                            <controller>applications</controller>
+                            <action>edit-application</action>
+                        </edit-application>
+                    </pages>
+                </list>
+                <navheader2>
+                    <label>Actions sur les applications</label>
+                    <uri>navheader</uri>
+                </navheader2>
+                <add>
+                    <label>Ajout d'une application</label>
+                    <controller>applications</controller>
+                    <action>add-application</action>
+                </add>
+                <navheader3>
+                    <label>Gestion des groupes</label>
+                    <uri>navheader</uri>
+                </navheader3>
+                <groups>
+                    <label>Voir les groupes existants</label>
+                    <controller>applications</controller>
+                    <action>groups</action>
+                    <pages>
+                        <edit-group>
+                            <label>[NOM_APPLICATION_GROUPE]</label>
+                            <controller>applications</controller>
+                            <action>edit-group</action>
+                        </edit-group>
+                    </pages>
+                </groups>
+                <add-group>
+                    <label>Ajouter un groupe d'applications</label>
+                    <controller>applications</controller>
+                    <action>add-group</action>
+                </add-group>
+            </pages>
         </applications>
 	</nav>
-    
-    <user_nav>
-        <user>
-            <label>[NOM_UTILISATEUR]</label>
-            <uri>#</uri>
-            <pages>
-                <view>
-                    <label>Voir mon profil</label>
-                    <controller>user</controller>
-                    <action>index</action>
-                </view>
-                <calendar>
-                    <label>Voir mon emploi du temps</label>
-                    <uri>https://mail.sdis62.fr/owa/?cmd=contents&amp;module=calendar&amp;view=weekly</uri>
-                </calendar>
-                <edit>
-                    <label>Modifier mes informations</label>
-                    <controller>user</controller>
-                    <action>edit</action>
-                </edit>
-                <divider>
-                    <uri>divider</uri>
-                </divider>
-                <logout>
-                    <label>Se déconnecter</label>
-                    <controller>authentication</controller>
-                    <action>logout</action>
-                </logout>
-            </pages>
-        </user>
-        <login>
-            <label>Se connecter</label>
-            <controller>authentication</controller>
-            <action>login</action>
-        </login>
-    </user_nav>
-    
 </configdata>

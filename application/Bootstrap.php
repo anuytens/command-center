@@ -50,7 +50,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         // create the navigation menus
         $view->nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav'));
-        $view->user_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'user_nav'));
+        $view->user_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/user_navigation.xml', 'user_nav'));
         
         // setup the acl
         $acl = new Zend_Acl();

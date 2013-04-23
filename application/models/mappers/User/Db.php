@@ -53,6 +53,18 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
         }
 
         // Save the profile
+        // question : on update l'actuel ou on change de type ?
+        if(!$is_new_user)
+        {
+            $user_tmp = $this->findByCriteria(array("id" => $user->getId()));
+            $user_tmp = $user_tmp[0];
+            if(get_class($user_tmp->getProfile()) !== get_class($user->getProfile()))
+            {
+                $profileMapper = new Application_Model_Mapper_Profile;
+                $profileMapper->delete($user_tmp->getProfile());
+                $user->getProfile()->setId(null);
+            }
+        }
         $profileMapper = Application_Model_Mapper_Profile::getProfileMapper($user->getProfile());
         $profileMapper->save($id_usersdb, $user->getProfile());
      }
@@ -76,7 +88,8 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
             ->joinLeft("profileselus", "profileselus.id_profile = profiles.id_profile")
             ->joinLeft("profileselusmaires", "profileselusmaires.id_profileelu = profileselus.id_profileelu")
             ->joinLeft("profileselusprefets", "profileselusprefets.id_profileelu = profileselus.id_profileelu")
-            ->order("profiles.last_name");
+            ->columns(array("id_profile" => "profiles.id_profile"))
+            ->order("users.id_user");
             
         // critères
         foreach($criterias as $criteria => $value)
@@ -120,6 +133,10 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
                     $profile = new Application_Model_Profile_Pompier;
                     $profile->setGrade($result->grade);
                 }
+                else
+                {
+                    $profile = new Application_Model_Profile;
+                }
                 
                 $profile->setFirstName($result->first_name);
                 $profile->setLastName($result->last_name);
@@ -134,6 +151,9 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
                 $user->setActiveStatus($result->is_active);
                 $user->setRole($result->role);
                 $user->setId($result->id_user);
+                
+                // get apps
+                $user->setApplications($this->getApplications($user->getId()));
                 
                 // populate the array
                 $array_returns[] = $user;

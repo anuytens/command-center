@@ -15,17 +15,17 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
         // On lie les feuilles de style
         $view->headLink()
             ->appendStylesheet('/components/bootstrap/less/bootstrap.less', 'all', null, array('rel' => 'stylesheet/less'))
-            ->appendStylesheet('/components/bootstrap/less/responsive.less', 'all', null, array('rel' => 'stylesheet/less'));
+            ->appendStylesheet('/components/bootstrap/less/responsive.less', 'all', null, array('rel' => 'stylesheet/less'))
+            ->appendStylesheet('/components/tablesorter.theme.bootstrap2.css/css/theme.bootstrap2.css')
+            ->appendStylesheet('/components/chosen/chosen/chosen.css');
             
         // Balises META de l'application
         $view->headMeta()
             ->appendName('viewport', 'width=device-width,initial-scale=1')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1');
-            /*
-            ->appendName('description', 'KICKSTATR - Description de l\'app')
-            ->appendName('author', 'Kévin DUBUC')
-            ->appendName('keywords', 'KICKSTATR, tags')
-            */
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1')
+            ->appendName('description', 'Centre de commande de l\'écosystème applicatiof du SDIS 62')
+            ->appendName('author', 'SDIS 62');
+            //->appendName('keywords', 'KICKSTATR, tags')
             
         // Scripts éxecutés en fin de page
         $view->inlineScript()
@@ -33,7 +33,11 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             ->appendFile("/components/jquery/jquery.min.js")
             ->appendFile("/components/bootstrap/js/bootstrap-collapse.js")
             ->appendFile("/components/bootstrap/js/bootstrap-dropdown.js")
-            ->appendFile("/components/bootstrap/js/bootstrap-alert.js");
+            ->appendFile("/components/bootstrap/js/bootstrap-alert.js")
+            ->appendFile("/components/chosen/chosen/chosen.jquery.min.js")
+            ->appendFile("/components/jquery.tablesorter/js/jquery.tablesorter.min.js")
+            ->appendFile("/js/main.js");
+            
         // Icône du site
         $view->headLink()
             ->headLink(array("rel" => "shortcut icon", "href" => "/favicon.ico"));

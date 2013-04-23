@@ -68,6 +68,28 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $user_mapper = new Application_Model_Mapper_User_Db;
         
         $last_name = rand(9,2) . "Tost" . rand(9,2) . rand(9,2);
+        
+        // Création du profile que l'on affectera à l'utilisateur test
+        $profile = new Application_Model_Profile;
+        $profile->setEmail("kdubuc@sdis62.fr")
+            ->setFirstName("Kévin")
+            ->setLastName($last_name)
+            ->setAsMan();
+        
+        // Création de l'utilisateur test
+        $user = new Application_Model_User_Db($profile);
+        $user->setPassword("test")
+            ->setActiveStatus(true)
+            ->setRole(Application_Model_Role::GUEST);
+            
+        $user_mapper->save($user);
+        $this->assertGreaterThan(0, $user->getId());
+        $id_profile = $user->getProfile()->getId();
+        $user->getProfile()->setFirstName("Okay");
+        $user_mapper->save($user);
+        $this->assertEquals($user->getProfile()->getId(), $id_profile);
+        $user_mapper->delete($user);
+        unset($user);
 
         // Création du profile que l'on affectera à l'utilisateur test
         $profile = new Application_Model_Profile_Elu_Maire;
@@ -104,8 +126,59 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $user->getProfile()->setFirstName("YOOOOOO");
         $user_mapper->save($user);
         
-        // On supprime la donnée test
+        // On créé un groupe d'utilisateurs
+        $usersGroup = new Application_Model_UsersGroup;
+        $usersGroup->setName("Administrateur");
+        $usersGroup->setDesc("Groupe des administrateurs");
+        $usersGroup->setRole(Application_Model_Role::GUEST);
+        $usersGroup->add($user);
+        
+        // On met l'user dans un groupe
+        $usergroup_mapper = new Application_Model_Mapper_UsersGroup;
+        $usergroup_mapper->save($usersGroup);
+        $this->assertGreaterThan(0, $usersGroup->getId());
+        
+        // mapper général des users
+        $user_general_mapper = new Application_Model_Mapper_User;
+        $user_test = $user_general_mapper->getByLastName($last_name);
+        $this->assertCount(1, $user_test);
+        $this->assertEquals($user_test[0]->getProfile()->getLastName(), $last_name);
+        unset($user_test);
+        
+        // on test de retrouver le groupe
+        $groups_test = $usergroup_mapper->getById($usersGroup->getId());
+        $this->assertCount(1, $groups_test);
+        $this->assertInstanceOf("Application_Model_UsersGroup", $groups_test[0]);
+        
+        // on donne une application à l'utilisateur
+        $application_mapper = new Application_Model_Mapper_Application;
+        $application = new Application_Model_Application;
+        $application->setName("Application 1");
+        $application->setConsumerSecret("aaa");
+        $application->setUrl("https://apps.sdis62.fr/prevarisc");
+        $application->setConsumerKey("aa");
+        $application->setActiveStatus(true);
+        $application_mapper->save($application);
+        $user->addApplication($application);
+        $user_mapper->save($user);
+        $rowset_user = $user_mapper->getByLastName($last_name);
+        $user = $rowset_user[0];
+        $this->assertCount(1, $user->getApplications());
+        $user->removeApplication($application);
+        $user_mapper->save($user);
+        $rowset_user = $user_mapper->getByLastName($last_name);
+        $user = $rowset_user[0];
+        $this->assertCount(0, $user->getApplications());
+        $application_mapper->delete($application);
+        
+        // on change et on update le profil de l'user
+        $id_profile = $user->getProfile()->getId();
+        $user_mapper->save($user);
+        $this->assertEquals($id_profile, $user->getProfile()->getId());
+        
+        // On supprime les données test
         $user_mapper->delete($user);
+        $usergroup_mapper->delete($usersGroup);
     }
     
     public function testUsersLDAPMappers()
@@ -129,4 +202,39 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $user_mapper->save($user);
         $user_mapper->delete($user);
     }
+    
+    public function testApplicationsMappers()
+    {
+        $application_mapper = new Application_Model_Mapper_Application;
+        $applicationgroup_mapper = new Application_Model_Mapper_ApplicationsGroup;
+        
+        // création d'une application
+        $application = new Application_Model_Application;
+        $application->setName("Application 1");
+        $application->setConsumerSecret("aaa");
+        $application->setUrl("https://apps.sdis62.fr/prevarisc");
+        $application->setConsumerKey("aa");
+        $application->setActiveStatus(true);
+        
+        // création d'un groupe d'application contenant l'application précédemment créée
+        $applicationsGroup = new Application_Model_ApplicationsGroup;
+        $applicationsGroup->setName("Service prévention");
+        $applicationsGroup->add($application);
+        
+        $application_mapper->save($application);
+        
+        $applicationgroup_mapper->save($applicationsGroup);
+        
+        $applicationsGroup->setName("Yop !");
+        
+        $applicationgroup_mapper->save($applicationsGroup);
+        
+        $groups_test = $applicationgroup_mapper->getById($applicationsGroup->getId());
+        $this->assertCount(1, $groups_test);
+        $this->assertInstanceOf("Application_Model_ApplicationsGroup", $groups_test[0]);
+        $this->assertCount(1, $groups_test[0]->getApplications());
+        
+        $applicationgroup_mapper->delete($applicationsGroup);
+        $application_mapper->delete($application);
+    }    
 }

@@ -1,0 +1,22 @@
+<?php if(count($this->users) == 0) : ?>
+<p class="muted">Il n'y a pas encore d'utilisateurs. :-(</p>
+<?php else : ?>
+<table class="table tablesorter">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->users as $user) : ?>
+        <tr>
+            <td><?php echo $this->escape($user->getId()) ?></td>
+            <td><?php echo $this->escape($user->getProfile()->getFullName()) ?></td>
+            <td><a href="<?php echo $this->url(array("action" => "edit-user", "id" => $user->getId(),"ref" => isset($this->ref) ? $this->ref : "" )) ?>">Modifier</a></td>
+        </tr>
+        <?php endforeach ?>
+    </tbody>
+</table>
+<?php endif ?>

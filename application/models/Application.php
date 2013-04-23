@@ -169,7 +169,7 @@ class Application_Model_Application extends Application_Model_Abstract
         //make the connection with curl
        $cl = curl_init($this->getURL());
        
-       curl_setopt($cl,CURLOPT_CONNECTTIMEOUT,10);
+       curl_setopt($cl,CURLOPT_CONNECTTIMEOUT, 10);
        curl_setopt($cl,CURLOPT_HEADER,true);
        curl_setopt($cl,CURLOPT_NOBODY,true);
        curl_setopt($cl,CURLOPT_RETURNTRANSFER,true);
@@ -180,5 +180,36 @@ class Application_Model_Application extends Application_Model_Abstract
        curl_close($cl);
        
        return (bool) $response;
+    }
+    
+    /**
+     * Check if the application is extern
+     *
+     @return bool
+    */
+    public function isExtern()
+    {
+      return !$this->isLegacy() && !$this->isEcosystem();
+    }
+    
+    /**
+     * Check if the application is in SDIS but legacy
+     *
+     @return bool
+    */
+    public function isLegacy()
+    {
+        $url = explode(".", parse_url($this->getURL(), PHP_URL_HOST));
+        return $url[1] === "sdis62";
+    }
+    
+    /**
+     * Check if the application is in ecosystem
+     *
+     @return bool
+    */
+    public function isEcosystem()
+    {
+      return parse_url($this->getURL(), PHP_URL_HOST) == "apps.sdis62.fr";
     }
 }

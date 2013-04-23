@@ -38,7 +38,7 @@ class Application_Model_Mapper_Profile_Pompier extends Application_Model_Mapper_
         try
         {
             $dbTable_profiles = new Application_Model_DbTable_Profiles;
-            $dbTable_profiles_pompiers = new Application_Model_DbTable_Profiles_Pompiers;
+            $dbTable_profiles_pompiers = new Application_Model_DbTable_ProfilesPompiers;
 
             // Save the base row
             $row = $dbTable_profiles->find($id)->current();

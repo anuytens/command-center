@@ -1,0 +1,17 @@
+<?php if(count($this->groups) == 0) : ?>
+<p class="muted">Il n'y a pas encore de groupes d'utilisateurs. :-(</p>
+<?php else : ?>
+    <?php foreach($this->groups as $group) : ?>
+    <h3>
+        <?php echo $this->escape($group->getName()) ?>
+        <small><?php echo $this->escape(count($group->getUsers())) ?> utilisateur<?php echo $this->escape(count($group->getUsers())) > 1 ? "s" : ""?></small>
+    </h3>
+    <?php echo $this->partial("users/partial_list_users.phtml", array("users" => $group->getUsers(), "ref" => "groups")) ?>
+    <?php endforeach ?>
+<?php endif ?>
+
+<?php if(count($this->users_without_group) != 0) : ?>
+<hr/>
+<h2>Les utilisateurs n'ayant pas été affectés</h2>
+<?php echo $this->partial("users/partial_list_users.phtml", array("users" => $this->users_without_group, "ref" => "groups")) ?>
+<?php endif ?>

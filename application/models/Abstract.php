@@ -42,4 +42,14 @@ abstract class Application_Model_Abstract
         $this->id = $id;
         return $this;
     }
+    
+     /**
+     * Privide __toString magic method
+     *
+     * @return string
+     */     
+    public function __toString()
+    {
+        return serialize($this);
+    }
 }

@@ -11,9 +11,8 @@
  *
  * @category   Application
  * @package    Application_Model_Mapper_Profile
- * @abstract
  */
-abstract class Application_Model_Mapper_Profile
+class Application_Model_Mapper_Profile
 {
     /**
      * Save the profile
@@ -21,7 +20,6 @@ abstract class Application_Model_Mapper_Profile
      * @param  int $id_userdb
      * @param  Application_Model_Profile $profile
      * @return int
-     * @abstract
      * 
      */
      public function save($id_userdb, Application_Model_Profile &$profile)
@@ -84,8 +82,42 @@ abstract class Application_Model_Mapper_Profile
             case "Application_Model_Profile_Elu_Prefet" :
                 return new Application_Model_Mapper_Profile_Elu_Prefet;
                 break;
+                
+            default:
+                return new Application_Model_Mapper_Profile;
         }
         
         return null;
+     }
+     
+      /**
+     * Delete profile
+     *
+     * @param  Application_Model_Profile $profile
+     * 
+     */
+     final public function delete(Application_Model_Profile &$profile)
+     {
+        if($profile->getId() !== null)
+        {
+            // On commence la transaction
+            $db = Zend_Db_Table::getDefaultAdapter();
+            $db->beginTransaction();
+            
+            try
+            {
+                $dbTable_Profiles = new Application_Model_DbTable_Profiles;
+                $row = $dbTable_Profiles->find($profile->getId())->current();
+                $row->delete();
+                unset($profile);
+
+                $db->commit();
+            }
+            catch(Exception $e)
+            {
+                $db->rollBack();
+                throw $e;
+            }
+        }
      }
 }

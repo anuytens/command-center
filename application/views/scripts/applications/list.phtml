@@ -1,0 +1,18 @@
+<?php if(count($this->groups) == 0) : ?>
+<p class="muted">Il n'y a pas encore de groupes d'applications.</p>
+<?php else : ?>
+    <?php foreach($this->groups as $group) : ?>
+    <h3>
+        <span style="color: <?php echo $this->escape($group->getColor()) ?>"><?php echo $this->escape($group->getName()) ?></span>
+        <small><?php echo $this->escape(count($group->getApplications())) ?> application<?php echo $this->escape(count($group->getApplications())) > 1 ? "s" : ""?></small>
+    </h3>
+    <?php echo $this->partial("applications/partial_list_applications.phtml", array("applications" => $group->getApplications())) ?>
+    <?php endforeach ?>
+<?php endif ?>
+
+<?php if(count($this->applications_without_group) != 0) : ?>
+<hr/>
+<h2>Les applications affectées à aucun groupe</h2>
+<?php echo $this->partial("applications/partial_list_applications.phtml", array("applications" => $this->applications_without_group)) ?>
+<?php endif ?>
+<p class="muted"><u>Note:</u> Les statuts des applications sont actualisés toutes les minutes.</p>

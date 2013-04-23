@@ -71,7 +71,7 @@ class Application_Model_UsersGroup extends Application_Model_Abstract implements
      */      
     public function getDesc()
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**

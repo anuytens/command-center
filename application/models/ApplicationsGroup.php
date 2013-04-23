@@ -29,6 +29,13 @@ class Application_Model_ApplicationsGroup extends Application_Model_Abstract imp
     private $name;
     
     /**
+     * Applications Group's color
+     *
+     * @var string
+     */
+    private $color;
+    
+    /**
      * Get Applications Group's name.
      *
      * @return string
@@ -47,6 +54,28 @@ class Application_Model_ApplicationsGroup extends Application_Model_Abstract imp
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+    
+    /**
+     * Get Applications Group's color.
+     *
+     * @return string
+     */      
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Set Applications Group's color
+     *
+     * @param  string $name
+     * @return Application_Model_ApplicationsGroup Provides fluent interface
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
         return $this;
     }
     
