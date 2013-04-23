@@ -12,6 +12,8 @@ class Application_Form_ACL extends Twitter_Bootstrap_Form_Horizontal
         
         // Valeurs du select
         $select = array();
+        $select["users"] = array();
+        $select["groups"] = array();
         foreach($user_service->getAllUsers() as $user_non_parse)
         {
             $select["users"]["user_" . $user_non_parse->getId()] = $user_non_parse->getProfile()->getFullName();
