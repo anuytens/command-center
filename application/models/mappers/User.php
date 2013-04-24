@@ -243,6 +243,20 @@ class Application_Model_Mapper_User
      }
      
       /**
+     * Get users by email
+     *
+     * @param  string $email
+     * @return array<Application_Model_User>
+     * @final
+     */
+     final public function getByEmail($email)
+     {
+        return $this->findByCriteria(array(
+            "email" => $email
+        ));
+     }
+     
+      /**
      * Fetch all users
      *
      * @return array<Application_Model_User>

@@ -30,14 +30,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->addHelperPath(APPLICATION_PATH . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "vendor" . 
             DIRECTORY_SEPARATOR . "sdis62" . DIRECTORY_SEPARATOR . "toolbox" . DIRECTORY_SEPARATOR . "library" . 
             DIRECTORY_SEPARATOR . "SDIS62" . DIRECTORY_SEPARATOR . "View" . DIRECTORY_SEPARATOR . "Helper", "SDIS62_View_Helper_");
-        
-        /*
-		$view->setHelperPath(
-            APPLICATION_PATH . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "helpers",
-            'Application_View_Helper_'
-        );
-        */
-        
+
         // get the ZFBootstrap menu helper
         $view->registerHelper(new Menu(), 'menu');
 	}
@@ -50,32 +43,37 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         // create the navigation menus
         $view->nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav'));
-        $view->user_nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/user_navigation.xml', 'user_nav'));
-        
+
         // setup the acl
         $acl = new Zend_Acl();
         
         $acl->addRole(new Zend_Acl_Role('guest')); // not authenicated
+        $acl->addRole(new Zend_Acl_Role('admin'));
         
-        $acl->add(new Zend_Acl_Resource('login'));
-        $acl->add(new Zend_Acl_Resource('account'));
+        $acl->add(new Zend_Acl_Resource('admin'));
+        //$acl->add(new Zend_Acl_Resource('full'));
         
-        //$acl->allow('guest', 'login');
-        //$acl->deny('guest', 'account');
+        $acl->allow('admin', 'admin');
+        $acl->deny('guest', 'admin');
         
         $view->navigation($view->nav)->setAcl($acl)->setRole("guest");
+        
+        // Build the user nav
+        $user_service = new Application_Service_User;
+        $view->user_nav = new Zend_Navigation($user_service->getNavigationXML());
         
         // If we are connected, replace the label by the username
         if(Zend_Auth::getInstance()->hasIdentity())
         {
             $identity = Zend_Auth::getInstance()->getIdentity();
-            $view->user_nav->findOneByLabel("[NOM_UTILISATEUR]")->setLabel($identity->last_name . " " . $identity->first_name);
+            $view->user_nav->findOneByLabel("[USER_NAME]")->setLabel($identity["display_name"]);
         }
     }
     
     public function loadPlugins()
     {
         Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_Layout);
+        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_ForceLogin);
     }
     
     public function loadThirdParty()

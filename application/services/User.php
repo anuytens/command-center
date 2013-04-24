@@ -197,6 +197,27 @@ class Application_Service_User
             return null;
         }
     }
+    
+    /**
+     * Get a user account by email
+     *
+     * @return Application_Model_User
+     * 
+     */       
+    public function getAccountByEmail($email)
+    {
+        $users_mapper = new Application_Model_Mapper_User;
+        $users = $users_mapper->getByEmail($email);
+        
+        if(count($users) === 1)
+        {
+            return $users[0];
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     /**
      * Get the user's form
@@ -363,6 +384,20 @@ class Application_Service_User
         }
 
         return false;
+    }
+    
+    /**
+     * Get the navigation XML for a user
+     *
+     * @return Zend_Config_Xml
+     * 
+     */      
+    public function getNavigationXML()
+    {
+        // get the xml
+        $xml = new Zend_Config_Xml(APPLICATION_PATH . '/configs/user_navigation.xml', 'user_nav');
+        
+        return $xml;
     }
 
 }

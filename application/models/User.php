@@ -234,4 +234,20 @@ class Application_Model_User extends Application_Model_Abstract
     {
         return in_array($application, $this->getApplications());
     }
+    
+    /**
+     * Retrieve the user's informations in an array
+     *
+     * @return array
+     */     
+    public function toArray()
+    {
+        return array(
+            "id" => $this->getId(),
+            "mail" => $this->getLogin(),
+            "first_name" => $this->getProfile()->getFirstName(),
+            "last_name" => $this->getProfile()->getLastName(),
+            "display_name" => $this->getProfile()->getFullName()
+        );
+    }
 }

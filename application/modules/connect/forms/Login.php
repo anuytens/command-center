@@ -1,6 +1,6 @@
 <?php
 
-class Application_Form_Login extends Twitter_Bootstrap_Form_Horizontal
+class Connect_Form_Login extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {

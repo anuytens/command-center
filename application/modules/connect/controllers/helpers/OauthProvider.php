@@ -1,6 +1,6 @@
 <?php
 
-class Api_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_Abstract
+class Connect_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_Abstract
 {
 
     private $provider;
@@ -40,9 +40,8 @@ class Api_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_
      */
     public function _consumerHandler($provider)
     {
-
         // fetch the current consumer
-        $model_consumer = new Api_Model_Consumers;
+        $model_consumer = new Connect_Model_Consumers;
         $row_consumer = $model_consumer->getConsumerByConsumerKey($provider->consumer_key);
     
         // If consumer is unknown or inactive
@@ -66,16 +65,15 @@ class Api_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_
      */
     public function _timestampNonceHandler($provider)
     {
-    
         // fetch the current consumer
-        $model_consumer = new Api_Model_Consumers;
+        $model_consumer = new Connect_Model_Consumers;
         $row_consumer = $model_consumer->getConsumerByConsumerKey($provider->consumer_key);
 
         // Prepare SQl for check if nonce exists for consumer
-        $model_consumersNonce = new Api_Model_ConsumersNonce;
+        $model_consumersNonce = new Connect_Model_ConsumersNonce;
         
         $select = $model_consumersNonce->select()
-            ->where("id_consumer = ?", $row_consumer->id_consumer)
+            ->where("id_application = ?", $row_consumer->id_application)
             ->where("timestamp = ?", $this->provider->timestamp)
             ->where("nonce = ?", $provider->nonce);
     
@@ -92,7 +90,7 @@ class Api_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_
         // Add the new nonce to the db
         $row_newConsumernonce = $model_consumersNonce->createRow();
         $row_newConsumernonce->nonce = $this->provider->nonce;
-        $row_newConsumernonce->id_consumer = $row_consumer->id_consumer;
+        $row_newConsumernonce->id_application = $row_consumer->id_application;
         $row_newConsumernonce->save();
 
         return OAUTH_OK;
@@ -104,7 +102,7 @@ class Api_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_
     public function _tokenHandler($provider)
     {
         // get the request token
-        $model_tokens = new Api_Model_Tokens;
+        $model_tokens = new Connect_Model_Tokens;
         $row_token = $model_tokens->getTokenByToken($provider->token);
             
         // token not found
@@ -114,7 +112,7 @@ class Api_Controller_Helper_OauthProvider extends Zend_Controller_Action_Helper_
         }
         
         // get the consumer
-        $row_consumer = $row_token->findParentApi_Model_Consumers();
+        $row_consumer = $row_token->findParentConnect_Model_Consumers();
         
         // The consumer must be the same as the one this request token was originally issued for
         if($row_consumer->consumer_key != $provider->consumer_key)

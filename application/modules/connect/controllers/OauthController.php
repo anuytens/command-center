@@ -1,6 +1,6 @@
 <?php
 
-class Api_OauthController extends Zend_Controller_Action
+class Connect_OauthController extends Zend_Controller_Action
 {
     /**
      * OAuthProvider object
@@ -52,21 +52,21 @@ class Api_OauthController extends Zend_Controller_Action
         // Generate the tokens (request and token)
         $oauth_token = sha1($this->provider->generateToken(20, true));
         $oauth_token_secret = sha1($this->provider->generateToken(20, true));
-        
+
         // fetch the current consumer
-        $model_consumer = new Api_Model_Consumers;
-        $row_consumer = $model_consumer->getConsumerByConsumerKey($this->_request->getQuery("oauth_consumer_key"));
+        $model_consumer = new Connect_Model_Consumers;
+        $row_consumer = $model_consumer->getConsumerByConsumerKey($this->_helper->oauthProvider->getProvider()->consumer_key);
         
         // store the request token
-        $model_tokens = new Api_Model_Tokens;
+        $model_tokens = new Connect_Model_Tokens;
         $row_newToken = $model_tokens->createRow();
-        $row_newToken->id_consumer = $row_consumer->id_consumer;
+        $row_newToken->id_application = $row_consumer->id_application;
         $row_newToken["id_token-types"] = 1;
         $row_newToken->token = $oauth_token;
         $row_newToken->token_secret = $oauth_token_secret;
-        $row_newToken->callback = $this->_request->getQuery("oauth_callback");
+        $row_newToken->callback = $this->_helper->oauthProvider->getProvider()->callback;
         $row_newToken->save();
-
+        
         // output the response
         echo "oauth_token=" . $oauth_token . "&oauth_token_secret=" . $oauth_token_secret . "&oauth_callback_confirmed=true";
     }
@@ -86,13 +86,10 @@ class Api_OauthController extends Zend_Controller_Action
         // Generate the tokens (token and access token)
         $oauth_token = sha1($this->provider->generateToken(20,true));
         $oauth_token_secret = sha1($this->provider->generateToken(20,true));
-        
-        // get the auth instance
-        $auth = Zend_Auth::getInstance();
-        
+
         // update the token
         $model_tokens = new Api_Model_Tokens;
-        $row_token = $model_tokens->getTokenByToken($this->_request->getQuery("oauth_token"));
+        $row_token = $model_tokens->getTokenByToken($this->_helper->oauthProvider->getProvider()->token);
         $row_token->token = $oauth_token;
         $row_token->token_secret = $oauth_token_secret;
         $row_token["id_token-types"] = 2;
@@ -109,18 +106,25 @@ class Api_OauthController extends Zend_Controller_Action
     public function authorizeAction()
     {
         $this->_helper->layout()->setLayout("signin");
-    
-        // Log in Form
-        $form_login = new Application_Form_Login;
+        
+        // fetch the current consumer
+        $model_consumer = new Connect_Model_Consumers;
+        $row_consumer = $model_consumer->getByToken($this->_request->getQuery("oauth_token"));
+        
+        // service user
+        $connect_service = new Connect_Service_Connect;
 
         // Check if there is a request
-        if($this->_request->isPost() && $form_login->isValid($this->_request->getPost()))
+        if($this->_request->isPost())
         {
-            $this->_helper->performLogin(
-                $this->_request->getPost("email"),
-                $this->_request->getPost("password"),
-                $this->_request->getPost("remember_me")
-            );
+            if(!$connect_service->login($this->_request->getPost()))
+            {
+                $this->_helper->flashMessenger(array(
+                    'context' => 'warning',
+                    'title' => 'Oups !',
+                    'message' => 'Les identifiants ne sont pas valides. Rééssayez.'
+                ));
+            }
         }
 
         // get the auth instance
@@ -129,27 +133,30 @@ class Api_OauthController extends Zend_Controller_Action
         // If user is already connected, perform the oauth
         if($auth->hasIdentity())
         {
+            $identity = $auth->getIdentity();
+        
             $this->_helper->viewRenderer->setNoRender(true);
 
             $oauth_token = $this->_request->getQuery("oauth_token");
             $oauth_verifier = sha1($this->provider->generateToken(20,true));
 
             // update the request token
-            $model_tokens = new Api_Model_Tokens;
+            $model_tokens = new Connect_Model_Tokens;
             $row_token = $model_tokens->getTokenByToken($oauth_token);
             $row_token->token_verifier = $oauth_verifier;
             $row_token->save();
             
             // associate the user to the token
-            $model_tokensUser = new Api_Model_TokensUser;
+            $model_tokensUser = new Connect_Model_TokensUser;
             $row_newTokenUser = $model_tokensUser->createRow();
             $row_newTokenUser->id_token = $row_token->id_token;
-            $row_newTokenUser->id_user = $auth->getIdentity()->id;
+            $row_newTokenUser->id_user = $identity["id"];
             $row_newTokenUser->save();
             
             header( 'location: ' . $row_token->callback . '?oauth_token=' . $oauth_token . '&oauth_verifier=' . $oauth_verifier );
         }
         
-        $this->view->form = $form_login;
+        $this->view->form = $connect_service->getLoginForm();
+        $this->view->consumer = $row_consumer->name;
     }
 }

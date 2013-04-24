@@ -82,7 +82,7 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
         
         $select = $db->select();
         $select->from("users")
-            ->join("usersdb", "users.id_user = usersdb.id_user", null)
+            ->join("usersdb", "users.id_user = usersdb.id_user", "password")
             ->join("profiles", "profiles.id_userdb = usersdb.id_userdb")
             ->joinLeft("profilespompiers", "profilespompiers.id_profile = profiles.id_profile")
             ->joinLeft("profileselus", "profileselus.id_profile = profiles.id_profile")
@@ -98,6 +98,10 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
             {
                 case "last_name":
                     $select->where("profiles.last_name = ?", $value);
+                    break;
+                    
+                case "email":
+                    $select->where("profiles.email = ?", $value);
                     break;
                     
                 case "id":
@@ -148,6 +152,7 @@ class Application_Model_Mapper_User_Db extends Application_Model_Mapper_User
                 
                 // Create the user object
                 $user = new Application_Model_User_Db($profile);
+                $user->setPassword($result->password, false);
                 $user->setActiveStatus($result->is_active);
                 $user->setRole($result->role);
                 $user->setId($result->id_user);

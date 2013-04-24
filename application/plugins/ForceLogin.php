@@ -8,12 +8,16 @@ class Application_Plugin_ForceLogin extends Zend_Controller_Plugin_Abstract
         $view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
         
         // set the redirection if not connected
-        $url_login = $view->url(array("action" => "login", "controller" => "authentication"));
+        $controller_login = "identity";
 
-        if (!Zend_Auth::getInstance()->hasIdentity() && $url_login != $view->url())
+        if (
+            !Zend_Auth::getInstance()->hasIdentity() &&
+            $controller_login !== $request->getControllerName() &&
+            $request->getModuleName() !== "connect"
+        )
         {
-            $request->setControllerName("authentication");
-            $request->setActionName("login");
+            $request->setControllerName($controller_login);
+            $request->setActionName("index");
         }
     }
 }

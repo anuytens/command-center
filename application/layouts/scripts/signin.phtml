@@ -5,7 +5,7 @@
         <meta charset="utf-8">
 
         <?php echo $this->headMeta() ?>
-        <?php echo $this->headTitle() ?>
+        <?php echo $this->headTitle('Connexion') ?>
         <?php echo $this->headLink() ?>
         <?php echo $this->headStyle() ?>
         <?php echo $this->headScript() ?>
@@ -29,7 +29,6 @@
                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
                     box-shadow: 0 1px 2px rgba(0,0,0,.05);
           }
-
         </style>
 
         <!--<script src="/js/libs/modernizr-2.5.3.min.js"></script>-->
@@ -38,6 +37,7 @@
     <body>
     
         <div class="container well">
+
             <!-- Notifications -->
             <?php if( $this->flashMessenger()->hasMessages() ): ?>
                 <ul id="flashmessenger" class="unstyled" >
@@ -47,6 +47,7 @@
             
             <!-- Content -->
             <?php echo $this->layout()->content ?>
+
         </div>
 
         <!-- javascript (fast load)-->

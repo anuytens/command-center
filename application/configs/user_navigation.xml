@@ -2,7 +2,7 @@
 <configdata>
     <user_nav>
         <user>
-            <label>[NOM_UTILISATEUR]</label>
+            <label>[USER_NAME]</label>
             <uri>#</uri>
             <pages>
                 <view>
@@ -16,7 +16,7 @@
                 </calendar>
                 <edit>
                     <label>Modifier mes informations</label>
-                    <controller>user</controller>
+                    <controller>identity</controller>
                     <action>edit</action>
                 </edit>
                 <divider>
@@ -24,15 +24,14 @@
                 </divider>
                 <logout>
                     <label>Se déconnecter</label>
-                    <controller>authentication</controller>
+                    <controller>identity</controller>
                     <action>logout</action>
                 </logout>
             </pages>
         </user>
         <login>
             <label>Se connecter</label>
-            <controller>authentication</controller>
-            <action>login</action>
+            <controller>identity</controller>
         </login>
     </user_nav>
 </configdata>

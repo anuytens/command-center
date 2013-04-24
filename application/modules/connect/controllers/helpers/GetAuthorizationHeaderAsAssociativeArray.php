@@ -1,6 +1,6 @@
 <?php
 
-class Api_Controller_Helper_GetAuthorizationHeaderAsAssociativeArray extends Zend_Controller_Action_Helper_Abstract
+class Connect_Controller_Helper_GetAuthorizationHeaderAsAssociativeArray extends Zend_Controller_Action_Helper_Abstract
 {
     public function direct()
     {

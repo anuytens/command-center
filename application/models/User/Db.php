@@ -35,19 +35,27 @@ class Application_Model_User_Db extends Application_Model_User
      * Set the user's password
      *
      * @param  string $password
+     * @param  bool $hashed
      * @return Application_Model_User_Db Provides fluent interface
      */
-    public function setPassword($password)
+    public function setPassword($password, $hashed = true)
     {
-        // Get the SALT for password's hash
-        $config = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'secret.ini', APPLICATION_ENV);
-        $salt = $config->security->salt;
+        if($hashed)
+        {
+            // Get the SALT for password's hash
+            $config = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'secret.ini', APPLICATION_ENV);
+            $salt = $config->security->salt;
+            
+            // Get the user's login
+            $login = $this->getLogin();
         
-        // Get the user's login
-        $login = $this->getLogin();
-        
-        // Set the password with salt
-        $this->password = md5($login . $salt . $password);
+            // Set the password with salt
+            $this->password = md5($login . $salt . $password);
+        }
+        else
+        {
+            $this->password = $password;
+        }
         
         return $this;
     }
