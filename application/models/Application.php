@@ -166,20 +166,16 @@ class Application_Model_Application extends Application_Model_Abstract
     */
     public function isAvailable()
     {
-        //make the connection with curl
-       $cl = curl_init($this->getURL());
-       
-       curl_setopt($cl,CURLOPT_CONNECTTIMEOUT, 10);
-       curl_setopt($cl,CURLOPT_HEADER,true);
-       curl_setopt($cl,CURLOPT_NOBODY,true);
-       curl_setopt($cl,CURLOPT_RETURNTRANSFER,true);
-
-       //get response
-       $response = curl_exec($cl);
-
-       curl_close($cl);
-       
-       return (bool) $response;
+        $socket = @fsockopen(parse_url($this->getURL(), PHP_URL_HOST), 80);
+        
+        if ($socket === false)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     
     /**

@@ -136,6 +136,7 @@ class Application_Service_ApplicationsGroup
      */
     public function getApplicationsWithoutGroup()
     {
+        
         $application_service = new Application_Service_Application;
         
         $groups = $this->getAllGroups();
