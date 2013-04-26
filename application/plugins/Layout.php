@@ -20,7 +20,7 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
         $view->headMeta()
             ->appendName('viewport', 'width=device-width,initial-scale=1')
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1')
-            ->appendName('description', 'Centre de commande de l\'écosystème applicatiof du SDIS 62')
+            ->appendName('description', 'Centre de commande de l\'écosystème applicatif du SDIS 62')
             ->appendName('author', 'SDIS 62');
             //->appendName('keywords', 'KICKSTATR, tags')
             
