@@ -3,7 +3,8 @@
 <?php else : ?>
     <?php foreach($this->groups as $group) : ?>
     <h3>
-        <span style="color: <?php echo $this->escape($group->getColor()) ?>"><?php echo $this->escape($group->getName()) ?></span>
+        <span class="badge" style="background-color: <?php echo $this->escape($group->getColor()) ?>; font-size: 1em;">&nbsp;</span>
+        <span><?php echo $this->escape($group->getName()) ?></span>
         <small><?php echo $this->escape(count($group->getApplications())) ?> application<?php echo $this->escape(count($group->getApplications())) > 1 ? "s" : ""?></small>
     </h3>
     <?php echo $this->partial("applications/partial_list_applications.phtml", array("applications" => $group->getApplications())) ?>
