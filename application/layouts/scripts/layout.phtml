@@ -22,7 +22,7 @@
     <body>
 
         <!-- Container -->
-        <div class="container">
+        <div class="container container-primary">
         
             <!-- Nav bar -->
             <div class="navbar navbar-fixed-top">
@@ -33,18 +33,13 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </a>
-                        <a class="brand" href="#">SDIS62:<span style="color: #D01F3C">Command Center</span></a>
+                        <ul class="nav">
+                            <li class="logo"><img src="/img/logo_sdis_pastille.png" alt="SDIS 62" /></li>
+                            <li class="divider-vertical"></li>
+                            <li class="brand"><span style="color: #D01F3C">Command Center</span></li>
+                        </ul>
                         <div class="nav-collapse collapse">
                             <?php
-                                echo $this->navigation()
-                                    ->menu()
-                                    ->setUlClass('nav')
-                                    ->setMaxDepth(0)
-                                    ->setMinDepth(0)
-                                    ->setRenderParents(false)
-                                    ->setOnlyActiveBranch(false)
-                                    ->renderMenu($this->nav);
-                                    
                                 echo $this->navigation()
                                     ->menu()
                                     ->setUlClass('nav pull-right')
@@ -66,14 +61,29 @@
                 </ul>
             <?php endif ?>
             
-            <!-- breadcrumb -->
-            <?php echo $this->navigation()->breadcrumbs()->setPartial(array('breadcrumbs.phtml', 'default')); ?>
+            <!-- Barre de navigation -->
+            <div class="navbar">
+                <div class="navbar-inner">
+                <?php
+                echo $this->navigation()
+                    ->menu()
+                    ->setUlClass('nav')
+                    ->setMaxDepth(0)
+                    ->setMinDepth(0)
+                    ->setRenderParents(false)
+                    ->setOnlyActiveBranch(false)
+                    ->renderMenu($this->nav);
+                ?>
+                </div>
+            </div>
 
+            <!-- breadcrumb -->
+            <?php // echo $this->navigation()->breadcrumbs()->setPartial(array('breadcrumbs.phtml', 'default')); ?>
+            
             <!-- Content -->
             <?php echo $this->layout()->content ?>
             
             <footer>
-                <hr/>
                 <p>© SDIS 62 - 2013</p>
             </footer>
 

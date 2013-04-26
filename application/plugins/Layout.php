@@ -14,10 +14,7 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             
         // On lie les feuilles de style
         $view->headLink()
-            ->appendStylesheet('/components/bootstrap/less/bootstrap.less', 'all', null, array('rel' => 'stylesheet/less'))
-            ->appendStylesheet('/components/bootstrap/less/responsive.less', 'all', null, array('rel' => 'stylesheet/less'))
-            ->appendStylesheet('/components/tablesorter.theme.bootstrap2.css/css/theme.bootstrap2.css')
-            ->appendStylesheet('/components/chosen/chosen/chosen.css');
+            ->appendStylesheet('/css/main.less', 'all', null, array('rel' => 'stylesheet/less'));
             
         // Balises META de l'application
         $view->headMeta()
