@@ -14,11 +14,6 @@
                     <label>Voir mon emploi du temps</label>
                     <uri>https://mail.sdis62.fr/owa/?cmd=contents&amp;module=calendar&amp;view=weekly</uri>
                 </calendar>
-                <edit>
-                    <label>Modifier mes informations</label>
-                    <controller>identity</controller>
-                    <action>edit</action>
-                </edit>
                 <divider>
                     <uri>divider</uri>
                 </divider>

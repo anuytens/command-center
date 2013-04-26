@@ -26,7 +26,13 @@
                 <span class="muted">Pas de clés disponibles.</span>
                 <?php endif ?>
             </td>
-            <td><?php echo $application->isAvailable() ? "<span class='label label-success'>Fonctionne</span>" : "<span class='label label-error'>Inaccessible</span>" ?></td>
+            <td>
+                <?php if($application->isActive()) : ?>
+                <?php echo $application->isAvailable() ? "<span class='label label-success'>Fonctionne</span>" : "<span class='label label-error'>Inaccessible</span>" ?>
+                <?php else : ?>
+                <span class='label'>Inactive</span>
+                <?php endif ?>
+            </td>
             <td><a href="<?php echo $this->url(array("action" => "edit-application", "id" => $application->getId())) ?>">Modifier</a></td>
         </tr>
         <?php endforeach ?>

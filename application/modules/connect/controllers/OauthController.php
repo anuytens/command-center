@@ -58,17 +58,20 @@ class Connect_OauthController extends Zend_Controller_Action
         $row_consumer = $model_consumer->getConsumerByConsumerKey($this->_helper->oauthProvider->getProvider()->consumer_key);
         
         // store the request token
-        $model_tokens = new Connect_Model_Tokens;
-        $row_newToken = $model_tokens->createRow();
-        $row_newToken->id_application = $row_consumer->id_application;
-        $row_newToken["id_token-types"] = 1;
-        $row_newToken->token = $oauth_token;
-        $row_newToken->token_secret = $oauth_token_secret;
-        $row_newToken->callback = $this->_helper->oauthProvider->getProvider()->callback;
-        $row_newToken->save();
-        
-        // output the response
-        echo "oauth_token=" . $oauth_token . "&oauth_token_secret=" . $oauth_token_secret . "&oauth_callback_confirmed=true";
+        if($row_consumer != null)
+        {
+            $model_tokens = new Connect_Model_Tokens;
+            $row_newToken = $model_tokens->createRow();
+            $row_newToken->id_application = $row_consumer->id_application;
+            $row_newToken["id_token-types"] = 1;
+            $row_newToken->token = $oauth_token;
+            $row_newToken->token_secret = $oauth_token_secret;
+            $row_newToken->callback = $this->_helper->oauthProvider->getProvider()->callback;
+            $row_newToken->save();
+            
+            // output the response
+            echo "oauth_token=" . $oauth_token . "&oauth_token_secret=" . $oauth_token_secret . "&oauth_callback_confirmed=true";
+        }
     }
 
     /**
@@ -88,8 +91,8 @@ class Connect_OauthController extends Zend_Controller_Action
         $oauth_token_secret = sha1($this->provider->generateToken(20,true));
 
         // update the token
-        $model_tokens = new Api_Model_Tokens;
-        $row_token = $model_tokens->getTokenByToken($this->_helper->oauthProvider->getProvider()->token);
+        $model_tokens = new Connect_Model_Tokens;
+        $row_token = $model_tokens->getTokenByToken($this->_request->getQuery("oauth_token"));
         $row_token->token = $oauth_token;
         $row_token->token_secret = $oauth_token_secret;
         $row_token["id_token-types"] = 2;
@@ -111,52 +114,60 @@ class Connect_OauthController extends Zend_Controller_Action
         $model_consumer = new Connect_Model_Consumers;
         $row_consumer = $model_consumer->getByToken($this->_request->getQuery("oauth_token"));
         
-        // service user
-        $connect_service = new Connect_Service_Connect;
-
-        // Check if there is a request
-        if($this->_request->isPost())
+        // check the consumer
+        if($row_consumer != null)
         {
-            if(!$connect_service->login($this->_request->getPost()))
+            // service user
+            $connect_service = new Connect_Service_Connect;
+
+            // Check if there is a request
+            if($this->_request->isPost())
             {
-                $this->_helper->flashMessenger(array(
-                    'context' => 'warning',
-                    'title' => 'Oups !',
-                    'message' => 'Les identifiants ne sont pas valides. Rééssayez.'
-                ));
+                if(!$connect_service->login($this->_request->getPost()))
+                {
+                    $this->_helper->flashMessenger(array(
+                        'context' => 'warning',
+                        'title' => 'Oups !',
+                        'message' => 'Les identifiants ne sont pas valides. Rééssayez.'
+                    ));
+                }
             }
+
+            // get the auth instance
+            $auth = Zend_Auth::getInstance();
+
+            // If user is already connected, perform the oauth
+            if($auth->hasIdentity())
+            {
+                $identity = $auth->getIdentity();
+            
+                $this->_helper->viewRenderer->setNoRender(true);
+
+                $oauth_token = $this->_request->getQuery("oauth_token");
+                $oauth_verifier = sha1($this->provider->generateToken(20,true));
+
+                // update the request token
+                $model_tokens = new Connect_Model_Tokens;
+                $row_token = $model_tokens->getTokenByToken($oauth_token);
+                $row_token->token_verifier = $oauth_verifier;
+                $row_token->save();
+                
+                // associate the user to the token
+                $model_tokensUser = new Connect_Model_TokensUser;
+                $row_newTokenUser = $model_tokensUser->createRow();
+                $row_newTokenUser->id_token = $row_token->id_token;
+                $row_newTokenUser->id_user = $identity["id"];
+                $row_newTokenUser->save();
+
+                header( 'location: ' . $row_token->callback . '?oauth_token=' . $oauth_token . '&oauth_verifier=' . $oauth_verifier );
+            }
+            
+            $this->view->form = $connect_service->getLoginForm();
+            $this->view->consumer = $row_consumer->name;
         }
-
-        // get the auth instance
-        $auth = Zend_Auth::getInstance();
-
-        // If user is already connected, perform the oauth
-        if($auth->hasIdentity())
+        else
         {
-            $identity = $auth->getIdentity();
-        
-            $this->_helper->viewRenderer->setNoRender(true);
-
-            $oauth_token = $this->_request->getQuery("oauth_token");
-            $oauth_verifier = sha1($this->provider->generateToken(20,true));
-
-            // update the request token
-            $model_tokens = new Connect_Model_Tokens;
-            $row_token = $model_tokens->getTokenByToken($oauth_token);
-            $row_token->token_verifier = $oauth_verifier;
-            $row_token->save();
-            
-            // associate the user to the token
-            $model_tokensUser = new Connect_Model_TokensUser;
-            $row_newTokenUser = $model_tokensUser->createRow();
-            $row_newTokenUser->id_token = $row_token->id_token;
-            $row_newTokenUser->id_user = $identity["id"];
-            $row_newTokenUser->save();
-            
-            header( 'location: ' . $row_token->callback . '?oauth_token=' . $oauth_token . '&oauth_verifier=' . $oauth_verifier );
+            throw new Exception("Consumer not found (bad token).", 500);
         }
-        
-        $this->view->form = $connect_service->getLoginForm();
-        $this->view->consumer = $row_consumer->name;
     }
 }

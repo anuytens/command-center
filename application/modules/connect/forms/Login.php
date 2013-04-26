@@ -20,11 +20,13 @@ class Connect_Form_Login extends Twitter_Bootstrap_Form_Horizontal
             'validators' => array(new Zend_Validate_StringLength(1,255))
         ));
         
+        /*
         $this->addElement('checkbox', 'remember_me', array(
             'label' => 'Se souvenir de moi',
             'filters' => array(new Zend_Filter_HtmlEntities, new Zend_Filter_StripTags),
             'validators' => array(new Zend_Validate_Int)
         ));
+        */
         
         $this->addElement(new Twitter_Bootstrap_Form_Element_Submit("Connexion", array(
                 "buttonType" => Twitter_Bootstrap_Form_Element_Submit::BUTTON_PRIMARY

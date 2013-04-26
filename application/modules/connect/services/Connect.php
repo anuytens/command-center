@@ -82,6 +82,9 @@ class Connect_Service_Connect
     {
         $auth = Zend_Auth::getInstance();
         $auth_result = null;
+        
+        $connect_session = new Zend_Auth_Storage_Session('connect');
+        $auth->setStorage($connect_session);
     
         // Do I proceed LDAP auth ?
         /*

@@ -1,6 +1,6 @@
 <?php
 
-class Api_UsersController extends Zend_Controller_Action
+class Connect_UserController extends Zend_Controller_Action
 {
 
     public function init()
@@ -29,16 +29,16 @@ class Api_UsersController extends Zend_Controller_Action
             $array_authorizationHeader = $this->_helper->getAuthorizationHeaderAsAssociativeArray();
             
             // get the user by token
-            $model_tokens = new Api_Model_Tokens;
+            $model_tokens = new Connect_Model_Tokens;
             $row_token = $model_tokens->getTokenByToken($array_authorizationHeader["oauth_token"]);
+            $user = $row_token->findApplication_Model_DbTable_UsersViaConnect_Model_TokensUser()->current();
+
+            $service_user = new Application_Service_User;
             
             // get the LDAP account object
-            $this->view->results = $this->_helper->retrieveLdapAccountObject($row_token->getUser()->id_ldap);
+            echo Zend_Json::Encode( $service_user->getAccount($user->id_user)->toArray() );
         }
+        
+        die();
     }
-
-
 }
-
-
-

@@ -16,8 +16,8 @@ class Application_Plugin_ForceLogin extends Zend_Controller_Plugin_Abstract
             $request->getModuleName() !== "connect"
         )
         {
-            $request->setControllerName($controller_login);
-            $request->setActionName("index");
+            //$request->setControllerName($controller_login);
+            //$request->setActionName("index");
         }
     }
 }
