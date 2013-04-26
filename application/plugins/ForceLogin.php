@@ -13,11 +13,12 @@ class Application_Plugin_ForceLogin extends Zend_Controller_Plugin_Abstract
         if (
             !Zend_Auth::getInstance()->hasIdentity() &&
             $controller_login !== $request->getControllerName() &&
-            $request->getModuleName() !== "connect"
+            "error" !== $request->getControllerName() &&
+            $request->getModuleName() != "connect"
         )
         {
-            //$request->setControllerName($controller_login);
-            //$request->setActionName("index");
+            $request->setControllerName($controller_login);
+            $request->setActionName("index");
         }
     }
 }
