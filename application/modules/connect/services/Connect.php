@@ -71,7 +71,8 @@ class Connect_Service_Connect
             return $this->proceedLogin(
                 $data["email"],
                 $data["password"],
-                $data["remember_me"]
+                //$data["remember_me"]
+                false
             );
         }
 
@@ -170,6 +171,7 @@ class Connect_Service_Connect
             $auth->getStorage()->write($auth_result->getIdentity());
             
             // remember the user ?
+            /*
             if($remember_me == 1)
             {
                 $seconds  = 60 * 60 * 24 * 7; // 7 days
@@ -179,6 +181,7 @@ class Connect_Service_Connect
             {
                 Zend_Session::forgetMe();
             }
+            */
             
             return true;
         }

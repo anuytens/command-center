@@ -1,5 +1,4 @@
 {
-    "name": "sdis62/users",
     "require": {
         "emagister/zend-form-decorators-bootstrap": "dev-master",
         "kdubuc/zf1-navigation-view-helper-bootstrap": "dev-master",

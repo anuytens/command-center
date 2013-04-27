@@ -4,10 +4,12 @@
 		<home>
 			<label>Flux d'activités</label>
 			<controller>index</controller>
+            <resource>authenticated</resource>
 		</home>
         <users>
             <label>Gestion des utilisateurs</label>
             <controller>users</controller>
+            <resource>authenticated</resource>
             <pages>
                 <navheader1>
                     <label>Liste des utilisateurs</label>
@@ -83,6 +85,7 @@
         <applications>
             <label>Gestion des applications</label>
             <controller>applications</controller>
+            <resource>authenticated</resource>
            <pages>
                 <navheader1>
                     <label>Liste des applications</label>

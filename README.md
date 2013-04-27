@@ -1,7 +1,6 @@
-# Module utilisateur
+# Command Center
 
-Application utilisateur de base permettant :
-* De renseigner ses données personnelles ;
-* De rassembler les données métiers de l'utilisateur ;
-* De fournir un service provider pour les applications tierces ;
-* Gérer ou visualiser les droits d'un ou de plusieurs utilisateurs.
+Le Command Center est le module permettant de gérer les utilisateurs et les applications de l'écosystème.
+Il gère aussi les permissions entre les utilisateurs et les accès aux applications.
+
+Accessible à l'adresse : https://apps.sdis62.fr/admin

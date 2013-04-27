@@ -22,7 +22,6 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             ->appendHttpEquiv('X-UA-Compatible', 'IE=edge,chrome=1')
             ->appendName('description', 'Centre de commande de l\'écosystème applicatif du SDIS 62')
             ->appendName('author', 'SDIS 62');
-            //->appendName('keywords', 'KICKSTATR, tags')
             
         // Scripts éxecutés en fin de page
         $view->inlineScript()

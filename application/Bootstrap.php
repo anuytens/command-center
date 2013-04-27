@@ -11,6 +11,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->loadViewHelpers();
         $this->loadNavigation();
         $this->loadPlugins();
+        $this->loadAcl();
 		parent::run();
 	}
 
@@ -35,6 +36,40 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->registerHelper(new Menu(), 'menu');
 	}
     
+    public function loadACL()
+    {
+        // get the view
+        $layout = $this->getResource("layout");
+		$view = $layout->getView();
+        
+        // setup the acl
+        $acl = new Zend_Acl();
+        
+        // roles
+        $acl->addRole(new Zend_Acl_Role('user'));
+        $acl->addRole(new Zend_Acl_Role('anonymous'));
+        
+        // resources
+        $acl->add(new Zend_Acl_Resource('authenticated'));
+        $acl->add(new Zend_Acl_Resource('not_authenticated'));
+        
+        // règles
+        $acl->allow('anonymous', array('not_authenticated'));
+        $acl->deny('anonymous', array('authenticated'));
+        $acl->deny('user', array('not_authenticated'));
+        $acl->allow('user', array('authenticated'));
+        
+        // setup
+        if(Zend_Auth::getInstance()->hasIdentity())
+        {
+            $view->navigation($view->nav)->setAcl($acl)->setRole("user");
+        }
+        else
+        {
+            $view->navigation($view->nav)->setAcl($acl)->setRole("anonymous");
+        }
+    }
+    
     public function loadNavigation()
     {
         // get the view
@@ -43,20 +78,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         // create the navigation menus
         $view->nav = new Zend_Navigation(new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav'));
-
-        // setup the acl
-        $acl = new Zend_Acl();
-        
-        $acl->addRole(new Zend_Acl_Role('guest')); // not authenicated
-        $acl->addRole(new Zend_Acl_Role('admin'));
-        
-        $acl->add(new Zend_Acl_Resource('admin'));
-        //$acl->add(new Zend_Acl_Resource('full'));
-        
-        $acl->allow('admin', 'admin');
-        $acl->deny('guest', 'admin');
-        
-        $view->navigation($view->nav)->setAcl($acl)->setRole("guest");
+        $view->navigation($view->nav);
         
         // Build the user nav
         $user_service = new Application_Service_User;
@@ -67,13 +89,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         {
             $identity = Zend_Auth::getInstance()->getIdentity();
             $view->user_nav->findOneByLabel("[USER_NAME]")->setLabel($identity["display_name"]);
+            $view->user_nav->findOneByLabel("Se connecter")->setVisible(false);
+        }
+        else
+        {
+            $view->user_nav->findOneByLabel("[USER_NAME]")->setVisible(false);
         }
     }
     
     public function loadPlugins()
     {
         Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_Layout);
-        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_ForceLogin);
+        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_AccessCheck);
     }
     
     public function loadThirdParty()

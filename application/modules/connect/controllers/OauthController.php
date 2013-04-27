@@ -140,26 +140,42 @@ class Connect_OauthController extends Zend_Controller_Action
             if($auth->hasIdentity())
             {
                 $identity = $auth->getIdentity();
-            
-                $this->_helper->viewRenderer->setNoRender(true);
-
-                $oauth_token = $this->_request->getQuery("oauth_token");
-                $oauth_verifier = sha1($this->provider->generateToken(20,true));
-
-                // update the request token
-                $model_tokens = new Connect_Model_Tokens;
-                $row_token = $model_tokens->getTokenByToken($oauth_token);
-                $row_token->token_verifier = $oauth_verifier;
-                $row_token->save();
                 
-                // associate the user to the token
-                $model_tokensUser = new Connect_Model_TokensUser;
-                $row_newTokenUser = $model_tokensUser->createRow();
-                $row_newTokenUser->id_token = $row_token->id_token;
-                $row_newTokenUser->id_user = $identity["id"];
-                $row_newTokenUser->save();
+                // Check if the user can access to the app
+                $user_service = new Application_Service_User;
+                $user = $user_service->getAccount($identity["id"]);
+                $application = new Application_Model_Application;
+                $application->setId($row_consumer->id_application);
+                if($user->hasApplication($application))
+                {
+                    $this->_helper->flashMessenger(array(
+                        'context' => 'warning',
+                        'title' => 'Accès interdit !',
+                        'message' => 'Vous n\'êtes pas autorisé à accéder à cette application.'
+                    ));
+                }
+                else
+                {
+                    $this->_helper->viewRenderer->setNoRender(true);
 
-                header( 'location: ' . $row_token->callback . '?oauth_token=' . $oauth_token . '&oauth_verifier=' . $oauth_verifier );
+                    $oauth_token = $this->_request->getQuery("oauth_token");
+                    $oauth_verifier = sha1($this->provider->generateToken(20,true));
+
+                    // update the request token
+                    $model_tokens = new Connect_Model_Tokens;
+                    $row_token = $model_tokens->getTokenByToken($oauth_token);
+                    $row_token->token_verifier = $oauth_verifier;
+                    $row_token->save();
+                    
+                    // associate the user to the token
+                    $model_tokensUser = new Connect_Model_TokensUser;
+                    $row_newTokenUser = $model_tokensUser->createRow();
+                    $row_newTokenUser->id_token = $row_token->id_token;
+                    $row_newTokenUser->id_user = $identity["id"];
+                    $row_newTokenUser->save();
+
+                    header( 'location: ' . $row_token->callback . '?oauth_token=' . $oauth_token . '&oauth_verifier=' . $oauth_verifier );
+                }
             }
             
             $this->view->form = $connect_service->getLoginForm();

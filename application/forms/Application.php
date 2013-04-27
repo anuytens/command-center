@@ -53,6 +53,7 @@ class Application_Form_Application extends Twitter_Bootstrap_Form_Horizontal
         // Accessible ou pas ?
         $this->addElement('checkbox', 'access', array(
             'label' => 'Application accessible ?',
+            'description' => 'Rendre une application accessible génère des clés servant pour l\'authorisation de connexion. Ces clés sont générées qu\'une seule fois. Ceci est valable que pour les applications de l\'écosystème.',
             'filters' => array('StripTags'),
             'validators' => array('Int'),
             'value' => 1

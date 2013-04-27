@@ -7,13 +7,18 @@ class IdentityController extends SDIS62_Oauth_Consumer_Controller_Abstract
     public function authAction()
     {
         // get my session
-		$session = new Zend_Session_Namespace();
+        $session = new Zend_Session_Namespace();
+        
+		// get the instance of auth
+        $auth = Zend_Auth::getInstance();
         
         // if we have not request_token
         if($session->ACCESS_TOKEN)
         {
             // Get the access token
             $access_token = unserialize($session->ACCESS_TOKEN);
+            
+            // Get the user account
             $connect = new SDIS62_Service_Connect($access_token, array(
                 'callbackUrl' => $this->config_file->oauth->callback,
                 'siteUrl' => $this->config_file->oauth->siteurl,
@@ -21,7 +26,13 @@ class IdentityController extends SDIS62_Oauth_Consumer_Controller_Abstract
                 'consumerSecret' => $this->config_file->oauth->consumersecret // consumer secret
             ));
             
-            Zend_Auth::getInstance()->getStorage()->write($connect->getAccount());
+            // Store the user and the access token
+            $data = $connect->getAccount();
+            $data["ACCESS_TOKEN"] = $access_token;
+            Zend_Auth::getInstance()->getStorage()->write($data);
+            
+            // Unset the access token the session
+            unset($session->ACCESS_TOKEN);
 
             $this->_helper->redirector("index", "index");
         }
@@ -38,9 +49,9 @@ class IdentityController extends SDIS62_Oauth_Consumer_Controller_Abstract
 
         // clear the identity
         $auth->clearIdentity();
-        
+
         // Forget the session lifetime
-        Zend_Session::forgetMe();
+        // Zend_Session::forgetMe();
                 
         $this->_helper->flashMessenger(array(
             'context' => 'success',

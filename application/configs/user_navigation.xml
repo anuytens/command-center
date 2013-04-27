@@ -10,6 +10,11 @@
                     <controller>user</controller>
                     <action>index</action>
                 </view>
+                <notifications>
+                    <label>Mes notifications [NUM_NOTIFICATIONS]</label>
+                    <controller>user</controller>
+                    <action>notifications</action>
+                </notifications>
                 <calendar>
                     <label>Voir mon emploi du temps</label>
                     <uri>https://mail.sdis62.fr/owa/?cmd=contents&amp;module=calendar&amp;view=weekly</uri>
