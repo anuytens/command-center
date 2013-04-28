@@ -1,12 +1,6 @@
 {
-  "name": "public",
-  "version": "0.0.0",
   "dependencies": {
-    "bootstrap": "2.*.*",
-    "less.js": "1.*.*",
-    "modernizr": "2.*.*",
-    "jquery.tablesorter" : "2.*.*",
-    "tablesorter.theme.bootstrap2.css" : "dev-master",
-    "chosen" : "dev-master"
+    "sdis62-ui": "1.*.*",
+    "requirejs": "2.*.*"
   }
 }

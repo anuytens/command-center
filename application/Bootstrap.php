@@ -100,7 +100,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     public function loadPlugins()
     {
         Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_Layout);
-        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_AccessCheck);
+        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_AccessCheck("identity"));
     }
     
     public function loadThirdParty()

@@ -8,13 +8,20 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
         $view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
         
         // On définit le titre de l'application
-        $view->headTitle("Module utilisateur")
+        $view->headTitle("Command Center")
             ->setSeparator(" | ")
             ->append(strip_tags( $view->navigation()->breadcrumbs()->setMinDepth(0)->setSeparator(" > ") ));
             
-        // On lie les feuilles de style
-        $view->headLink()
-            ->appendStylesheet('/css/main.less', 'all', null, array('rel' => 'stylesheet/less'));
+        // LESS file for development env
+        // min CSS file for production env
+        if(APPLICATION_ENV !== "production")
+        {
+            $view->headLink()->appendStylesheet('/css/main.less?v=' . time(), 'all', null, array('rel' => 'stylesheet/less'));
+        }
+        else
+        {
+            $view->headLink()->appendStylesheet('/css/main.css', 'all');
+        }
             
         // Balises META de l'application
         $view->headMeta()
@@ -23,19 +30,22 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             ->appendName('description', 'Centre de commande de l\'écosystème applicatif du SDIS 62')
             ->appendName('author', 'SDIS 62');
             
-        // Scripts éxecutés en fin de page
-        $view->inlineScript()
-            ->appendFile("/components/less.js/dist/less-1.3.3.min.js")
-            ->appendFile("/components/jquery/jquery.min.js")
-            ->appendFile("/components/bootstrap/js/bootstrap-collapse.js")
-            ->appendFile("/components/bootstrap/js/bootstrap-dropdown.js")
-            ->appendFile("/components/bootstrap/js/bootstrap-alert.js")
-            ->appendFile("/components/chosen/chosen/chosen.jquery.min.js")
-            ->appendFile("/components/jquery.tablesorter/js/jquery.tablesorter.min.js")
-            ->appendFile("/js/main.js");
-            
+        // Javascript
+        // (LESS required for non-production env)
+        if(APPLICATION_ENV !== "production")
+        {
+            $view->inlineScript()
+                ->setAllowArbitraryAttributes(true)
+                ->appendFile("/components/less.js/dist/less-1.3.3.min.js")
+                ->appendFile("/components/requirejs/require.js", "text/javascript", array("data-main" => "/js/main"));
+        }
+        else
+        {
+            $view->inlineScript()
+            ->appendFile("/js/main.min.js", "text/javascript");
+        }
+ 
         // Icône du site
-        $view->headLink()
-            ->headLink(array("rel" => "shortcut icon", "href" => "/favicon.ico"));
+        $view->headLink()->headLink(array("rel" => "shortcut icon", "href" => "/favicon.ico"));
     }
 }
