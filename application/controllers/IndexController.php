@@ -14,9 +14,7 @@ class IndexController extends Zend_Controller_Action
      * index
      */
     public function indexAction()
-    {
-        $command_center = Application_Service_CommandCenter::getInstance();
-        // $command_center->getUser();
+    {   
     }
 
 }

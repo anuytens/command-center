@@ -3,13 +3,13 @@
 // =======================================================================
 
 define('common', [
-    "../components/jquery/jquery.min",
-    "../components/bootstrap/js/bootstrap-collapse",
-    "../components/bootstrap/js/bootstrap-dropdown",
-    "../components/bootstrap/js/bootstrap-alert",
-    "../components/chosen/chosen/chosen.jquery.min",
-    "../components/jquery.tablesorter/js/jquery.tablesorter.min",
-    "../components/sdis62-ui/js/main.js"
+    "/components/jquery/jquery.min.js",
+    "/components/bootstrap/js/bootstrap-collapse.js",
+    "/components/bootstrap/js/bootstrap-dropdown.js",
+    "/components/bootstrap/js/bootstrap-alert.js",
+    "/components/chosen/chosen/chosen.jquery.min.js",
+    "/components/jquery.tablesorter/js/jquery.tablesorter.min.js",
+    "/components/sdis62-ui/js/main.js"
 ], function() {
 
     // =======================================================================

@@ -81,26 +81,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->navigation($view->nav);
         
         // Build the user nav
-        $user_service = new Application_Service_User;
-        $view->user_nav = new Zend_Navigation($user_service->getNavigationXML());
-        
-        // If we are connected, replace the label by the username
         if(Zend_Auth::getInstance()->hasIdentity())
         {
-            $identity = Zend_Auth::getInstance()->getIdentity();
-            $view->user_nav->findOneByLabel("[USER_NAME]")->setLabel($identity["display_name"]);
-            $view->user_nav->findOneByLabel("Se connecter")->setVisible(false);
+            $view->user_nav = new Zend_Navigation(Zend_Auth::getInstance()->getIdentity()->navigation);
         }
         else
         {
-            $view->user_nav->findOneByLabel("[USER_NAME]")->setVisible(false);
+            
         }
     }
     
     public function loadPlugins()
     {
         Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_Layout);
-        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_AccessCheck("identity"));
+        Zend_Controller_Front::getInstance()->registerPlugin(new Application_Plugin_AccessCheck("identity", array(), array("api")));
     }
     
     public function loadThirdParty()

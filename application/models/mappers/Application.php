@@ -114,6 +114,10 @@ class Application_Model_Mapper_Application
                 case "id":
                     $select->where("applications.id_application = ?", $value);
                     break;
+                    
+                case "consumer_key":
+                    $select->where("applications.consumer_key = ?", $value);
+                    break;
             }
         }
             
@@ -158,6 +162,20 @@ class Application_Model_Mapper_Application
      {
         return $this->findByCriteria(array(
             "id" => $id
+        ));
+     }
+     
+      /**
+     * Get applications by consumer key
+     *
+     * @param  string consumer_key
+     * @return array<Application_Model_Application>
+     * @final
+     */
+     final public function getByConsumerKey($consumer_key)
+     {
+        return $this->findByCriteria(array(
+            "consumer_key" => $consumer_key
         ));
      }
      

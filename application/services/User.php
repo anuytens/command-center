@@ -267,12 +267,12 @@ class Application_Service_User
                         
                     case "Application_Model_Profile_Elu_Maire" :
                         $data["typeprofile"] = 3;
-                        $data["db_elu"]["db_elu_prefet"]["department"] = $uset->getProfile()->getCity();
+                        $data["db_elu"]["db_elu_prefet"]["department"] = $user->getProfile()->getCity();
                         break;
                         
                     case "Application_Model_Profile_Elu_Prefet" :
                         $data["typeprofile"] = 3;
-                        $data["db_elu"]["db_elu_prefet"]["department"] = $uset->getProfile()->getDepartment();
+                        $data["db_elu"]["db_elu_prefet"]["department"] = $user->getProfile()->getDepartment();
                         break;
                 }
                 

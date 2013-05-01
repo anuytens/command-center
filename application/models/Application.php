@@ -166,7 +166,7 @@ class Application_Model_Application extends Application_Model_Abstract
     */
     public function isAvailable()
     {
-        $socket = @fsockopen(parse_url($this->getURL(), PHP_URL_HOST), 80);
+        $socket = @fsockopen(parse_url($this->getURL(), PHP_URL_HOST), 80, $errno, $errstr, 1);
         
         if ($socket === false)
         {
@@ -195,8 +195,13 @@ class Application_Model_Application extends Application_Model_Abstract
     */
     public function isLegacy()
     {
-        $url = explode(".", parse_url($this->getURL(), PHP_URL_HOST));
-        return $url[1] === "sdis62";
+        if(!$this->isEcosystem())
+        {
+            $url = explode(".", parse_url($this->getURL(), PHP_URL_HOST));
+            return $url[1] === "sdis62";
+        }
+        
+        return false;
     }
     
     /**
@@ -207,5 +212,35 @@ class Application_Model_Application extends Application_Model_Abstract
     public function isEcosystem()
     {
       return parse_url($this->getURL(), PHP_URL_HOST) == "apps.sdis62.fr";
+    }
+    
+    /**
+     * Retrieve the application's informations in an array
+     *
+     * @return array
+     */     
+    public function toArray()
+    {
+        $domain = "extern";
+        
+        if($this->isEcosystem())
+        {
+            $domain = "ecosystem";
+        }
+        elseif($this->isLegacy())
+        {
+            $domain = "legacy";
+        }
+        
+        return array(
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "is_active" => $this->isActive(),
+            "url" => $this->getURL(),
+            "is_active" => $this->isActive(),
+            "consumer_key" => $this->getConsumerKey(),
+            "consumer_secret" => $this->getCOnsumerSecret(),
+            "domain" => $domain
+        );
     }
 }

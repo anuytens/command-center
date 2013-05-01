@@ -37,7 +37,8 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             $view->inlineScript()
                 ->setAllowArbitraryAttributes(true)
                 ->appendFile("/components/less.js/dist/less-1.3.3.min.js")
-                ->appendFile("/components/requirejs/require.js", "text/javascript", array("data-main" => "/js/main"));
+                ->appendFile("/components/requirejs/require.js")
+                ->appendFile("/js/main.js");
         }
         else
         {

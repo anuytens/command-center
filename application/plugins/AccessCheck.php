@@ -22,6 +22,13 @@ class Application_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
     private $excludes_controllers_list;
     
     /**
+     * List of excludes modules
+     *
+     * @var array
+     */
+    private $excludes_modules_list;
+    
+    /**
      * Redirection controller
      *
      * @var string
@@ -36,12 +43,14 @@ class Application_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
      * @return Application_Plugin_AccessCheck
      * 
      */  
-    public function __construct($redirection_controller, array $excludes_controllers_list = array())
+    public function __construct($redirection_controller, array $excludes_controllers_list = array(), array $excludes_modules_list = array())
     {
         $this->excludes_controllers_list = $excludes_controllers_list;
+        $this->excludes_modules_list = $excludes_modules_list;
         $this->redirection_controller = $redirection_controller;
         
         $this->excludes_controllers_list[] = "error";
+        $this->excludes_controllers_list[] = $redirection_controller;
     }
 
     /**
@@ -54,16 +63,18 @@ class Application_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
     {
         // get the view
         $view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
+        
+        if(in_array($request->getControllerName(), $this->excludes_controllers_list) || in_array($request->getModuleName(), $this->excludes_modules_list))
+        {
+            return;
+        }
 
         // If no connected, AccessCheck based on the excludes_controllers_list
         // Else based on navigation and resources
         if (!Zend_Auth::getInstance()->hasIdentity())
         {
-            if(!in_array($request->getControllerName(), $this->excludes_controllers_list))
-            {
-                $request->setControllerName($this->redirection_controller);
-                $request->setActionName("index");
-            }
+            $request->setControllerName($this->redirection_controller);
+            $request->setActionName("index");
         }
         else
         {
@@ -75,18 +86,21 @@ class Application_Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract
             
             // Get the current page
             $page = $view->navigation($view->nav)->findOneBy('active', true);
-
-            // Get page resource required
-            $resource = $this->getPageResource($page);
             
-            // Get page privilege required
-            $privilege = $this->getPagePrivilege($page);
-
-            // check permissions
-            if (!$acl->isAllowed($role, $resource, $privilege) && $resource !== null)
+            if($page !== null)
             {
-                $request->setControllerName('error');
-                $request->setActionName('error');
+                // Get page resource required
+                $resource = $this->getPageResource($page);
+                
+                // Get page privilege required
+                $privilege = $this->getPagePrivilege($page);
+
+                // check permissions
+                if (!$acl->isAllowed($role, $resource, $privilege) && $resource !== null)
+                {
+                    $request->setControllerName('error');
+                    $request->setActionName('error');
+                }
             }
         }
     }
