@@ -7,6 +7,10 @@ defined('APPLICATION_PATH')
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+    
+// Define assets path
+defined('ASSETS_PATH')
+    || define('ASSETS_PATH', (getenv('ASSETS_PATH') ? getenv('ASSETS_PATH') : ( in_array(APPLICATION_ENV, array("development", "testing")) ? "/" : dirname($_SERVER["PHP_SELF"]) . DIRECTORY_SEPARATOR )));
 
 // Get include path
 set_include_path(implode(PATH_SEPARATOR, array(

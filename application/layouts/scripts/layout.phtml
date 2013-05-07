@@ -16,7 +16,7 @@
         <?php echo $this->headStyle() ?>
         <?php echo $this->headScript() ?>
 
-        <script src="/components/modernizr/modernizr.js"></script>
+        <script src="<?php echo ASSETS_PATH ?>components/modernizr/modernizr.js"></script>
     </head>
     
     <body>
@@ -34,7 +34,7 @@
                             <span class="icon-bar"></span>
                         </a>
                         <ul class="nav">
-                            <li class="logo"><img src="/components/sdis62-ui/img/logo_sdis_pastille.png" alt="SDIS 62" /></li>
+                            <li class="logo"><img src="<?php echo ASSETS_PATH ?>components/sdis62-ui/img/logo_sdis_pastille.png" alt="SDIS 62" /></li>
                             <li class="divider-vertical"></li>
                             <li class="brand"><span style="color: #D01F3C">Command Center</span></li>
                         </ul>
@@ -79,7 +79,7 @@
 
             <!-- breadcrumb -->
             <?php // echo $this->navigation()->breadcrumbs()->setPartial(array('breadcrumbs.phtml', 'default')); ?>
-            
+
             <!-- Content -->
             <?php echo $this->layout()->content ?>
             

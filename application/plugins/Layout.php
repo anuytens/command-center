@@ -6,7 +6,7 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
     {
         // On récupère la vue
         $view = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getResource('view');
-        
+
         // On définit le titre de l'application
         $view->headTitle("Command Center")
             ->setSeparator(" | ")
@@ -16,11 +16,11 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
         // min CSS file for production env
         if(APPLICATION_ENV !== "production")
         {
-            $view->headLink()->appendStylesheet('/css/main.less?v=' . time(), 'all', null, array('rel' => 'stylesheet/less'));
+            $view->headLink()->appendStylesheet(ASSETS_PATH . 'css/main.less?v=' . time(), 'all', null, array('rel' => 'stylesheet/less'));
         }
         else
         {
-            $view->headLink()->appendStylesheet('/css/main.css', 'all');
+            $view->headLink()->appendStylesheet(ASSETS_PATH . 'css/main.css', 'all');
         }
             
         // Balises META de l'application
@@ -36,17 +36,17 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
         {
             $view->inlineScript()
                 ->setAllowArbitraryAttributes(true)
-                ->appendFile("/components/less.js/dist/less-1.3.3.min.js")
-                ->appendFile("/components/requirejs/require.js")
-                ->appendFile("/js/main.js");
+                ->appendFile(ASSETS_PATH . "components/less.js/dist/less-1.3.3.min.js")
+                ->appendFile(ASSETS_PATH . "components/requirejs/require.js")
+                ->appendFile(ASSETS_PATH . "js/main.js");
         }
         else
         {
             $view->inlineScript()
-            ->appendFile("/js/main.min.js", "text/javascript");
+            ->appendFile(ASSETS_PATH . "js/main.min.js", "text/javascript");
         }
  
         // Icône du site
-        $view->headLink()->headLink(array("rel" => "shortcut icon", "href" => "/favicon.ico"));
+        $view->headLink()->headLink(array("rel" => "shortcut icon", "href" => ASSETS_PATH . "favicon.ico"));
     }
 }
