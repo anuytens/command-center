@@ -1,6 +1,6 @@
 <?php
 
-class IdentityController extends SDIS62_Oauth_Consumer_Controller_Abstract
+class ConnectController extends SDIS62_Oauth_Consumer_Controller_Abstract
 {
     protected $stock_access_token_url = array("stock-access-token");
     
