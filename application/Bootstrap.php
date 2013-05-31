@@ -104,7 +104,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
         else
         {
-            $page = new Zend_Navigation_Page_Uri(array('uri'   => '/identity', 'label' => 'Se connecter'));
+            $page = new Zend_Navigation_Page_Mvc(array('controller' => 'identity', 'label' => 'Se connecter'));
             $view->user_nav = new Zend_Navigation(array($page));
         }
     }
