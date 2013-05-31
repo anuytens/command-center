@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr" >
+
+<head>
+    <meta charset="utf-8">
+    
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+
+    <?php echo $this->headMeta() ?>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+    <?php echo $this->headScript() ?>
+
+    <script src="<?php echo ASSETS_PATH ?>components/modernizr/modernizr.js"></script>
+</head>
+
+<body>
+
+    <div class="container container-primary">
+    
+        <!-- Nav bar -->
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <ul class="nav">
+                        <li class="logo"><img src="<?php echo ASSETS_PATH ?>components/sdis62-ui/img/logo_sdis_pastille.png" alt="SDIS 62" /></li>
+                        <li class="divider-vertical"></li>
+                        <li class="brand"><span style="color: #D01F3C">Command Center</span></li>
+                    </ul>
+                    <div class="nav-collapse collapse">
+                         <?php
+                            echo $this->navigation()
+                                ->menu()
+                                ->setUlClass('nav pull-right')
+                                ->setMaxDepth(-1)
+                                ->setMinDepth(0)
+                                ->setRenderParents(false)
+                                ->setOnlyActiveBranch(false)
+                                ->renderMenu($this->user_nav);
+
+                            echo $this->navigation()
+                                ->menu()
+                                ->setUlClass('nav visible-phone')
+                                ->setMaxDepth(0)
+                                ->setMinDepth(0)
+                                ->setRenderParents(false)
+                                ->setOnlyActiveBranch(false)
+                                ->renderMenu($this->nav);
+                         ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Notifications -->
+        <?php if( $this->flashMessenger()->hasMessages() ): ?>
+            <ul id="flashmessenger" class="unstyled" >
+            <?php echo $this->flashMessenger()->output(); ?>
+            </ul>
+        <?php endif ?>
+        
+        <!-- Barre de navigation -->
+        <div class="navbar hidden-phone">
+            <div class="navbar-inner">
+            <?php
+            echo $this->navigation()
+                ->menu()
+                ->setUlClass('nav nav-fluid')
+                ->setMaxDepth(0)
+                ->setMinDepth(0)
+                ->setRenderParents(false)
+                ->setOnlyActiveBranch(false)
+                ->renderMenu($this->nav);
+            ?>
+            </div>
+        </div>
+        
+    </div>
