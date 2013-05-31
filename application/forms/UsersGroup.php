@@ -28,9 +28,9 @@ class Application_Form_UsersGroup extends Twitter_Bootstrap_Form_Horizontal
         ));
         
         // Liste des utilisateurs
-        $user_service = new Application_Service_User;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         $users = array();
-        foreach($user_service->getAllUsers() as $users_non_parse)
+        foreach($commandcenter_service->getAllUsers() as $users_non_parse)
         {
             $users[$users_non_parse->getId()] = $users_non_parse->getProfile()->getFullName();
         }

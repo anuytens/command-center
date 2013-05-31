@@ -438,7 +438,7 @@ class Application_Service_CommandCenter implements Application_Service_ICommandC
                 $data["users"][] = $user->getId();
             }
             
-            $this->getGroupForm()->populate($data);
+            $this->getUsersGroupForm()->populate($data);
         }
         return $this->users_group_form;
     }

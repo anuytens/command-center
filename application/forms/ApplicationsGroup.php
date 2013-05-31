@@ -21,9 +21,9 @@ class Application_Form_ApplicationsGroup extends Twitter_Bootstrap_Form_Horizont
         ));
         
         // Liste des applications
-        $application_service = new Application_Service_Application;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         $applications = array();
-        foreach($application_service->getAllApplications() as $application_non_parse)
+        foreach($commandcenter_service->getAllApplications() as $application_non_parse)
         {
             $applications[$application_non_parse->getId()] = $application_non_parse->getName();
         }

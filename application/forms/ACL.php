@@ -6,25 +6,23 @@ class Application_Form_ACL extends Twitter_Bootstrap_Form_Horizontal
     {
         $this->setMethod("post");
 
-        $application_service = new Application_Service_Application;
-        $user_service = new Application_Service_User;
-        $usersgroup_service = new Application_Service_UsersGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         // Valeurs du select
         $select = array();
         $select["users"] = array();
         $select["groups"] = array();
-        foreach($user_service->getAllUsers() as $user_non_parse)
+        foreach($commandcenter_service->getAllUsers() as $user_non_parse)
         {
             $select["users"]["user_" . $user_non_parse->getId()] = $user_non_parse->getProfile()->getFullName();
         }
-        foreach($usersgroup_service->getAllGroups() as $group_non_parse)
+        foreach($commandcenter_service->getAllUsersGroups() as $group_non_parse)
         {
             $select["groups"]["group_" . $group_non_parse->getId()] = $group_non_parse->getName();
         }
         
         // Elements
-        foreach($application_service->getAllApplications() as $application)
+        foreach($commandcenter_service->getAllApplications() as $application)
         {
             $this->addElement('multiselect', $application->getId(), array(
                 'label' => $application->getName(),
