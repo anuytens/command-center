@@ -159,4 +159,41 @@ class ApplicationsController extends Zend_Controller_Action
         $group_service = new Application_Service_ApplicationsGroup;
         $this->view->groups = $group_service->getAllGroups();
     }
+    
+    public function getApplicationsStatusAction()
+    {
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
+        
+        // Disable the renderer
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+        // Get all applications
+        $applications = $commandcenter_service->getAllApplications();
+        
+        // Set an array
+        $results = array();
+        
+        // Populate the array with 3 values for each applications
+        // success : available
+        // error : non reachable
+        // inactive
+        foreach($applications as $application)
+        {
+            $value = null;
+            
+            if($application->isActive())
+            {
+                $value = $application->isAvailable() ? "success" : "error";
+            }
+            else
+            {
+                $value = "inactive";
+            }
+            
+            $results[$application->getId()] = $value;
+        }
+        
+        echo Zend_Json::Encode($results);
+    }
 }

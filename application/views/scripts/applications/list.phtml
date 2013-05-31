@@ -16,4 +16,34 @@
 <h2>Les applications affectées à aucun groupe</h2>
 <?php echo $this->partial("applications/partial_list_applications.phtml", array("applications" => $this->applications_without_group)) ?>
 <?php endif ?>
-<p class="muted"><u>Note:</u> Les statuts des applications sont actualisés toutes les minutes.</p>
+<p class="muted"><small><u>Note:</u> Les statuts des applications sont actualisés toutes les minutes.</small></p>
+
+<script>
+    function updateApplicationsStatus() {
+        $.get("<?php echo $this->url(array("action" => "get-applications-status")) ?>", null, function(data, textStatus, jqXHR) {
+            for(var id in data) {
+                var selector = $('*[data-application-id="' + id + '"]').find("span.status");
+                selector.removeClass("label-success label-error label-warning");
+                switch(data[id]) {
+                    case "success":
+                        selector.html("Fonctionne").addClass("label-success");
+                        break;
+                    case "inactive":
+                        selector.html("Inactive");
+                        break;
+                    case "error":
+                        selector.html("Inaccessible").addClass("label-error");
+                        break;
+                    default:
+                        selector.html("Statut indéterminé").addClass("label-warning");
+                        break;
+                }
+            }
+        }, "json");
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        updateApplicationsStatus();
+        setInterval("updateApplicationsStatus();", 60000);
+    }, false);
+</script>
