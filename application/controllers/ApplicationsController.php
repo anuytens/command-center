@@ -15,20 +15,20 @@ class ApplicationsController extends Zend_Controller_Action
 
     public function listAction()
     {
-        $group_service = new Application_Service_ApplicationsGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         // récupération des groupes et des utilisateurs
-        $this->view->groups = $group_service->getAllGroups();
-        $this->view->applications_without_group = $group_service->getApplicationsWithoutGroup();
+        $this->view->groups = $commandcenter_service->getAllApplicationsGroups();
+        $this->view->applications_without_group = $commandcenter_service->getApplicationsByGroupId();
     }
     
     public function addApplicationAction()
     {
-        $application_service = new Application_Service_Application;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         if($this->_request->isPost())
         {
-            if(null !== ($application = $application_service->create($this->_request->getPost())))
+            if(null !== ($application = $commandcenter_service->saveApplication($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -40,20 +40,20 @@ class ApplicationsController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $application_service->getApplicationForm();
+        $this->view->form = $commandcenter_service->getApplicationForm();
         $this->render("form");
     }
     
     public function editApplicationAction()
     {
-        $application_service = new Application_Service_Application;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $application = $application_service->get($this->_request->getParam("id"));
+        $application = $commandcenter_service->getApplicationById($this->_request->getParam("id"));
         $this->view->nav->findOneByLabel("[NOM_APPLICATION]")->setLabel($application->getName());
         
         if($this->_request->isPost())
         {
-            if(null !== ($application = $application_service->save($this->_request->getPost())))
+            if(null !== ($application = $commandcenter_service->saveApplication($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -65,7 +65,7 @@ class ApplicationsController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $application_service->getApplicationForm($this->_request->getParam("id"));
+        $this->view->form = $commandcenter_service->getApplicationForm($this->_request->getParam("id"));
         $this->view->id_application = $this->_request->getParam("id");
     }
     
@@ -73,9 +73,9 @@ class ApplicationsController extends Zend_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender();
         
-        $application_service = new Application_Service_Application;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $application = $application_service->get($this->_request->getParam("id"));
+        $application = $commandcenter_service->getApplicationById($this->_request->getParam("id"));
         
         $this->_helper->flashMessenger(array(
             'context' => 'success',
@@ -83,18 +83,18 @@ class ApplicationsController extends Zend_Controller_Action
             'message' => 'L\'application  ' . $application->getName() . ' a bien été supprimée !'
         ));
         
-        $application_service->delete($application);
+        $commandcenter_service->deleteApplication($application);
         
         $this->_helper->redirector('list');
     }
     
     public function addGroupAction()
     {
-        $group_service = new Application_Service_ApplicationsGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         if($this->_request->isPost())
         {
-            if(null !== ($group = $group_service->create($this->_request->getPost())))
+            if(null !== ($group = $commandcenter_service->saveApplicationsGroup($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -106,15 +106,15 @@ class ApplicationsController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $group_service->getGroupForm();
+        $this->view->form = $commandcenter_service->getApplicationsGroupForm();
         $this->render("form");
     }
     
     public function editGroupAction()
     {
-        $group_service = new Application_Service_ApplicationsGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $group = $group_service->get($this->_request->getParam("id"));
+        $group = $commandcenter_service->getApplicationsGroupById($this->_request->getParam("id"));
         $this->view->nav->findOneByLabel("[NOM_APPLICATION_GROUPE]")->setLabel($group->getName());
         
         if($this->_request->isPost())
@@ -131,7 +131,7 @@ class ApplicationsController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $group_service->getGroupForm($this->_request->getParam("id"));
+        $this->view->form = $commandcenter_service->getApplicationsGroupForm($this->_request->getParam("id"));
         $this->view->id_group = $this->_request->getParam("id");
     }
     
@@ -139,9 +139,9 @@ class ApplicationsController extends Zend_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender();
         
-        $group_service = new Application_Service_ApplicationsGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $group = $group_service->get($this->_request->getParam("id"));
+        $group = $commandcenter_service->getApplicationsGroupById($this->_request->getParam("id"));
         
         $this->_helper->flashMessenger(array(
             'context' => 'success',
@@ -149,15 +149,15 @@ class ApplicationsController extends Zend_Controller_Action
             'message' => 'Le groupe ' . $group->getName() . ' a bien été supprimé !'
         ));
         
-        $group_service->delete($group);
+        $commandcenter_service->deleteApplicationsGroup($group);
         
         $this->_helper->redirector('groups');
     }
 
     public function groupsAction()
     {
-        $group_service = new Application_Service_ApplicationsGroup;
-        $this->view->groups = $group_service->getAllGroups();
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
+        $this->view->groups = $commandcenter_service->getAllApplicationsGroups();
     }
     
     public function getApplicationsStatusAction()

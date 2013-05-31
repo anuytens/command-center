@@ -27,7 +27,7 @@ interface Application_Service_ICommandCenter
     public function getUserById($id_user);
     public function getUserByLastName($last_name);
     public function getUserByEmail($email);
-    public function getUsersByGroupId($id_group);
+    public function getUsersByGroupId($id_group = null);
     public function getUsersApplications($id_user);
     public function isUserAuthorized($id_user, $id_application);
     public function getUserForm($id_user = null);

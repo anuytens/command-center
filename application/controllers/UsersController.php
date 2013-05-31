@@ -15,26 +15,26 @@ class UsersController extends Zend_Controller_Action
 
     public function listAction()
     {
-        $user_service = new Application_Service_User;
-        $this->view->users = $user_service->getAllUsers();
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
+        $this->view->users = $commandcenter_service->getAllUsers();
     }
     
     public function listGroupsAction()
     {
-        $group_service = new Application_Service_UsersGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         // récupération des groupes et des utilisateurs
-        $this->view->groups = $group_service->getAllGroups();
-        $this->view->users_without_group = $group_service->getUsersWithoutGroup();
+        $this->view->groups = $commandcenter_service->getAllUsersGroups();
+        $this->view->users_without_group = $commandcenter_service->getUsersByGroupId();
     }
 
     public function addUserAction()
     {
-        $user_service = new Application_Service_User;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         if($this->_request->isPost())
         {
-            if(null !== ($user = $user_service->save($this->_request->getPost())))
+            if(null !== ($user = $commandcenter_service->saveUser($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -46,15 +46,16 @@ class UsersController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $user_service->getUserForm();
+        $this->view->form = $commandcenter_service->getUserForm();
         $this->render("form");
     }
     
     public function editUserAction()
     {
-        $user_service = new Application_Service_User;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $user = $user_service->getAccount($this->_request->getParam("id"));
+        $user = $commandcenter_service->getUserById($this->_request->getParam("id"));
+        
         foreach($this->view->nav->findAllByLabel("[NOM_USER]") as $node)
         {
             $node->setLabel($user->getProfile()->getFullName());
@@ -62,7 +63,7 @@ class UsersController extends Zend_Controller_Action
         
         if($this->_request->isPost())
         {
-            if(null !== ($user = $user_service->save($this->_request->getPost())))
+            if(null !== ($user = $commandcenter_service->saveUser($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -74,7 +75,7 @@ class UsersController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $user_service->getUserForm($this->_request->getParam("id"));
+        $this->view->form = $commandcenter_service->getUserForm($this->_request->getParam("id"));
         $this->view->id_user = $this->_request->getParam("id");
         $this->render("edit-form");
     }
@@ -83,9 +84,9 @@ class UsersController extends Zend_Controller_Action
     {
         $this->_helper->viewRenderer->setNoRender();
         
-        $user_service = new Application_Service_User;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $user = $user_service->getAccount($this->_request->getParam("id"));
+        $user = $commandcenter_service->getUserById($this->_request->getParam("id"));
         
         $this->_helper->flashMessenger(array(
             'context' => 'success',
@@ -93,7 +94,7 @@ class UsersController extends Zend_Controller_Action
             'message' => $user->getProfile()->getFirstName() . ' a bien été supprimé !'
         ));
         
-        $user_service->delete($user);
+        $commandcenter_service->deleteUser($user);
         
         if($this->_request->getParam("ref") == "users")
         {
@@ -107,11 +108,11 @@ class UsersController extends Zend_Controller_Action
     
     public function aclAction()
     {
-        $user_service = new Application_Service_User;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
 
         if($this->_request->isPost())
         {
-            if(false !== $user_service->saveACL($this->_request->getPost()))
+            if(false !== $commandcenter_service->saveACL($this->_request->getPost()))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -121,21 +122,21 @@ class UsersController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $user_service->getACLForm(true);
+        $this->view->form = $commandcenter_service->getACLForm(true);
         $this->render("form");
     }
     
     public function editGroupAction()
     {
-        $group_service = new Application_Service_UsersGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $group = $group_service->get($this->_request->getParam("id"));
+        $group = $commandcenter_service->getUsersGroupById($this->_request->getParam("id"));
         
         $this->view->nav->findOneByLabel("[NOM_GROUPE]")->setLabel($group->getName());
         
         if($this->_request->isPost())
         {
-            if(null !== ($group = $group_service->save($this->_request->getPost())))
+            if(null !== ($group = $commandcenter_service->saveUsersGroup($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -148,16 +149,16 @@ class UsersController extends Zend_Controller_Action
         }
         
         $this->view->id_group = $this->_request->getParam("id");
-        $this->view->form = $group_service->getGroupForm($this->_request->getParam("id"));
+        $this->view->form = $commandcenter_service->getUsersGroupForm($this->_request->getParam("id"));
     }
     
     public function deleteGroupAction()
     {
         $this->_helper->viewRenderer->setNoRender();
         
-        $group_service = new Application_Service_UsersGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
-        $group = $group_service->get($this->_request->getParam("id"));
+        $group = $commandcenter_service->getUsersGroupById($this->_request->getParam("id"));
         
         $this->_helper->flashMessenger(array(
             'context' => 'success',
@@ -165,18 +166,18 @@ class UsersController extends Zend_Controller_Action
             'message' => 'Le groupe ' . $group->getName() . ' a bien été supprimé !'
         ));
         
-        $group_service->delete($group);
+        $commandcenter_service->deleteUsersGroup($group);
         
         $this->_helper->redirector('groups');
     }
     
     public function addGroupAction()
     {
-        $group_service = new Application_Service_UsersGroup;
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
         
         if($this->_request->isPost())
         {
-            if(null !== ($group = $group_service->create($this->_request->getPost())))
+            if(null !== ($group = $commandcenter_service->saveUsersGroup($this->_request->getPost())))
             {
                 $this->_helper->flashMessenger(array(
                     'context' => 'success',
@@ -188,14 +189,14 @@ class UsersController extends Zend_Controller_Action
             }
         }
         
-        $this->view->form = $group_service->getGroupForm();
+        $this->view->form = $commandcenter_service->getUsersGroupForm();
         $this->render("form");
     }
 
     public function groupsAction()
     {
-        $group_service = new Application_Service_UsersGroup;
-        $this->view->groups = $group_service->getAllGroups();
+        $commandcenter_service = Application_Service_CommandCenter::getInstance();
+        $this->view->groups = $commandcenter_service->getAllUsersGroups();
     }
 
 }
