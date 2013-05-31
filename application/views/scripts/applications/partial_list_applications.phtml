@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <?php foreach($this->applications as $application) : ?>
-        <tr>
+        <tr data-application-id="<?php echo $this->escape($application->getId()) ?>">
             <td><?php echo $this->escape($application->getId()) ?></td>
             <td><?php echo $this->escape($application->getName()) ?></td>
             <td><a href="<?php echo $this->escape($application->getURL()) ?>"><?php echo $this->escape($application->getURL()) ?></a></td>
@@ -27,11 +27,7 @@
                 <?php endif ?>
             </td>
             <td>
-                <?php if($application->isActive()) : ?>
-                <?php echo $application->isAvailable() ? "<span class='label label-success'>Fonctionne</span>" : "<span class='label label-error'>Inaccessible</span>" ?>
-                <?php else : ?>
-                <span class='label'>Inactive</span>
-                <?php endif ?>
+                <span class="status label" >En cours d'analyse ...</span>
             </td>
             <td><a href="<?php echo $this->url(array("action" => "edit-application", "id" => $application->getId())) ?>">Modifier</a></td>
         </tr>
