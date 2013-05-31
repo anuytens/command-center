@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "sdis62-ui": "1.*.*",
-    "requirejs": "2.*.*"
+    "sdis62-ui": "1.*.*"
   }
 }

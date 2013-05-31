@@ -1,16 +1,4 @@
-// =======================================================================
-// Main
-// =======================================================================
-
-define('common', [
-    "/components/jquery/jquery.min.js",
-    "/components/bootstrap/js/bootstrap-collapse.js",
-    "/components/bootstrap/js/bootstrap-dropdown.js",
-    "/components/bootstrap/js/bootstrap-alert.js",
-    "/components/chosen/chosen/chosen.jquery.min.js",
-    "/components/jquery.tablesorter/js/jquery.tablesorter.min.js",
-    "/components/sdis62-ui/js/main.js"
-], function() {
+$(document).ready(function() {
 
     // =======================================================================
     // Comportements pour le formulaire utilisateur
@@ -52,8 +40,5 @@ define('common', [
             $("form.form-user div.db_elu_prefet").show();
         }
     }).change();
-
+    
 });
- 
-// on charge le module commun
-require(['common']);

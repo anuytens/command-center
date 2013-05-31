@@ -31,19 +31,18 @@ class Application_Plugin_Layout extends Zend_Controller_Plugin_Abstract
             ->appendName('author', 'SDIS 62');
             
         // Javascript
+        $view->inlineScript()
+            ->appendFile(ASSETS_PATH . "components/jquery/jquery.min.js")
+            ->appendFile(ASSETS_PATH . "components/bootstrap/docs/assets/js/bootstrap.js")
+            ->appendFile(ASSETS_PATH . "components/chosen/chosen/chosen.jquery.min.js")
+            ->appendFile(ASSETS_PATH . "components/jquery.tablesorter/js/jquery.tablesorter.min.js")
+            ->appendFile(ASSETS_PATH . "components/sdis62-ui/js/main.js")
+            ->appendFile(ASSETS_PATH . "js/main.js");
+
         // (LESS required for non-production env)
         if(APPLICATION_ENV !== "production")
         {
-            $view->inlineScript()
-                ->setAllowArbitraryAttributes(true)
-                ->appendFile(ASSETS_PATH . "components/less.js/dist/less-1.3.3.min.js")
-                ->appendFile(ASSETS_PATH . "components/requirejs/require.js")
-                ->appendFile(ASSETS_PATH . "js/main.js");
-        }
-        else
-        {
-            $view->inlineScript()
-            ->appendFile(ASSETS_PATH . "js/main.min.js", "text/javascript");
+            $view->inlineScript()->appendFile(ASSETS_PATH . "components/less.js/dist/less-1.3.3.min.js");
         }
  
         // Icône du site
