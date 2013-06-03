@@ -1,6 +1,6 @@
 <?php
 
-use ZFBootstrap\View\Helper\Navigation\Menu;
+use ZFBootstrap\View\Helper\Navigation\Menu1;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
