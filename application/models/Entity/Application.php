@@ -14,13 +14,6 @@
  */
 class Application_Model_Entity_Application extends SDIS62_Model_Entity_Abstract implements Application_Model_Entity_Application_Interface
 {
-	/**
-     * Primary key
-     *
-     * @var int
-     */
-	public $primary;
-	
     /**
      * Name of the application
      *

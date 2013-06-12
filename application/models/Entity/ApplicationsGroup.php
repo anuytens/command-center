@@ -12,15 +12,8 @@
  * @category   Application
  * @package    Application_Model_Entity_ApplicationsGroup
  */
-class Application_Model_Entity_ApplicationsGroup extends SDIS62_Model_Entity_Abstract implements Application_Model_Entity_ApplicationsGroup_Interface
+class Application_Model_Entity_ApplicationsGroup extends SDIS62_Model_Entity_Abstract implements Application_Model_Entity_ApplicationsGroup_Interface, Countable
 {
-	/**
-     * Primary key
-     *
-     * @var int
-     */
-	public $primary;
-	
     /**
      * Applications list
      *
@@ -114,7 +107,7 @@ class Application_Model_Entity_ApplicationsGroup extends SDIS62_Model_Entity_Abs
      * @param  Application_Model_Proxy_Application $application
      * @return Application_Model_Entity_ApplicationsGroup Provides fluent interface
      */ 
-    public function add(Application_Model_Application $application)
+    public function add(Application_Model_Proxy_Application $application)
     {
         // avoid duplication
         if(false !== array_search($application, $this->applications))
@@ -133,7 +126,7 @@ class Application_Model_Entity_ApplicationsGroup extends SDIS62_Model_Entity_Abs
      * @param  Application_Model_Proxy_Application $application
      * @return Application_Model_Entity_ApplicationsGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_Application $application)
+    public function remove(Application_Model_Proxy_Application $application)
     {
         // Serach application in user's applications array
         $key_of_application_to_remove = array_search($application, $this->applications);

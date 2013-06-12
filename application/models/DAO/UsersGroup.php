@@ -15,13 +15,14 @@
 class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
 	public static $infosMap = array(
-		'classe' => 'Application_Model_Entity_Objet',
-		'table' => 'objet',
+		'classe' => 'Application_Model_Entity_UsersGroup',
+		'table' => 'usersgroups',
 		'identifier' => array('primary'),
 		'colonnes' => array(
-			array('fieldName' => 'primary', 'columnName' => 'id', 'type' => 'integer'),
-			array('fieldName' => 'label', 'columnName' => 'label', 'type' => 'string'),
-			array('fieldName' => 'idPersonne', 'columnName' => 'idPersonne', 'type' => 'integer', 'targetEntity' => 'Application_Model_Entity_Personne', 'mappingType' => 'ManyToOne')
+			array('fieldName' => 'primary', 'columnName' => 'id_usersgroup', 'type' => 'integer'),
+			array('fieldName' => 'name', 'columnName' => 'name', 'type' => 'string'),
+			array('fieldName' => 'description', 'columnName' => 'description', 'type' => 'string'),
+			array('fieldName' => 'role', 'columnName' => 'role', 'type' => 'integer')
 		)
 	);
 }

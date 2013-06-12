@@ -120,7 +120,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
      */
     public function setProfile(Application_Model_Proxy_Profile $profile)
     {
-        $this->getEntity()->setProfile($role);
+        $this->getEntity()->setProfile($profile);
         return $this;
     }
     

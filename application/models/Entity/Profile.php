@@ -14,13 +14,6 @@
  */
 class Application_Model_Entity_Profile extends SDIS62_Model_Entity_Abstract implements Application_Model_Entity_Profile_Interface
 {
-	/**
-     * Primary key
-     *
-     * @var int
-     */
-	public $primary;
-	
     /**
      * First name.
      *

@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Entity_UsersGroup_Interface
  */
-interface Application_Model_Entity_UsersGroup_Interface implements Countable
+interface Application_Model_Entity_UsersGroup_Interface
 {
     /**
      * Get Users Group's name.
@@ -25,7 +25,7 @@ interface Application_Model_Entity_UsersGroup_Interface implements Countable
      * Set Users Group's name
      *
      * @param  string $name
-     * @return Application_Model_UsersGroup Provides fluent interface
+     * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */
     public function setName($name);
     
@@ -40,7 +40,7 @@ interface Application_Model_Entity_UsersGroup_Interface implements Countable
      * Set Users Group's description
      *
      * @param  string $description
-     * @return Application_Model_UsersGroup Provides fluent interface
+     * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */
     public function setDesc($description);
     
@@ -55,7 +55,7 @@ interface Application_Model_Entity_UsersGroup_Interface implements Countable
      * Set the users group's role
      *
      * @param  int $role
-     * @return Application_Model_UsersGroup Provides fluent interface
+     * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */
     public function setRole($role);
     
@@ -69,31 +69,24 @@ interface Application_Model_Entity_UsersGroup_Interface implements Countable
     /**
      * Set the array of users
      *
-     * @param  array<Application_Model_User> $users
-     * @return Application_Model_UsersGroup Provides fluent interface
+     * @param  array<Application_Model_Proxy_User> $users
+     * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */
     public function setUsers(array $users);
     
     /**
      * Add user
      *
-     * @param  Application_Model_User $user
-     * @return Application_Model_UsersGroup Provides fluent interface
+     * @param  Application_Model_Proxy_User $user
+     * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */ 
-    public function add(Application_Model_User $user);
+    public function add(Application_Model_Proxy_User $user);
     
     /**
      * Remove a user
      *
-     * @param  Application_Model_User $user
-     * @return Application_Model_UsersGroup Provides fluent interface
+     * @param  Application_Model_Proxy_User $user
+     * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_User $user);
-
-    /**
-     * Implements countable. Return the number of users in the group
-     *
-     * @return int
-     */      
-    public function count();
+    public function remove(Application_Model_Proxy_User $user);
 }

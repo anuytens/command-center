@@ -12,15 +12,8 @@
  * @category   Application
  * @package    Application_Model_Entity_UsersGroup
  */
-class Application_Model_Entity_UsersGroup extends SDIS62_Model_Entity_Abstract implements Application_Model_Entity_UsersGroup_Interface
+class Application_Model_Entity_UsersGroup extends SDIS62_Model_Entity_Abstract implements Application_Model_Entity_UsersGroup_Interface, Countable
 {
-	/**
-     * Primary key
-     *
-     * @var int
-     */
-	public $primary;
-	
     /**
      * Users list
      *

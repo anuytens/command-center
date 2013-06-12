@@ -25,7 +25,7 @@ interface Application_Model_Entity_Application_Interface
      * Set the application's name
      *
      * @param  string $name
-     * @return Application_Model_Application Provides fluent interface
+     * @return Application_Model_Entity_Application_Interface Provides fluent interface
      */
     public function setName($name);
     
@@ -40,7 +40,7 @@ interface Application_Model_Entity_Application_Interface
      * Set the consumer secret
      *
      * @param  string $consumer_secret
-     * @return Application_Model_Application Provides fluent interface
+     * @return Application_Model_Entity_Application_Interface Provides fluent interface
      */
     public function setConsumerSecret($consumer_secret);
     
@@ -55,7 +55,7 @@ interface Application_Model_Entity_Application_Interface
      * Set the consumer key
      *
      * @param  string $consumer_key
-     * @return Application_Model_Application Provides fluent interface
+     * @return Application_Model_Entity_Application_Interface Provides fluent interface
      */
     public function setConsumerKey($consumer_key);
     
@@ -70,7 +70,7 @@ interface Application_Model_Entity_Application_Interface
      * Set the application's status
      *
      * @param  bool $status
-     * @return Application_Model_Application Provides fluent interface
+     * @return Application_Model_Entity_Application_Interface Provides fluent interface
      */
     public function setActiveStatus($status);
     
@@ -85,7 +85,7 @@ interface Application_Model_Entity_Application_Interface
      * Set the URL
      *
      * @param  string $url
-     * @return Application_Model_Application Provides fluent interface
+     * @return Application_Model_Entity_Application_Interface Provides fluent interface
      */
     public function setURL($url);
     
@@ -116,11 +116,4 @@ interface Application_Model_Entity_Application_Interface
      @return bool
     */
     public function isEcosystem();
-    
-    /**
-     * Retrieve the application's informations in an array
-     *
-     * @return array
-     */     
-    public function toArray();
 }

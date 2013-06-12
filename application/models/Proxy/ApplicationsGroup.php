@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Proxy_ApplicationsGroup
  */
-class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstract implements Application_Model_Entity_ApplicationsGroup_Interface
+class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstract implements Application_Model_Entity_ApplicationsGroup_Interface, Countable
 {
 	/**
 	* Type of object
@@ -111,7 +111,7 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
      * @param  Application_Model_Proxy_Application $application
      * @return Application_Model_Proxy_ApplicationsGroup Provides fluent interface
      */ 
-    public function add(Application_Model_Application $application)
+    public function add(Application_Model_Proxy_Application $application)
     {
         $this->getEntity()->add($application);
         return $this;
@@ -123,7 +123,7 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
      * @param  Application_Model_Proxy_Application $application
      * @return Application_Model_Proxy_ApplicationsGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_Application $application)
+    public function remove(Application_Model_Proxy_Application $application)
     {
         $this->getEntity()->remove($application);
         return $this;

@@ -12,7 +12,7 @@
  * @category   Application
  * @package    Application_Model_Entity_ApplicationsGroup_Interface
  */
-interface Application_Model_Entity_ApplicationsGroup_Interface implements Countable
+interface Application_Model_Entity_ApplicationsGroup_Interface
 {
     /**
      * Get Applications Group's name.
@@ -25,7 +25,7 @@ interface Application_Model_Entity_ApplicationsGroup_Interface implements Counta
      * Set Applications Group's name
      *
      * @param  string $name
-     * @return Application_Model_ApplicationsGroup Provides fluent interface
+     * @return Application_Model_Entity_ApplicationsGroup_Interface Provides fluent interface
      */
     public function setName($name);
     
@@ -40,45 +40,38 @@ interface Application_Model_Entity_ApplicationsGroup_Interface implements Counta
      * Set Applications Group's color
      *
      * @param  string $name
-     * @return Application_Model_ApplicationsGroup Provides fluent interface
+     * @return Application_Model_Entity_ApplicationsGroup_Interface Provides fluent interface
      */
     public function setColor($color);
     
     /**
      * Get the applications
      *
-     * @return array<Application_Model_Application>
+     * @return array<Application_Model_Proxy_Application>
      */      
     public function getApplications();
 
     /**
      * Set the array of applications
      *
-     * @param  array<Application_Model_Application> $applications
-     * @return Application_Model_ApplicationsGroup Provides fluent interface
+     * @param  array<Application_Model_Proxy_Application> $applications
+     * @return Application_Model_Entity_ApplicationsGroup_Interface Provides fluent interface
      */
     public function setApplications(array $applications);
     
     /**
      * Add an application
      *
-     * @param  Application_Model_Application $application
-     * @return Application_Model_ApplicationsGroup Provides fluent interface
+     * @param  Application_Model_Proxy_Application $application
+     * @return Application_Model_Entity_ApplicationsGroup_Interface Provides fluent interface
      */ 
-    public function add(Application_Model_Application $application);
+    public function add(Application_Model_Proxy_Application $application);
     
     /**
      * Remove an application
      *
-     * @param  Application_Model_Application $application
-     * @return Application_Model_ApplicationsGroup Provides fluent interface
+     * @param  Application_Model_Proxy_Application $application
+     * @return Application_Model_Entity_ApplicationsGroup_Interface Provides fluent interface
      */ 
-    public function remove(Application_Model_Application $application);
-
-    /**
-     * Implements countable. Return the number of applications in the group
-     *
-     * @return int
-     */      
-    public function count();
+    public function remove(Application_Model_Proxy_Application $application);
 }
