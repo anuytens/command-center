@@ -19,7 +19,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
 	*
 	* @var string
 	*/
-	public $type_objet = 'User';
+	public static $type_objet = 'User';
 		
      /**
      * Construct the user with a profile
@@ -45,7 +45,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
         $res = $this->getEntity()->getRole();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getRole();
 		}
         return $res;
@@ -73,7 +73,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
         $res = $this->getEntity()->getProfile();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance('Profile')->fetch($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findByCriteria('Profile', $this::$getPrimary());
 			return $this->getEntity()->getProfile();
 		}
         return $res;
@@ -106,7 +106,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
         $res = $this->getEntity()->isActive();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->isActive();
 		}
         return $res;
@@ -143,10 +143,10 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
      */      
     public function getApplications()
     {
-        $res = $this->getEntity()->getProfile();
+        $res = $this->getEntity()->getApplications();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance('Application')->fetchAll($this->getId());
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('Application', $this->getPrimary());
 			return $this->getEntity()->getApplications();
 		}
         return $res;

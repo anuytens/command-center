@@ -25,8 +25,82 @@ class Application_Model_DAO_Profile extends SDIS62_Model_DAO_Abstract implements
 			array('fieldName' => 'is_man', 'columnName' => 'gender', 'type' => 'boolean'),
 			array('fieldName' => 'phone', 'columnName' => 'phone', 'type' => 'string'),
 			array('fieldName' => 'address', 'columnName' => 'address', 'type' => 'string'),
-			array('fieldName' => 'email', 'columnName' => 'email', 'type' => 'string')/*,
-			array('fieldName' => 'id_userdb', 'columnName' => 'id_userdb', 'type' => 'integer')*/
+			array('fieldName' => 'email', 'columnName' => 'email', 'type' => 'string'),
+			array('fieldName' => 'id_userdb', 'columnName' => 'id_userdb', 'type' => 'integer')
 		)
 	);
+	
+	/**
+	* Extract an entity and ask the mapper to save informations in database
+	*
+	* @params SDIS62_Model_Proxy_Abstract $proxy
+	*/
+	public function save(SDIS62_Model_Proxy_Abstract $proxy)
+	{
+		$mapper = $this->getMapper();
+		if($mapper::exist('Profile', $proxy->getPrimary()))
+			$mapper::update('Profile', $proxy->getEntity()->extract());
+		else
+			$mapper::insert('Profile', $proxy->getEntity()->extract());
+	}
+	
+	/**
+	* Ask the mapper to delete a specified entity from database due to its primary key
+	*
+	* @params int $id
+	*/
+	public function delete($id)
+	{
+		$mapper = $this->getMapper();
+		$mapper::delete('Profile', $id);
+	}
+	
+	/**
+	* Ask the mapper to find a specified entity from database due to its primary key
+	*
+	* @params int $id
+	* @return SDIS62_Model_Proxy_Abstract
+	*/
+	public function find($id)
+	{
+		$proxy = new Application_Model_Proxy_Profile;
+		$proxy->setPrimary($id);
+		$this->create($proxy);
+		return $proxy;
+	}
+	
+	/**
+	* Ask the mapper to find a specified entity from database due to a proxy and add it into that proxy
+	*
+	* @params SDIS62_Model_Proxy_Abstract $proxy
+	*/
+	public function create(SDIS62_Model_Proxy_Abstract $proxy)
+	{
+		$mapper = $this->getMapper();
+		$proxy->getEntity()->hydrate($mapper::find('Profile', $proxy->getPrimary()));
+	}
+	
+	/**
+	* Ask the mapper to find a specified entity from database due to a foreign key
+	*
+	* @params string $type
+	* @params int $id
+	* @return SDIS62_Model_Proxy_Abstract
+	*/
+	public function findByCriteria($type, $id)
+	{
+		return new Application_Model_Proxy_Profile;
+	}
+	
+	/**
+	* Ask the mapper to find several entities from database due to a foreign key
+	*
+	* @params string $type
+	* @params int $id
+	* @return SDIS62_Model_Proxy_Abstract[]
+	*/
+	public function findAllByCriteria($type, $id)
+	{
+		return array();
+	}
 }

@@ -136,7 +136,7 @@ class Application_Model_Entity_UsersGroup extends SDIS62_Model_Entity_Abstract i
      * @param  Application_Model_Proxy_User $user
      * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */ 
-    public function add(Application_Model_User $user)
+    public function add(Application_Model_Proxy_User $user)
     {
         // avoid duplication
         if(false !== array_search($user, $this->users))
@@ -155,7 +155,7 @@ class Application_Model_Entity_UsersGroup extends SDIS62_Model_Entity_Abstract i
      * @param  Application_Model_Proxy_User $user
      * @return Application_Model_Entity_UsersGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_User $user)
+    public function remove(Application_Model_Proxy_User $user)
     {
         // Search user in array
         $key_of_user_to_remove = array_search($user, $this->users);

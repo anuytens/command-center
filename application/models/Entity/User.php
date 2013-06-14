@@ -273,9 +273,9 @@ class Application_Model_Entity_User extends SDIS62_Model_Entity_Abstract impleme
 	public function extract()
 	{
 		return array(
-			'primary' => $this->primary,
-			'label' => $this->label,
-			'idPersonne' => $this->idPersonne
+			'profile' => $this->profile,
+			'is_active' => $this->is_active,
+			'role' => $this->role
 		);
 	}
 }

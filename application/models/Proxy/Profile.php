@@ -19,7 +19,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
 	*
 	* @var string
 	*/
-	public $type_objet = 'Profile';
+	public static $type_objet = 'Profile';
 		
     /**
      * Get the first name
@@ -31,7 +31,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
 		$res = $this->getEntity()->getFirstName();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getFirstName();
 		}
         return $res;
@@ -47,7 +47,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
         $res = $this->getEntity()->getLastName();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getLastName();
 		}
         return $res;
@@ -73,7 +73,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
         $res = $this->getEntity()->isMan();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->isMan();
 		}
         return $res;
@@ -99,7 +99,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
         $res = $this->getEntity()->getPhone();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getPhone();
 		}
         return $res;
@@ -115,7 +115,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
         $res = $this->getEntity()->getAddress();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getAddress();
 		}
         return $res;
@@ -131,7 +131,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
         $res = $this->getEntity()->getEmail();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getEmail();
 		}
         return $res;
@@ -191,7 +191,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
      */
     public function setPhone($phone)
     {
-        $this->getEntity()->setAsWoman($phone);
+        $this->getEntity()->setPhone($phone);
         return $this;
     }
     
@@ -203,7 +203,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
      */
     public function setAddress($address)
     {
-        $this->getEntity()->setAsWoman($address);
+        $this->getEntity()->setAddress($address);
         return $this;
     }
     
@@ -215,7 +215,7 @@ class Application_Model_Proxy_Profile extends SDIS62_Model_Proxy_Abstract implem
      */   
     public function setEmail($email)
     {    
-        $this->getEntity()->setAsWoman($email);
+        $this->getEntity()->setEmail($email);
         return $this;
     }
 }

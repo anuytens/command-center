@@ -19,7 +19,7 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
 	*
 	* @var string
 	*/
-	public $type_objet = 'UsersGroup';
+	public static $type_objet = 'UsersGroup';
 		
     /**
      * Get Users Group's name.
@@ -31,7 +31,7 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
         $res = $this->getEntity()->getName();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getName();
 		}
 		return $res;
@@ -59,7 +59,7 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
         $res = $this->getEntity()->getDesc();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getDesc();
 		}
 		return $res;
@@ -109,7 +109,7 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
         $res = $this->getEntity()->getDesc();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance('User')->fetchAll($this->getPrimary());
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('User', $this->getPrimary());
 			return $this->getEntity()->getUsers();
 		}
 		return $res;
@@ -133,7 +133,7 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
      * @param  Application_Model_Proxy_User $user
      * @return Application_Model_Proxy_UsersGroup Provides fluent interface
      */ 
-    public function add(Application_Model_User $user)
+    public function add(Application_Model_Proxy_User $user)
     {
         $this->getEntity()->add($user);
         return $this;
@@ -145,7 +145,7 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
      * @param  Application_Model_Proxy_User $user
      * @return Application_Model_Proxy_UsersGroup Provides fluent interface
      */ 
-    public function remove(Application_Model_User $user)
+    public function remove(Application_Model_Proxy_User $user)
     {
         $this->getEntity()->remove($user);
         return $this;

@@ -19,7 +19,7 @@ class Application_Model_Proxy_Profile_Elu_Prefet extends Application_Model_Proxy
 	*
 	* @var string
 	*/
-	public $type_objet = 'Profile_Elu_Prefet';
+	public static $type_objet = 'Profile_Elu_Prefet';
 		
     /**
      * Department.
@@ -38,7 +38,7 @@ class Application_Model_Proxy_Profile_Elu_Prefet extends Application_Model_Proxy
         $res = $this->getEntity()->getDepartment();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getDepartment();
 		}
 		return $res;

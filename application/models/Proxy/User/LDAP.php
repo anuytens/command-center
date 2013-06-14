@@ -19,7 +19,7 @@ class Application_Model_Proxy_User_LDAP extends Application_Model_Proxy_User imp
 	*
 	* @var string
 	*/
-	public $type_objet = 'User_LDAP';
+	public static $type_objet = 'User_LDAP';
     
     /**
      * Get object id.
@@ -31,7 +31,7 @@ class Application_Model_Proxy_User_LDAP extends Application_Model_Proxy_User imp
         $res = $this->getEntity()->getObjectId();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getObjectId();
 		}
 		return $res;
@@ -47,7 +47,7 @@ class Application_Model_Proxy_User_LDAP extends Application_Model_Proxy_User imp
         $res = $this->getEntity()->getDN();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getDN();
 		}
 		return $res;

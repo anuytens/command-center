@@ -19,7 +19,7 @@ class Application_Model_Proxy_User_Db extends Application_Model_Proxy_User imple
 	*
 	* @var string
 	*/
-	public $type_objet = 'User_Db';
+	public static $type_objet = 'User_Db';
     
     /**
      * Get user's password
@@ -31,7 +31,7 @@ class Application_Model_Proxy_User_Db extends Application_Model_Proxy_User imple
         $res = $this->getEntity()->getPassword();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getPassword();
 		}
 		return $res;

@@ -19,7 +19,7 @@ class Application_Model_Proxy_Profile_Elu_Maire extends Application_Model_Proxy_
 	*
 	* @var string
 	*/
-	public $type_objet = 'Profile_Elu_Maire';
+	public static $type_objet = 'Profile_Elu_Maire';
 
     /**
      * Get the mayor's city
@@ -31,7 +31,7 @@ class Application_Model_Proxy_Profile_Elu_Maire extends Application_Model_Proxy_
         $res = $this->getEntity()->getCity();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getCity();
 		}
 		return $res;

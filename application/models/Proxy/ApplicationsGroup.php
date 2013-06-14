@@ -19,7 +19,7 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
 	*
 	* @var string
 	*/
-	public $type_objet = 'ApplicationsGroup';
+	public static $type_objet = 'ApplicationsGroup';
 		
     /**
      * Get Applications Group's name.
@@ -31,7 +31,7 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
         $res = $this->getEntity()->getName();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getName();
 		}
 		return $res;
@@ -59,7 +59,7 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
         $res = $this->getEntity()->getColor();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getColor();
 		}
 		return $res;
@@ -87,8 +87,8 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
         $res = $this->getEntity()->getApplications();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance('Application')->fetchAll($this->getPrimary());
-			return $this->getEntity()->getName();
+			$this->getEntity()->hydrate(SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('Application', $this->getPrimary()));
+			return $this->getEntity()->getApplications();
 		}
 		return $res;
     }

@@ -19,5 +19,5 @@ abstract class Application_Model_Proxy_Profile_Elu extends Application_Model_Pro
 	*
 	* @var string
 	*/
-	public $type_objet = 'Profile_Elu';
+	public static $type_objet = 'Profile_Elu';
 }

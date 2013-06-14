@@ -27,4 +27,78 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 			array('fieldName' => 'is_active', 'columnName' => 'is_active', 'type' => 'string')
 		)
 	);
+	
+	/**
+	* Extract an entity and ask the mapper to save informations in database
+	*
+	* @params SDIS62_Model_Proxy_Abstract $proxy
+	*/
+	public function save(SDIS62_Model_Proxy_Abstract $proxy)
+	{
+		$mapper = $this->getMapper();
+		if($mapper::exist('Application', $proxy->getPrimary()))
+			$mapper::update('Application', $proxy->getEntity()->extract());
+		else
+			$mapper::insert('Application', $proxy->getEntity()->extract());
+	}
+	
+	/**
+	* Ask the mapper to delete a specified entity from database due to its primary key
+	*
+	* @params int $id
+	*/
+	public function delete($id)
+	{
+		$mapper = $this->getMapper();
+		$mapper::delete('Application', $id);
+	}
+	
+	/**
+	* Ask the mapper to find a specified entity from database due to its primary key
+	*
+	* @params int $id
+	* @return SDIS62_Model_Proxy_Abstract
+	*/
+	public function find($id)
+	{
+		$proxy = new Application_Model_Proxy_Application;
+		$proxy->setPrimary($id);
+		$this->create($proxy);
+		return $proxy;
+	}
+	
+	/**
+	* Ask the mapper to find a specified entity from database due to a proxy and add it into that proxy
+	*
+	* @params SDIS62_Model_Proxy_Abstract $proxy
+	*/
+	public function create(SDIS62_Model_Proxy_Abstract $proxy)
+	{
+		$mapper = $this->getMapper();
+		$proxy->getEntity()->hydrate($mapper::find('Application', $proxy->getPrimary()));
+	}
+	
+	/**
+	* Ask the mapper to find a specified entity from database due to a foreign key
+	*
+	* @params string $type
+	* @params int $id
+	* @return SDIS62_Model_Proxy_Abstract
+	*/
+	public function findByCriteria($type, $id)
+	{
+		return new Application_Model_Proxy_Application;
+	}
+	
+	/**
+	* Ask the mapper to find several entities from database due to a foreign key
+	*
+	* @params string $type
+	* @params int $id
+	* @return SDIS62_Model_Proxy_Abstract[]
+	*/
+	public function findAllByCriteria($type, $id)
+	{
+		return array();
+	}
 }

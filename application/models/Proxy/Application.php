@@ -19,7 +19,7 @@ class Application_Model_Proxy_Application extends SDIS62_Model_Proxy_Abstract im
 	*
 	* @var string
 	*/
-	public $type_objet = 'Application';
+	public static $type_objet = 'Application';
 		
     /**
      * Get the application's name.
@@ -31,7 +31,7 @@ class Application_Model_Proxy_Application extends SDIS62_Model_Proxy_Abstract im
 		$res = $this->getEntity()->getName();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getName();
 		}
 		return $res;
@@ -59,7 +59,7 @@ class Application_Model_Proxy_Application extends SDIS62_Model_Proxy_Abstract im
 		$res = $this->getEntity()->getConsumerSecret();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getConsumerSecret();
 		}
 		return $res;
@@ -87,7 +87,7 @@ class Application_Model_Proxy_Application extends SDIS62_Model_Proxy_Abstract im
 		$res = $this->getEntity()->getConsumerKey();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getConsumerKey();
 		}
 		return $res;
@@ -115,7 +115,7 @@ class Application_Model_Proxy_Application extends SDIS62_Model_Proxy_Abstract im
 		$res = $this->getEntity()->isActive();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->isActive();
 		}
 		return $res;
@@ -143,7 +143,7 @@ class Application_Model_Proxy_Application extends SDIS62_Model_Proxy_Abstract im
 		$res = $this->getEntity()->getURL();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getURL();
 		}
 		return $res;

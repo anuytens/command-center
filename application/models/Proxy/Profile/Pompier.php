@@ -19,7 +19,7 @@ class Application_Model_Proxy_Profile_Pompier extends Application_Model_Proxy_Pr
 	*
 	* @var string
 	*/
-	public $type_objet = 'Profile_Pompier';
+	public static $type_objet = 'Profile_Pompier';
 
     /**
      * Get grade
@@ -31,7 +31,7 @@ class Application_Model_Proxy_Profile_Pompier extends Application_Model_Proxy_Pr
         $res = $this->getEntity()->getGrade();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this->type_objet)->create($this);
+			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->create($this);
 			return $this->getEntity()->getGrade();
 		}
 		return $res;
