@@ -87,7 +87,8 @@ class Application_Model_Proxy_ApplicationsGroup extends SDIS62_Model_Proxy_Abstr
         $res = $this->getEntity()->getApplications();
 		if($res === null)
 		{
-			$this->getEntity()->hydrate(SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('Application', $this->getPrimary()));
+			$this->setApplications(SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('Application', $this->getPrimary()));
+			print_r($this->getEntity()->getApplications());
 			return $this->getEntity()->getApplications();
 		}
 		return $res;

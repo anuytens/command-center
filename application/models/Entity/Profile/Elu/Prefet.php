@@ -19,7 +19,14 @@ class Application_Model_Entity_Profile_Elu_Prefet extends Application_Model_Enti
      *
      * @var string
      */
-    private $department;
+    public $department;
+    
+    /**
+     * ID of profileelu
+     *
+     * @var string
+     */
+	public $id_profileelu;
 
     /**
      * Get the prefet's department

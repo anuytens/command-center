@@ -14,6 +14,11 @@
  */
 abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_Profile_Elu',
 		'table' => 'profileselus',
@@ -32,10 +37,19 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('Profile_Elu', $proxy->getPrimary()))
-			$mapper::update('Profile_Elu', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('Profile_Elu', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('Profile_Elu', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('Profile_Elu', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('Profile_Elu', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -46,7 +60,7 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('Profile_Elu', $id);
+		$mapper::delete('Profile_Elu', $id, self::$infosMap);
 	}
 	
 	/**
@@ -59,7 +73,7 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 	{
 		$proxy = new Application_Model_Proxy_Profile_Elu;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -71,7 +85,7 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('Profile_Elu', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('Profile_Elu', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**

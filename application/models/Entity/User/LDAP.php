@@ -19,14 +19,21 @@ class Application_Model_Entity_User_LDAP extends Application_Model_Entity_User i
      *
      * @var binary
      */
-    private $objectid;
+    public $objectid;
 
     /**
      * The DN object.
      *
      * @var Zend_Ldap_Dn
      */
-    private $dn;
+    public $dn;
+    
+    /**
+     * ID of user
+     *
+     * @var string
+     */
+    public $id_user;
     
     /**
      * Get object id.

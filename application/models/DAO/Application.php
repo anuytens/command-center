@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_Application',
 		'table' => 'applications',
@@ -36,10 +41,19 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('Application', $proxy->getPrimary()))
-			$mapper::update('Application', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('Application', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('Application', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('Application', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('Application', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -50,7 +64,7 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('Application', $id);
+		$mapper::delete('Application', $id, self::$infosMap);
 	}
 	
 	/**
@@ -63,7 +77,7 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 	{
 		$proxy = new Application_Model_Proxy_Application;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -75,7 +89,7 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('Application', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('Application', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**

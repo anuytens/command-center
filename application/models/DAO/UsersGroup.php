@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_UsersGroup',
 		'table' => 'usersgroups',
@@ -34,10 +39,19 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('UsersGroup', $proxy->getPrimary()))
-			$mapper::update('UsersGroup', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('UsersGroup', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('UsersGroup', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('UsersGroup', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('UsersGroup', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -48,7 +62,7 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('UsersGroup', $id);
+		$mapper::delete('UsersGroup', $id, self::$infosMap);
 	}
 	
 	/**
@@ -61,7 +75,7 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 	{
 		$proxy = new Application_Model_Proxy_UsersGroup;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -73,7 +87,7 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('UsersGroup', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('UsersGroup', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**
@@ -126,7 +140,8 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 					'UsersGroup' => 'ug',
 					'UsersgroupsUsers' => 'ugu',
 					'User' => 'u'
-				)
+				),
+				self::$infosMap
 			);
 		}
 		foreach($res as $a)

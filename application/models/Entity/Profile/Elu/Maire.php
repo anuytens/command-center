@@ -19,7 +19,14 @@ class Application_Model_Entity_Profile_Elu_Maire extends Application_Model_Entit
      *
      * @var string
      */
-    private $city;
+    public $city;
+    
+    /**
+     * ID of profileelu
+     *
+     * @var string
+     */
+	public $id_profileelu;
 
     /**
      * Get the mayor's city

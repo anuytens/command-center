@@ -19,7 +19,14 @@ class Application_Model_Entity_User_Db extends Application_Model_Entity_User imp
      *
      * @var string
      */
-    private $password;
+    public $password;
+    
+    /**
+     * ID of user
+     *
+     * @var string
+     */
+    public $id_user;
     
     /**
      * Get user's password

@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_User_LDAP',
 		'table' => 'usersldap',
@@ -34,10 +39,19 @@ class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implemen
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('User_LDAP', $proxy->getPrimary()))
-			$mapper::update('User_LDAP', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('User_LDAP', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('User_LDAP', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('User_LDAP', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('User_LDAP', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -48,7 +62,7 @@ class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implemen
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('User_LDAP', $id);
+		$mapper::delete('User_LDAP', $id, self::$infosMap);
 	}
 	
 	/**
@@ -61,7 +75,7 @@ class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implemen
 	{
 		$proxy = new Application_Model_Proxy_User_LDAP;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -73,7 +87,7 @@ class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implemen
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('User_LDAP', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('User_LDAP', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**

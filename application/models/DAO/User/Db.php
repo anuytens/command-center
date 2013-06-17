@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_User_Db',
 		'table' => 'usersdb',
@@ -33,10 +38,19 @@ class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('User_Db', $proxy->getPrimary()))
-			$mapper::update('User_Db', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('User_Db', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('User_Db', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('User_Db', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('User_Db', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -47,7 +61,7 @@ class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('User_Db', $id);
+		$mapper::delete('User_Db', $id, self::$infosMap);
 	}
 	
 	/**
@@ -60,7 +74,7 @@ class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements
 	{
 		$proxy = new Application_Model_Proxy_User_Db;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -72,7 +86,7 @@ class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('User_Db', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('User_Db', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**

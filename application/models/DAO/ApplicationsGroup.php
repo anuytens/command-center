@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_ApplicationsGroup',
 		'table' => 'applicationsgroups',
@@ -33,10 +38,19 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('ApplicationsGroup', $proxy->getPrimary()))
-			$mapper::update('ApplicationsGroup', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('ApplicationsGroup', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('ApplicationsGroup', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('ApplicationsGroup', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('ApplicationsGroup', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -47,7 +61,7 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('ApplicationsGroup', $id);
+		$mapper::delete('ApplicationsGroup', $id, self::$infosMap);
 	}
 	
 	/**
@@ -60,7 +74,7 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 	{
 		$proxy = new Application_Model_Proxy_ApplicationsGroup;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -72,7 +86,7 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('ApplicationsGroup', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('ApplicationsGroup', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**
@@ -125,7 +139,8 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 					'ApplicationGroup' => 'ag',
 					'ApplicationsgroupsApplications' => 'aga',
 					'Application' => 'a'
-				)
+				),
+				self::$infosMap
 			);
 		}
 		foreach($res as $a)

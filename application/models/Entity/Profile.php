@@ -19,42 +19,49 @@ class Application_Model_Entity_Profile extends SDIS62_Model_Entity_Abstract impl
      *
      * @var string
      */
-    protected $first_name;
+    public $first_name;
 
     /**
      * Last name.
      *
      * @var string
      */
-    protected $last_name;
+    public $last_name;
 
     /**
      * If the profile concern a man, the var equal true
      *
      * @var bool
      */
-    protected $is_man;
+    public $is_man;
 
     /**
      * Phone.
      *
      * @var string
      */
-    protected $phone;
+    public $phone;
 
     /**
      * Postal address.
      *
      * @var string
      */
-    protected $address;
+    public $address;
 
     /**
      * Email.
      *
      * @var string
      */
-    protected $email;
+    public $email;
+    
+    /**
+     * ID of userdb
+     *
+     * @var string
+     */
+    public $id_userdb;
 
     /**
      * Get the first name

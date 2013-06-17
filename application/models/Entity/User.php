@@ -19,28 +19,28 @@ class Application_Model_Entity_User extends SDIS62_Model_Entity_Abstract impleme
      *
      * @var Application_Model_Entity_Profile
      */
-     protected $profile;
+     public $profile;
      
     /**
      * If the user still active, the var equal true
      *
      * @var bool
      */
-     protected $is_active;
+     public $is_active;
      
      /**
      * List of user's applications
      *
      * @var array<Application_Model_Entity_Application>
      */
-     protected $applications = array();
+     public $applications = array();
      
     /**
      * User's role
      *
      * @var Application_Model_Role
      */
-     protected $role;
+     public $role;
      
      /**
      * Construct the user with a profile

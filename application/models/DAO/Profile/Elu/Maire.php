@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_Profile_Elu_Maire extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_Profile_Elu_Maire',
 		'table' => 'profileselusmaires',
@@ -33,10 +38,19 @@ class Application_Model_DAO_Profile_Elu_Maire extends SDIS62_Model_DAO_Abstract 
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('Elu_Maire', $proxy->getPrimary()))
-			$mapper::update('Elu_Maire', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('Elu_Maire', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('Elu_Maire', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('Elu_Maire', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('Elu_Maire', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -47,7 +61,7 @@ class Application_Model_DAO_Profile_Elu_Maire extends SDIS62_Model_DAO_Abstract 
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('Elu_Maire', $id);
+		$mapper::delete('Elu_Maire', $id, self::$infosMap);
 	}
 	
 	/**
@@ -60,7 +74,7 @@ class Application_Model_DAO_Profile_Elu_Maire extends SDIS62_Model_DAO_Abstract 
 	{
 		$proxy = new Application_Model_Proxy_Elu_Maire;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -72,7 +86,7 @@ class Application_Model_DAO_Profile_Elu_Maire extends SDIS62_Model_DAO_Abstract 
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('Elu_Maire', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('Elu_Maire', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**

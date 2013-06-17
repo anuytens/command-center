@@ -14,6 +14,11 @@
  */
 class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SDIS62_Model_DAO_Interface
 {
+	/**
+	* Information about how the entity is stored in the database
+	*
+	* @var Array
+	*/
 	public static $infosMap = array(
 		'classe' => 'Application_Model_Entity_User',
 		'table' => 'users',
@@ -33,10 +38,19 @@ class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SD
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		if($mapper::exist('User', $proxy->getPrimary()))
-			$mapper::update('User', $proxy->getEntity()->extract());
+		$extract = $proxy->getEntity()->extract();
+		if($mapper::exist('User', $proxy->getPrimary(), self::$infosMap))
+		{
+			$mapper::update('User', $extract, self::$infosMap);
+		}
 		else
-			$mapper::insert('User', $proxy->getEntity()->extract());
+		{
+			$id = $mapper::insert('User', $extract, self::$infosMap);
+			if($proxy->getPrimary() === null)
+			{
+				$proxy->setPrimary($id);
+			}
+		}
 	}
 	
 	/**
@@ -47,7 +61,7 @@ class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SD
 	public function delete($id)
 	{
 		$mapper = $this->getMapper();
-		$mapper::delete('User', $id);
+		$mapper::delete('User', $id, self::$infosMap);
 	}
 	
 	/**
@@ -60,7 +74,7 @@ class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SD
 	{
 		$proxy = new Application_Model_Proxy_User;
 		$proxy->setPrimary($id);
-		$this->create($proxy);
+		$this->create($proxy, self::$infosMap);
 		return $proxy;
 	}
 	
@@ -72,7 +86,7 @@ class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SD
 	public function create(SDIS62_Model_Proxy_Abstract $proxy)
 	{
 		$mapper = $this->getMapper();
-		$proxy->getEntity()->hydrate($mapper::find('User', $proxy->getPrimary()));
+		$proxy->getEntity()->hydrate($mapper::find('User', $proxy->getPrimary(), self::$infosMap));
 	}
 	
 	/**
@@ -114,7 +128,8 @@ class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SD
 						'User' => 'u',
 						'User_Db' => 'udb',
 						'Profile' => 'p'
-					)
+					),
+					self::$infosMap
 				)
 			);
 		}
@@ -159,7 +174,8 @@ class Application_Model_DAO_User extends SDIS62_Model_DAO_Abstract implements SD
 					'User' => 'u',
 					'UserApplications' => 'ua',
 					'Application' => 'a'
-				)
+				),
+				self::$infosMap
 			);
 		}
 		foreach($res as $a)

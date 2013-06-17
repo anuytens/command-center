@@ -247,7 +247,7 @@ class Application_Model_Entity_Application extends SDIS62_Model_Entity_Abstract 
         }
         
         return array(
-            "id" => $this->getId(),
+            "id" => $this->getPrimary(),
             "name" => $this->getName(),
             "is_active" => $this->isActive(),
             "url" => $this->getURL(),

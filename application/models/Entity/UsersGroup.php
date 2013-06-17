@@ -19,28 +19,28 @@ class Application_Model_Entity_UsersGroup extends SDIS62_Model_Entity_Abstract i
      *
      * @var array<Application_Model_Proxy_User>
      */
-    private $users = array();
+    public $users = array();
     
     /**
      * Users Group's name
      *
      * @var string
      */
-    private $name;
+    public $name;
     
     /**
      * User's role
      *
      * @var Application_Model_Proxy_Role
      */
-     private $role;
+     public $role;
      
      /**
      * Users Group's description
      *
      * @var string
      */
-     private $description;
+     public $description;
     
     /**
      * Get Users Group's name.

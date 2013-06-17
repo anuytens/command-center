@@ -19,7 +19,14 @@ class Application_Model_Entity_Profile_Pompier extends Application_Model_Entity_
      *
      * @var string
      */
-    protected $grade;
+    public $grade;
+    
+    /**
+     * ID of profile
+     *
+     * @var string
+     */
+    public $id_profile;
 
     /**
      * Get grade

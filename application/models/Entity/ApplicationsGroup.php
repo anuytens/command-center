@@ -19,21 +19,21 @@ class Application_Model_Entity_ApplicationsGroup extends SDIS62_Model_Entity_Abs
      *
      * @var array<Application_Model_Proxy_Application>
      */
-    private $applications = array();
+    public $applications = array();
     
     /**
      * Applications Group's name
      *
      * @var string
      */
-    private $name;
+    public $name;
     
     /**
      * Applications Group's color
      *
      * @var string
      */
-    private $color;
+    public $color;
     
     /**
      * Get Applications Group's name.
