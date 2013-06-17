@@ -33,6 +33,41 @@ catch(Exception $e)
     die();
 }
 
+/**
+ * 1. list namespaces
+ */
+use
+	Doctrine\ORM\Configuration;
+ 
+require_once 'Doctrine/Common/ClassLoader.php';
+
+$classLoader = new \Doctrine\Common\ClassLoader('Doctrine');
+$classLoader->register();
+ 
+/**
+ * 2. implement cache 
+ */
+$cache = new \Doctrine\Common\Cache\ArrayCache;
+ 
+/**
+ * 3. prepare conf 
+ */
+// Implement Configuration
+$configDoctrine = new Configuration;
+// Add cache to config
+$configDoctrine->setMetadataCacheImpl($cache);
+$configDoctrine->setQueryCacheImpl($cache);
+// Where to find Doctrine objects for my project
+$driverImpl = $configDoctrine->newDefaultAnnotationDriver(APPLICATION_PATH . DIRECTORY_SEPARATOR .'models'. DIRECTORY_SEPARATOR .'Entity');
+$configDoctrine->setMetadataDriverImpl($driverImpl);
+// Where to generate proxy classes
+$configDoctrine->setProxyDir(APPLICATION_PATH . DIRECTORY_SEPARATOR .'models' . DIRECTORY_SEPARATOR .'Proxy');
+$configDoctrine->setProxyNamespace('Proxy');
+$configDoctrine->setAutoGenerateProxyClasses(false);
+
+require_once 'Zend/Config/Ini.php';
+$config = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR .'configs'.DIRECTORY_SEPARATOR .'application.ini', APPLICATION_ENV);
+
 /** Zend_Application */
 require_once 'Zend/Application.php';
 
@@ -42,14 +77,20 @@ $application = new Zend_Application(
     APPLICATION_PATH . '/configs/application.ini'
 );
 
-// Configure database connection
-$dbConfig = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini', APPLICATION_ENV);
+// database access
+$connectionOptions = array(
+	'driver' => $config->resources->db->adapter,
+	'host' => $config->resources->db->params->host,
+	'dbname' => $config->resources->db->params->dbname,
+	'user' => $config->resources->db->params->username,
+	'password' => $config->resources->db->params->password,
+	'type_db' => $config->resources->type_db,
+	'type_orm' => $config->resources->type_orm
+);
 
-$dbAdapter = Zend_Db::factory($dbConfig->resources->db->adapter, array(
-    'host'     => $dbConfig->resources->db->params->host,
-    'username' => $dbConfig->resources->db->params->username,
-    'password' => $dbConfig->resources->db->params->password,
-    'dbname'   => $dbConfig->resources->db->params->dbname
-));
+/**
+ * 4. implement EntityManager 
+ */
 
-Zend_Db_Table::setDefaultAdapter($dbAdapter);
+echo "\n  > La Database s'initialise";
+SDIS62_Model_Mapper_Doctrine_Abstract::createEntityManager($connectionOptions, $configDoctrine);
