@@ -88,7 +88,7 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
         $user->getProfile()->setFirstName("Okay");
         $user_dao->save($user);
         $this->assertEquals($user->getProfile()->getPrimary(), $id_profile);
-        $user_dao->delete($user);
+        $user_dao->delete($user->getPrimary());
         unset($user);
 
         // Création du profile que l'on affectera à l'utilisateur test
@@ -106,9 +106,9 @@ class ApplicationTest extends PHPUnit_Framework_TestCase
             ->setRole(Application_Model_Entity_Role::GUEST);
 
         // Test de sauvegarde dans la base de données
-        $this->assertEquals($user->getId(), 0);
+        $this->assertEquals($user->getPrimary(), 0);
         $user_dao->save($user);
-        $this->assertGreaterThan(0, $user->getId());
+        $this->assertGreaterThan(0, $user->getPrimary());
         $user->getProfile()->setFirstName("Kenny");
         $user->getProfile()->setCity("Carency");
         $user_dao->save($user);
