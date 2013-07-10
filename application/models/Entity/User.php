@@ -255,7 +255,7 @@ class Application_Model_Entity_User extends SDIS62_Model_Entity_Abstract impleme
 	* Hydrate an array who contain informations to add at entity
 	*
 	* @params Array $array
-	* @return SDIS62_Model_Entity_Abstract
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
 	*/
     public function hydrate($array)
 	{
@@ -263,6 +263,7 @@ class Application_Model_Entity_User extends SDIS62_Model_Entity_Abstract impleme
 		{
 			$this->$n = $v;
 		}
+		return $this;
 	}
 	
 	/**

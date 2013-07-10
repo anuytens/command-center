@@ -43,4 +43,11 @@ interface Application_Model_Entity_User_LDAP_Interface
      * @return Application_Model_Entity_User_LDAP Provides fluent interface
      */
     public function setDN(Zend_Ldap_Dn $dn);
+    
+    /**
+     * Retrieve the user's informations in an array
+     *
+     * @return array
+     */     
+    public function toArray();
 }

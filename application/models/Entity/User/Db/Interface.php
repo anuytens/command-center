@@ -29,4 +29,11 @@ interface Application_Model_Entity_User_Db_Interface
      * @return Application_Model_Entity_User_Db Provides fluent interface
      */
     public function setPassword($password, $hashed = true);
+    
+    /**
+     * Retrieve the user's informations in an array
+     *
+     * @return array
+     */     
+    public function toArray();
 }

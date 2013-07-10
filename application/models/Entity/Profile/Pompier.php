@@ -20,13 +20,6 @@ class Application_Model_Entity_Profile_Pompier extends Application_Model_Entity_
      * @var string
      */
     public $grade;
-    
-    /**
-     * ID of profile
-     *
-     * @var string
-     */
-    public $id_profile;
 
     /**
      * Get grade
@@ -49,4 +42,31 @@ class Application_Model_Entity_Profile_Pompier extends Application_Model_Entity_
         $this->grade = $grade;
         return $this;
     }
+    
+    /**
+	* Hydrate an array who contain informations to add at entity
+	*
+	* @params Array $array
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
+	*/
+    public function hydrate($array)
+	{
+		foreach($array as $n => $v)
+		{
+			$this->$n = $v;
+		}
+		return $this;
+	}
+	
+	/**
+	* Extract an array from entity who contain informations about the entity
+	*
+	* @return Array
+	*/
+	public function extract()
+	{
+		$array = parent::extract();
+		$array['grade'] = $this->grade;
+		return $array;
+	}
 }

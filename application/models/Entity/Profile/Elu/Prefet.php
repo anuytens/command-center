@@ -20,13 +20,6 @@ class Application_Model_Entity_Profile_Elu_Prefet extends Application_Model_Enti
      * @var string
      */
     public $department;
-    
-    /**
-     * ID of profileelu
-     *
-     * @var string
-     */
-	public $id_profileelu;
 
     /**
      * Get the prefet's department
@@ -49,4 +42,31 @@ class Application_Model_Entity_Profile_Elu_Prefet extends Application_Model_Enti
         $this->department = $department;
         return $this;
     }
+    
+    /**
+	* Hydrate an array who contain informations to add at entity
+	*
+	* @params Array $array
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
+	*/
+    public function hydrate($array)
+	{
+		foreach($array as $n => $v)
+		{
+			$this->$n = $v;
+		}
+		return $this;
+	}
+	
+	/**
+	* Extract an array from entity who contain informations about the entity
+	*
+	* @return Array
+	*/
+	public function extract()
+	{
+		$array = parent::extract();
+		$array['department'] = $this->department;
+		return $array;
+	}
 }

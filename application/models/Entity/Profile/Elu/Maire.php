@@ -20,13 +20,6 @@ class Application_Model_Entity_Profile_Elu_Maire extends Application_Model_Entit
      * @var string
      */
     public $city;
-    
-    /**
-     * ID of profileelu
-     *
-     * @var string
-     */
-	public $id_profileelu;
 
     /**
      * Get the mayor's city
@@ -49,4 +42,31 @@ class Application_Model_Entity_Profile_Elu_Maire extends Application_Model_Entit
         $this->city = $city;
         return $this;
     }
+    
+    /**
+	* Hydrate an array who contain informations to add at entity
+	*
+	* @params Array $array
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
+	*/
+    public function hydrate($array)
+	{
+		foreach($array as $n => $v)
+		{
+			$this->$n = $v;
+		}
+		return $this;
+	}
+	
+	/**
+	* Extract an array from entity who contain informations about the entity
+	*
+	* @return Array
+	*/
+	public function extract()
+	{
+		$array = parent::extract();
+		$array['city'] = $this->city;
+		return $array;
+	}
 }

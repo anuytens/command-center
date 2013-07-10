@@ -22,13 +22,6 @@ class Application_Model_Entity_User_Db extends Application_Model_Entity_User imp
     public $password;
     
     /**
-     * ID of user
-     *
-     * @var string
-     */
-    public $id_user;
-    
-    /**
      * Get user's password
      *
      * @return string
@@ -66,4 +59,31 @@ class Application_Model_Entity_User_Db extends Application_Model_Entity_User imp
         
         return $this;
     }
+    
+    /**
+	* Hydrate an array who contain informations to add at entity
+	*
+	* @params Array $array
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
+	*/
+    public function hydrate($array)
+	{
+		foreach($array as $n => $v)
+		{
+			$this->$n = $v;
+		}
+		return $this;
+	}
+	
+	/**
+	* Extract an array from entity who contain informations about the entity
+	*
+	* @return Array
+	*/
+	public function extract()
+	{
+		$array = parent::extract();
+		$array['password'] = $this->password;
+		return $array;
+	}
 }

@@ -218,7 +218,7 @@ class Application_Model_Entity_Application extends SDIS62_Model_Entity_Abstract 
 	* Hydrate an array who contain informations to add at entity
 	*
 	* @params Array $array
-	* @return SDIS62_Model_Entity_Abstract
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
 	*/
     public function hydrate($array)
 	{
@@ -226,6 +226,7 @@ class Application_Model_Entity_Application extends SDIS62_Model_Entity_Abstract 
 		{
 			$this->$n = $v;
 		}
+		return $this;
 	}
 	
 	/**
@@ -247,7 +248,7 @@ class Application_Model_Entity_Application extends SDIS62_Model_Entity_Abstract 
         }
         
         return array(
-            "id" => $this->getPrimary(),
+            "primary" => $this->getPrimary(),
             "name" => $this->getName(),
             "is_active" => $this->isActive(),
             "url" => $this->getURL(),

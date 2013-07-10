@@ -29,13 +29,6 @@ class Application_Model_Entity_User_LDAP extends Application_Model_Entity_User i
     public $dn;
     
     /**
-     * ID of user
-     *
-     * @var string
-     */
-    public $id_user;
-    
-    /**
      * Get object id.
      *
      * @return binary
@@ -78,4 +71,32 @@ class Application_Model_Entity_User_LDAP extends Application_Model_Entity_User i
         $this->dn = $dn;
         return $this;
     }
+    
+    /**
+	* Hydrate an array who contain informations to add at entity
+	*
+	* @params Array $array
+	* @return SDIS62_Model_Entity_Abstract Provides fluent interface
+	*/
+    public function hydrate($array)
+	{
+		foreach($array as $n => $v)
+		{
+			$this->$n = $v;
+		}
+		return $this;
+	}
+	
+	/**
+	* Extract an array from entity who contain informations about the entity
+	*
+	* @return Array
+	*/
+	public function extract()
+	{
+		$array = parent::extract();
+		$array['objectid'] = $this->objectid;
+		$array['dn'] = $this->dn;
+		return $array;
+	}
 }
