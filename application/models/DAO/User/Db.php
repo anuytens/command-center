@@ -23,17 +23,18 @@ class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements
 		'classe' => 'Application_Model_Entity_User_Db',
 		'table' => 'usersdb',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
 			array('fieldName' => 'primary', 'columnName' => 'id_userdb', 'type' => 'integer'),
-			array('fieldName' => 'password', 'columnName' => 'password', 'type' => 'string'),
-			array('fieldName' => 'id_user', 'columnName' => 'id_user', 'type' => 'integer')
+			array('fieldName' => 'password', 'columnName' => 'password', 'type' => 'string')
 		)
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -41,15 +42,11 @@ class Application_Model_DAO_User_Db extends SDIS62_Model_DAO_Abstract implements
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('User_Db', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('User_Db', $extract, self::$infosMap);
+			return $mapper::update('User_Db', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('User_Db', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('User_Db', $extract, self::$infosMap);
 		}
 	}
 	

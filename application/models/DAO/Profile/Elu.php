@@ -23,16 +23,17 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 		'classe' => 'Application_Model_Entity_Profile_Elu',
 		'table' => 'profileselus',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
-			array('fieldName' => 'primary', 'columnName' => 'id_profileelu', 'type' => 'integer'),
-			array('fieldName' => 'id_profile', 'columnName' => 'id_profile', 'type' => 'integer')
+			array('fieldName' => 'primary', 'columnName' => 'id_profileelu', 'type' => 'integer')
 		)
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -40,15 +41,11 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('Profile_Elu', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('Profile_Elu', $extract, self::$infosMap);
+			return $mapper::update('Profile_Elu', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('Profile_Elu', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('Profile_Elu', $extract, self::$infosMap);
 		}
 	}
 	
@@ -95,7 +92,7 @@ abstract class Application_Model_DAO_Profile_Elu extends SDIS62_Model_DAO_Abstra
 	* @params int $id
 	* @return SDIS62_Model_Proxy_Abstract
 	*/
-	public function findByCriteria($type, $id)
+	public function findByCriteria($type, $criteria)
 	{
 		return new Application_Model_Proxy_Profile_Elu;
 	}

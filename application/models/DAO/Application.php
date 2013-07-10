@@ -23,6 +23,7 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 		'classe' => 'Application_Model_Entity_Application',
 		'table' => 'applications',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
 			array('fieldName' => 'primary', 'columnName' => 'id_application', 'type' => 'integer'),
 			array('fieldName' => 'name', 'columnName' => 'name', 'type' => 'string'),
@@ -30,13 +31,20 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 			array('fieldName' => 'consumer_secret', 'columnName' => 'consumer_secret', 'type' => 'string'),
 			array('fieldName' => 'consumer_key', 'columnName' => 'consumer_key', 'type' => 'string'),
 			array('fieldName' => 'is_active', 'columnName' => 'is_active', 'type' => 'string')
+		),
+		'join' => array(
+			'fieldName' => 'applicationsgroups-applications',
+			'joinColumns' => array('name' => 'id_application', 'referencedColumnName' => 'id_application'),
+			'inverseJoinColumns' => array('name' => 'id_applicationsgroup', 'referencedColumnName' => 'id_applicationsgroup'),
+			'isCascadePersist' => true
 		)
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -44,15 +52,11 @@ class Application_Model_DAO_Application extends SDIS62_Model_DAO_Abstract implem
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('Application', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('Application', $extract, self::$infosMap);
+			return $mapper::update('Application', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('Application', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('Application', $extract, self::$infosMap);
 		}
 	}
 	

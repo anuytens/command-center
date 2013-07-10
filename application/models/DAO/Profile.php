@@ -23,6 +23,7 @@ class Application_Model_DAO_Profile extends SDIS62_Model_DAO_Abstract implements
 		'classe' => 'Application_Model_Entity_Profile',
 		'table' => 'profiles',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
 			array('fieldName' => 'primary', 'columnName' => 'id_profile', 'type' => 'integer'),
 			array('fieldName' => 'first_name', 'columnName' => 'first_name', 'type' => 'string'),
@@ -36,9 +37,10 @@ class Application_Model_DAO_Profile extends SDIS62_Model_DAO_Abstract implements
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -46,15 +48,11 @@ class Application_Model_DAO_Profile extends SDIS62_Model_DAO_Abstract implements
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('Profile', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('Profile', $extract, self::$infosMap);
+			return $mapper::update('Profile', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('Profile', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('Profile', $extract, self::$infosMap);
 		}
 	}
 	

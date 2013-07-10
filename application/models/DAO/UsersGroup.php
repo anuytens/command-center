@@ -23,18 +23,26 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 		'classe' => 'Application_Model_Entity_UsersGroup',
 		'table' => 'usersgroups',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
 			array('fieldName' => 'primary', 'columnName' => 'id_usersgroup', 'type' => 'integer'),
 			array('fieldName' => 'name', 'columnName' => 'name', 'type' => 'string'),
 			array('fieldName' => 'description', 'columnName' => 'description', 'type' => 'string'),
 			array('fieldName' => 'role', 'columnName' => 'role', 'type' => 'integer')
+		),
+		'join' => array(
+			'fieldName' => 'usersgroups-users',
+			'joinColumns' => array('name' => 'id_usersgroup', 'referencedColumnName' => 'id_usersgroup'),
+			'inverseJoinColumns' => array('name' => 'id_user', 'referencedColumnName' => 'id_user'),
+			'isCascadePersist' => true
 		)
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -42,15 +50,11 @@ class Application_Model_DAO_UsersGroup extends SDIS62_Model_DAO_Abstract impleme
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('UsersGroup', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('UsersGroup', $extract, self::$infosMap);
+			return $mapper::update('UsersGroup', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('UsersGroup', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('UsersGroup', $extract, self::$infosMap);
 		}
 	}
 	

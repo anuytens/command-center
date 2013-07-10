@@ -23,17 +23,25 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 		'classe' => 'Application_Model_Entity_ApplicationsGroup',
 		'table' => 'applicationsgroups',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
 			array('fieldName' => 'primary', 'columnName' => 'id_applicationsgroup', 'type' => 'integer'),
 			array('fieldName' => 'name', 'columnName' => 'name', 'type' => 'string'),
 			array('fieldName' => 'color', 'columnName' => 'color', 'type' => 'string'),
+		),
+		'join' => array(
+			'fieldName' => 'applicationsgroups-applications',
+			'joinColumns' => array('name' => 'id_applicationsgroup', 'referencedColumnName' => 'id_applicationsgroup'),
+			'inverseJoinColumns' => array('name' => 'id_application', 'referencedColumnName' => 'id_application'),
+			'isCascadePersist' => true
 		)
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -41,15 +49,11 @@ class Application_Model_DAO_ApplicationsGroup extends SDIS62_Model_DAO_Abstract 
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('ApplicationsGroup', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('ApplicationsGroup', $extract, self::$infosMap);
+			return $mapper::update('ApplicationsGroup', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('ApplicationsGroup', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('ApplicationsGroup', $extract, self::$infosMap);
 		}
 	}
 	

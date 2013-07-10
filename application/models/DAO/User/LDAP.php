@@ -23,18 +23,19 @@ class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implemen
 		'classe' => 'Application_Model_Entity_User_LDAP',
 		'table' => 'usersldap',
 		'identifier' => array('primary'),
+		'id_auto' => true,
 		'colonnes' => array(
 			array('fieldName' => 'primary', 'columnName' => 'id_usersLDAP', 'type' => 'integer'),
 			array('fieldName' => 'objectid', 'columnName' => 'objectid', 'type' => 'boolean'),
-			array('fieldName' => 'dn', 'columnName' => 'dn', 'type' => 'string'),
-			array('fieldName' => 'id_user', 'columnName' => 'id_user', 'type' => 'integer')
+			array('fieldName' => 'dn', 'columnName' => 'dn', 'type' => 'string')
 		)
 	);
 	
 	/**
-	* Extract an entity and ask the mapper to save informations in database
+	* Extract an entity and ask the mapper to save informations in database and get the primary key
 	*
 	* @params SDIS62_Model_Proxy_Abstract $proxy
+	* @return int
 	*/
 	public function save(SDIS62_Model_Proxy_Abstract $proxy)
 	{
@@ -42,15 +43,11 @@ class Application_Model_DAO_User_LDAP extends SDIS62_Model_DAO_Abstract implemen
 		$extract = $proxy->getEntity()->extract();
 		if($mapper::exist('User_LDAP', $proxy->getPrimary(), self::$infosMap))
 		{
-			$mapper::update('User_LDAP', $extract, self::$infosMap);
+			return $mapper::update('User_LDAP', $extract, self::$infosMap);
 		}
 		else
 		{
-			$id = $mapper::insert('User_LDAP', $extract, self::$infosMap);
-			if($proxy->getPrimary() === null)
-			{
-				$proxy->setPrimary($id);
-			}
+			return $mapper::insert('User_LDAP', $extract, self::$infosMap);
 		}
 	}
 	
