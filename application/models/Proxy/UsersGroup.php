@@ -106,10 +106,10 @@ class Application_Model_Proxy_UsersGroup extends SDIS62_Model_Proxy_Abstract imp
      */      
     public function getUsers()
     {
-        $res = $this->getEntity()->getDesc();
+        $res = $this->getEntity()->getUsers();
 		if($res == null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('User', $this->getPrimary());
+			$this->setUsers(SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('User', array('primary' => $this::getPrimary())));
 			return $this->getEntity()->getUsers();
 		}
 		return $res;

@@ -73,7 +73,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
         $res = $this->getEntity()->getProfile();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findByCriteria('Profile', $this::$getPrimary());
+			$this->setProfile(SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findByCriteria('Profile', array('primary' => $this::getPrimary())));
 			return $this->getEntity()->getProfile();
 		}
         return $res;
@@ -146,7 +146,7 @@ class Application_Model_Proxy_User extends SDIS62_Model_Proxy_Abstract implement
         $res = $this->getEntity()->getApplications();
 		if($res === null)
 		{
-			SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('Application', $this->getPrimary());
+			$this->setApplications(SDIS62_Model_DAO_Abstract::getInstance($this::$type_objet)->findAllByCriteria('Application', array('primary' => $this::getPrimary())));
 			return $this->getEntity()->getApplications();
 		}
         return $res;
